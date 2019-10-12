@@ -1,0 +1,3 @@
+# GoAdmin Official Themes
+
+- adminlte

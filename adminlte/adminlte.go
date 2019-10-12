@@ -1,9 +1,10 @@
 package adminlte
 
 import (
+	"github.com/GoAdminGroup/themes/adminlte/resource"
+	"github.com/GoAdminGroup/themes/adminlte/tmpl"
 	"github.com/chenhg5/go-admin/modules/language"
-	"github.com/chenhg5/go-admin/template/adminlte/resource"
-	"github.com/chenhg5/go-admin/template/adminlte/tmpl"
+	adminTemplate "github.com/chenhg5/go-admin/template"
 	"github.com/chenhg5/go-admin/template/components"
 	"github.com/chenhg5/go-admin/template/types"
 	"html/template"
@@ -36,6 +37,10 @@ var Adminlte = Theme{
 			TemplateList: tmpl.List,
 		},
 	},
+}
+
+func init() {
+	adminTemplate.Add("adminlte", &Adminlte)
 }
 
 func Get() *Theme {
