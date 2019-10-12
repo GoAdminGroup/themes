@@ -1,12 +1,12 @@
 package adminlte
 
 import (
+	"github.com/GoAdminGroup/go-admin/modules/language"
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
+	"github.com/GoAdminGroup/go-admin/template/components"
+	"github.com/GoAdminGroup/go-admin/template/types"
 	"github.com/GoAdminGroup/themes/adminlte/resource"
 	"github.com/GoAdminGroup/themes/adminlte/tmpl"
-	"github.com/chenhg5/go-admin/modules/language"
-	adminTemplate "github.com/chenhg5/go-admin/template"
-	"github.com/chenhg5/go-admin/template/components"
-	"github.com/chenhg5/go-admin/template/types"
 	"html/template"
 )
 
