@@ -4,7 +4,7 @@ $('.grid-per-pager').on('change', function (e) {
 });
 $('.grid-refresh').on('click', function () {
     $.pjax.reload('#pjax-container');
-    toastr.success('Refresh succeeded !');
+    toastr.success(toastMsg);
 });
 toastr.options = {
     closeButton: true,
@@ -109,7 +109,7 @@ function exitFullscreen() {
 
 $('.container-refresh').on('click', function () {
     $.pjax.reload('#pjax-container');
-    toastr.success('Refresh succeeded !');
+    toastr.success(toastMsg);
 });
 
 $('.sidebar-menu a').on('click', function () {

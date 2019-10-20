@@ -1427,7 +1427,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
         $('.tree-5b405b7481760-refresh').click(function () {
             $.pjax.reload('#pjax-container');
-            toastr.success('{{lang "Refresh succeeded"}} !');
+            toastr.success(toastMsg);
         });
         $('.tree-5b405b7481760-tree-tools').on('click', function (e) {
             let target = $(e.target),
@@ -1446,13 +1446,14 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
 </script>
 {{end}}`,"content":`{{define "content"}}
     <script>
+        let toastMsg = '{{lang "Refresh succeeded"}} !';
         $('.grid-per-pager').on("change", function (e) {
             console.log("changing...");
             $.pjax({url: this.value, container: '#pjax-container'});
         });
         $('.grid-refresh').on('click', function () {
             $.pjax.reload('#pjax-container');
-            toastr.success('{{lang "Refresh succeeded"}} !');
+            toastr.success(toastMsg);
         });
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/chart.js"}}"></script>

@@ -1,4 +1,4 @@
-CLI=admincli
+CLI=adm
 ASSETS_PATH=./resource/assets
 
 all: assets
