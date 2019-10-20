@@ -1,7 +1,6 @@
 package adminlte
 
 import (
-	"fmt"
 	"github.com/GoAdminGroup/go-admin/modules/language"
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 	"github.com/GoAdminGroup/go-admin/template/components"
@@ -100,6 +99,5 @@ func (*Theme) GetAsset(path string) ([]byte, error) {
 }
 
 func (*Theme) GetAssetList() []string {
-	fmt.Println("asfasfa")
 	return resource.AssetsList
 }
