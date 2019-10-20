@@ -34,4 +34,4 @@ combine-css:
 
 # generate golang template file
 build-tmpl:
-	$(CLI) compile tpl
+	$(CLI) compile tpl --p=sword
