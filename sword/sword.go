@@ -18,7 +18,7 @@ var Sword = Theme{
 	Name: "sword",
 	Base: components.Base{
 		Attribute: types.Attribute{
-			TemplateList: templateList,
+			TemplateList: TemplateList,
 		},
 	},
 }
@@ -32,7 +32,7 @@ func Get() *Theme {
 }
 
 func (*Theme) GetTmplList() map[string]string {
-	return templateList
+	return TemplateList
 }
 
 func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
@@ -52,10 +52,10 @@ func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 			"isLinkUrl": func(s string) bool {
 				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
 			},
-		}).Parse(templateList["layout"] +
-			templateList["head"] + templateList["header"] + templateList["sidebar"] +
-			templateList["footer"] + templateList["js"] + templateList["menu"] +
-			templateList["admin_panel"] + templateList["content"])
+		}).Parse(TemplateList["layout"] +
+			TemplateList["head"] + TemplateList["header"] + TemplateList["sidebar"] +
+			TemplateList["footer"] + TemplateList["js"] + TemplateList["menu"] +
+			TemplateList["admin_panel"] + TemplateList["content"])
 	} else {
 		name = "content"
 		tmpl, err = template.New("content").Funcs(template.FuncMap{
@@ -67,7 +67,7 @@ func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 				}
 				return cdnUrl + assetsUrl
 			},
-		}).Parse(templateList["admin_panel"] + templateList["content"])
+		}).Parse(TemplateList["admin_panel"] + TemplateList["content"])
 	}
 
 	if err != nil {

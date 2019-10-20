@@ -4,8 +4,8 @@ import (
 	"github.com/GoAdminGroup/go-admin/modules/language"
 	"github.com/GoAdminGroup/go-admin/template/components"
 	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/GoAdminGroup/themes/sword"
 	"github.com/GoAdminGroup/themes/sword/resource"
-	"github.com/GoAdminGroup/themes/sword/tmpl"
 	"html/template"
 )
 
@@ -18,13 +18,13 @@ var Sword = Theme{
 	Name: "sword",
 	Base: components.Base{
 		Attribute: types.Attribute{
-			TemplateList: tmpl.List,
+			TemplateList: sword.TemplateList,
 		},
 	},
 }
 
 func (Theme) GetTmplList() map[string]string {
-	return tmpl.List
+	return sword.TemplateList
 }
 
 func (Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
@@ -44,10 +44,10 @@ func (Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
 			"isLinkUrl": func(s string) bool {
 				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
 			},
-		}).Parse(tmpl.List["layout"] +
-			tmpl.List["head"] + tmpl.List["header"] + tmpl.List["sidebar"] +
-			tmpl.List["footer"] + tmpl.List["js"] + tmpl.List["menu"] +
-			tmpl.List["admin_panel"] + tmpl.List["content"])
+		}).Parse(sword.TemplateList["layout"] +
+			sword.TemplateList["head"] + sword.TemplateList["header"] + sword.TemplateList["sidebar"] +
+			sword.TemplateList["footer"] + sword.TemplateList["js"] + sword.TemplateList["menu"] +
+			sword.TemplateList["admin_panel"] + sword.TemplateList["content"])
 	} else {
 		name = "content"
 		tmpler, err = template.New("content").Funcs(template.FuncMap{
@@ -59,7 +59,7 @@ func (Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
 				}
 				return cdnUrl + assetsUrl
 			},
-		}).Parse(tmpl.List["admin_panel"] + tmpl.List["content"])
+		}).Parse(sword.TemplateList["admin_panel"] + sword.TemplateList["content"])
 	}
 
 	if err != nil {
