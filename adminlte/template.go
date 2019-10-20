@@ -1,8 +1,14 @@
-package tmpl
+package adminlte
 
-var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
+var templateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+
+            <li>
+                <a href="javascript:void(0);" class="fixed-btn" data-click="false">
+                    <i class="fa fa-anchor"></i>
+                </a>
+            </li>
 
             <li>
                 <a href="javascript:void(0);" class="fullpage-btn">
@@ -592,14 +598,14 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 <div class="col-md-8">
 
                     <div class="btn-group pull-right">
-                        <button type="submit" class="btn btn-primary pull-right"
+                        <button type="submit" class="btn btn-info pull-right"
                                 data-loading-text="&lt;i class='fa fa-spinner fa-spin '&gt;&lt;/i&gt; Save">
                             {{lang "Save"}}
                         </button>
                     </div>
 
                     <div class="btn-group pull-left">
-                        <button type="reset" class="btn btn-default">{{lang "Reset"}}</button>
+                        <button type="reset" class="btn btn-warning">{{lang "Reset"}}</button>
                     </div>
 
                 </div>
@@ -725,6 +731,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     })
 </script>
 {{end}}`,"components/paginator":`{{define "paginator"}}
+{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}}
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
     <li class="page-item {{.PreviousClass}}">
@@ -759,28 +766,28 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </li>
 </ul>
 
-<label class="control-label pull-right">
+<label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
+
+    <small>{{lang "show"}}</small>&nbsp;
     <select class="input-sm grid-per-pager" name="per-page">
         <option value="{{.Url}}&__pageSize=10" {{index .Option "10"}}>
-            10 条/页
+            10
         </option>
         <option value="{{.Url}}&__pageSize=20" {{index .Option "20"}}>
-            20 条/页
+            20
         </option>
         <option value="{{.Url}}&__pageSize=30" {{index .Option "30"}}>
-            30 条/页
+            30
         </option>
         <option value="{{.Url}}&__pageSize=50" {{index .Option "50"}}>
-            50 条/页
+            50
         </option>
         <option value="{{.Url}}&__pageSize=100" {{index .Option "100"}}>
-            100 条/页
+            100
         </option>
     </select>
+    <small>{{lang "entries"}}</small>
 </label>
-<script>
-    $('.grid-per-pager').selectpicker();
-</script>
 {{end}}`,"components/pie-chart":`{{define "pie-chart"}}
 {{if ne .Title ""}}
 <p class="text-center">
@@ -894,7 +901,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="pull-right">
 
         <div class="dropdown pull-right column-selector" style="margin-right: 10px">
-            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-sm btn-instagram dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-table"></i>
                 &nbsp;
                 <span class="caret"></span>
@@ -924,7 +931,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <div class="btn-group pull-right" style="margin-right: 10px">
             <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#filter-modal"><i
                         class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
-            <a href="{{.InfoUrl}}" class="btn btn-sm btn-default"><i
+            <a href="{{.InfoUrl}}" class="btn btn-sm btn-facebook"><i
                         class="fa fa-undo"></i>&nbsp;&nbsp;{{lang "Reset"}}
             </a>
         </div>
@@ -991,12 +998,12 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
         <div class="btn-group pull-right" style="margin-right: 10px">
             {{if .NewUrl}}
-                <a href="{{.NewUrl}}" class="btn btn-sm btn-default">
+                <a href="{{.NewUrl}}" class="btn btn-sm btn-success">
                     <i class="fa fa-save"></i>&nbsp;&nbsp;{{lang "New"}}
                 </a>
             {{end}}
             {{if .ExportUrl}}
-                <a href="javascript:;" class="btn btn-sm btn-default" id="export-btn">
+                <a href="javascript:;" class="btn btn-sm btn-success" id="export-btn">
                     <i class="fa fa-save"></i>&nbsp;&nbsp;{{lang "Export"}}
                 </a>
 
@@ -1022,6 +1029,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
     <span>
     {{if .DeleteUrl}}
+        <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
         <div class="btn-group">
             <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -1036,7 +1044,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
             </ul>
         </div>
     {{end}}
-    <a class="btn btn-sm btn-primary grid-refresh" style="margin-left: 10px;">
+    <a class="btn btn-sm btn-primary grid-refresh">
         <i class="fa fa-refresh"></i> {{lang "Refresh"}}
     </a>
 </span>
@@ -1057,9 +1065,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{if eq .Type "data-table"}}
             <tr>
                 {{if eq .IsTab false}}
-                    <th>
-                        <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
-                    </th>
+                    <th></th>
                 {{end}}
                 {{range $key, $head := .Thead}}
                     {{if eq (index $head "hide") "0"}}
@@ -1095,7 +1101,7 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <tr>
                 {{if eq $Type "data-table"}}
                     {{if eq $IsTab false}}
-                        <td style="width: 15px;">
+                        <td>
                             {{if $DeleteUrl}}
                                 <input type="checkbox" class="grid-row-checkbox" data-id="{{index $info $PrimaryKey}}"
                                        style="position: absolute; opacity: 0;">
@@ -1337,17 +1343,17 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <a class="btn btn-primary btn-sm tree-5b405b7481760-tree-tools" data-action="expand">
         <i class="fa fa-plus-square-o"></i>&nbsp;{{lang "expand"}}
     </a>
-    <a class="btn btn-default btn-sm tree-5b405b7481760-tree-tools" data-action="collapse">
+    <a class="btn btn-primary btn-sm tree-5b405b7481760-tree-tools" data-action="collapse">
         <i class="fa fa-minus-square-o"></i>&nbsp;{{lang "collapse"}}
     </a>
 </div>
 
 <div class="btn-group">
-    <a class="btn btn-default btn-sm  tree-5b405b7481760-save"><i class="fa fa-save"></i>&nbsp;{{lang "save"}}</a>
+    <a class="btn btn-info btn-sm  tree-5b405b7481760-save"><i class="fa fa-save"></i>&nbsp;{{lang "save"}}</a>
 </div>
 
 <div class="btn-group">
-    <a class="btn btn-primary btn-sm tree-5b405b7481760-refresh"><i class="fa fa-refresh"></i>&nbsp;{{lang "refresh"}}</a>
+    <a class="btn btn-warning btn-sm tree-5b405b7481760-refresh"><i class="fa fa-refresh"></i>&nbsp;{{lang "refresh"}}</a>
 </div>
 <div class="btn-group">
 </div>
@@ -1460,16 +1466,14 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/fontawesome-iconpicker.min.js"}}"></script>
     {{if lang .Panel.Title}}
         <section class="content-header">
-            <div>
-                <ol class="breadcrumb">
-                <li><a href="{{.IndexUrl}}"> {{lang "home"}}</a></li>
-                {{.Menu.FormatPath}}
-                </ol>
-            </div>
-            <h4>
+            <h1>
                 {{lang .Panel.Title}}
                 <small>{{lang .Panel.Description}}</small>
-            </h4>
+            </h1>
+            <ol class="breadcrumb" style="margin-right: 30px;">
+                <li><a href="{{.IndexUrl}}"><i class="fa fa-dashboard"></i> {{lang "home"}}</a></li>
+                {{.Menu.FormatPath}}
+            </ol>
         </section>
     {{end}}
 
@@ -1715,7 +1719,6 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <nav class="navbar navbar-static-top">
             <div id="firstnav">
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="menu-fold" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"></path></svg>
                     <span class="sr-only">Toggle navigation</span>
                 </a>
 
@@ -1802,6 +1805,31 @@ var List = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    {{if eq .User.Avatar ""}}
+                        <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="img-circle" alt="User Image">
+                    {{else}}
+                        <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
+                    {{end}}
+                </div>
+                <div class="pull-left info">
+                    {{.User.Name}}
+                    <a href="#"><i class="fa fa-circle text-success"></i> {{lang "online"}}</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
 
             {{ template "menu" . }}
 
