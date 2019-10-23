@@ -32,4 +32,4 @@ combine-css:
 	$(CLI) combine css
 
 build-tmpl:
-	$(CLI) compile tpl --p=adminlte
+	$(CLI) compile tpl -p=adminlte

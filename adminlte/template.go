@@ -527,7 +527,7 @@ var templateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
 {{end}}`,"components/form":`{{define "form"}}
     <script src="{{.Prefix}}/assets/dist/js/form.min.js"></script>
-    <div class="box box-info">
+    <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">{{langHtml .Title}}</h3>
             <div class="box-tools">
@@ -598,7 +598,7 @@ var templateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 <div class="col-md-8">
 
                     <div class="btn-group pull-right">
-                        <button type="submit" class="btn btn-info pull-right"
+                        <button type="submit" class="btn btn-primary pull-right"
                                 data-loading-text="&lt;i class='fa fa-spinner fa-spin '&gt;&lt;/i&gt; Save">
                             {{lang "Save"}}
                         </button>
