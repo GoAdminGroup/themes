@@ -1,4 +1,4 @@
-CLI=admincli
+CLI=adm
 ASSETS_PATH=./resource/assets
 
 all: assets
@@ -26,8 +26,8 @@ combine:
 
 combine-js:
 	$(CLI) combine js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine2/ --out=$(ASSETS_PATH)/dist/js/all_2.min.js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine3/ --out=$(ASSETS_PATH)/dist/js/form.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine2/ --dist=$(ASSETS_PATH)/dist/js/all_2.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine3/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
 
 combine-css:
 	$(CLI) combine css

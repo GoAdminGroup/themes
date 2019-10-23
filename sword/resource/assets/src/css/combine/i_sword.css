@@ -393,3 +393,34 @@ a {
 .toast-progress {
     background-color: #1890ff;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #1790ff;
+    border-color: #1790ff;
+    padding: 1px 10px;
+    color: #fff;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default .select2-search--dropdown .select2-search__field {
+    border-color: #1790ff !important;
+}
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #1790ff;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+}
+
+.form-control:focus {
+    border-color: #1790ff;
+    box-shadow: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #1790ff;
+    color: white;
+}
+
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #1790ff;
+}
