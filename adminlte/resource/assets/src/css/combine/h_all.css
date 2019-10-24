@@ -109,3 +109,7 @@
     content: " *";
     color: red;
 }
+
+.form-horizontal .nav-tabs-custom {
+    box-shadow: none;
+}
