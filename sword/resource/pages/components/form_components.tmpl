@@ -37,6 +37,8 @@
                 {{ template "form_currency" $data }}
             {{else if eq $data.FormType.String "number"}}
                 {{ template "form_number" $data }}
+            {{else if eq $data.FormType.String "custom"}}
+                {{ template "form_custom" $data }}
             {{end}}
         </div>
     {{end}}

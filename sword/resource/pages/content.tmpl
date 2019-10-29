@@ -10,8 +10,8 @@
             toastr.success(toastMsg);
         });
     </script>
-    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/chart.js"}}"></script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/fontawesome-iconpicker.min.js"}}"></script>
+    {{.AssetsList}}
     {{if lang .Panel.Title}}
         <section class="content-header">
             <div>

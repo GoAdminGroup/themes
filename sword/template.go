@@ -64,98 +64,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <h4>{{langHtml .Title}}</h4>
     {{langHtml .Content}}
 </div>
-{{end}}`,"components/area-chart":`{{define "area-chart"}}
-{{if ne .Title ""}}
-<p class="text-center">
-    <strong>{{langHtml .Title}}</strong>
-</p>
-{{end}}
-<div class="chart">
-    <canvas id="{{.ID}}" style="height: {{.Height}}px;"></canvas>
-</div>
-<script>
-    (new Chart($('#{{.ID}}').get(0).getContext('2d'))).Line(JSON.parse({{.Data}}), {
-        // Boolean - If we should show the scale at all
-        showScale               : true,
-        // Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines      : false,
-        // String - Colour of the grid lines
-        scaleGridLineColor      : 'rgba(0,0,0,.05)',
-        // Number - Width of the grid lines
-        scaleGridLineWidth      : 1,
-        // Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
-        // Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines  : true,
-        // Boolean - Whether the line is curved between points
-        bezierCurve             : true,
-        // Number - Tension of the bezier curve between points
-        bezierCurveTension      : 0.3,
-        // Boolean - Whether to show a dot for each point
-        pointDot                : false,
-        // Number - Radius of each point dot in pixels
-        pointDotRadius          : 4,
-        // Number - Pixel width of point dot stroke
-        pointDotStrokeWidth     : 1,
-        // Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius : 20,
-        // Boolean - Whether to show a stroke for datasets
-        datasetStroke           : true,
-        // Number - Pixel width of dataset stroke
-        datasetStrokeWidth      : 2,
-        // Boolean - Whether to fill the dataset with a color
-        datasetFill             : true,
-        // String - A legend template
-        legendTemplate          : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].lineColor%>\'></span><%=datasets[i].label%></li><%}%></ul>',
-        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio     : true,
-        // Boolean - whether to make the chart responsive to window resizing
-        responsive              : true
-    });
-</script>
-{{end}}`,"components/bar-chart":`{{define "bar-chart"}}
-{{if ne .Title ""}}
-<p class="text-center">
-    <strong>{{langHtml .Title}}</strong>
-</p>
-{{end}}
-<div class="chart">
-    <canvas id="{{.ID}}" style="width: {{.Width}}px;"></canvas>
-</div>
-<script>
-    barChartData = JSON.parse({{.Data}});
-    barChartData.datasets[1].fillColor = '#00a65a';
-    barChartData.datasets[1].strokeColor = '#00a65a';
-    barChartData.datasets[1].pointColor = '#00a65a';
-    (new Chart($('#{{.ID}}').get(0).getContext('2d'))).Bar(barChartData, {
-        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-        scaleBeginAtZero: true,
-        //Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: true,
-        //String - Colour of the grid lines
-        scaleGridLineColor: 'rgba(0,0,0,.05)',
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
-        //Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
-        //Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines: true,
-        //Boolean - If there is a stroke on each bar
-        barShowStroke: true,
-        //Number - Pixel width of the bar stroke
-        barStrokeWidth: 2,
-        //Number - Spacing between each of the X value sets
-        barValueSpacing: 5,
-        //Number - Spacing between data sets within X values
-        barDatasetSpacing: 1,
-        //String - A legend template
-        legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-        //Boolean - whether to make the chart responsive
-        responsive: true,
-        maintainAspectRatio: true,
-        datasetFill: false
-    })
-</script>
 {{end}}`,"components/box":`{{define "box"}}
 <div class="box box-{{.Theme}}">
     {{if eq .HeadColor ""}}
@@ -174,20 +82,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
     {{end}}
 </div>
-{{end}}`,"components/chart-legend":`{{define "chart-legend"}}
-<ul class="chart-legend clearfix">
-    {{range $key, $data := .Data}}
-        <li><i class="fa fa-circle-o text-{{index $data "color"}}"></i>{{index $data "label"}}</li>
-    {{end}}
-</ul>
 {{end}}`,"components/col":`{{define "col"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
-{{end}}`,"components/description":`{{define "description"}}
-<div class="description-block border-{{.Border}}">
-    <span class="description-percentage text-{{.Color}}"><i class="fa fa-caret-{{.Arrow}}"></i>{{langHtml .Percent}}%</span>
-    <h5 class="description-header">{{langHtml .Number}}</h5>
-    <span class="description-text">{{langHtml .Title}}</span>
-</div>
 {{end}}`,"components/form/color":`{{define "form_color"}}
     {{if eq .Must true}}
     <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
@@ -221,6 +117,27 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             $('.{{.Field}}').inputmask({"alias": "currency", "radixPoint": ".", "prefix": "", "removeMaskOnSubmit": true});
         });
     </script>
+{{end}}`,"components/form/custom":`{{define "form_custom"}}
+    {{if eq .Must true}}
+        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
+    {{else}}
+        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
+    {{end}}
+    <div class="col-sm-8">
+        <div class="input-group">
+            {{.CustomContent}}
+        </div>
+    </div>
+    {{if .CustomJs}}
+        <script>
+            {{.CustomJs}}
+        </script>
+    {{end}}
+    {{if .CustomCss}}
+        <style>
+            {{.CustomCss}}
+        </style>
+    {{end}}
 {{end}}`,"components/form/datetime":`{{define "form_datetime"}}
     {{if eq .Must true}}
         <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
@@ -649,81 +566,15 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{ template "form_currency" $data }}
             {{else if eq $data.FormType.String "number"}}
                 {{ template "form_number" $data }}
+            {{else if eq $data.FormType.String "custom"}}
+                {{ template "form_custom" $data }}
             {{end}}
         </div>
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}
 <img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}">
-{{end}}`,"components/infobox":`{{define "infobox"}}
-<div class="info-box">
-    {{if .IsHexColor}}
-        <span class="info-box-icon" style="background-color: {{.Color}} !important;">
-    {{else}}
-        <span class="info-box-icon bg-{{.Color}}">
-    {{end}}
-    {{if .IsSvg}}
-        {{.Icon}}
-    {{else}}
-        <i class="fa {{.Icon}}"></i>
-    {{end}}
-    </span>
-    <div class="info-box-content">
-        <span class="info-box-text">{{langHtml .Text}}</span>
-        <span class="info-box-number">{{langHtml .Number}}</span>
-        {{langHtml .Content}}
-    </div>
-</div>
 {{end}}`,"components/label":`{{define "label"}}
 <span class="label label-{{.Color}}">{{langHtml .Content}}</span>
-{{end}}`,"components/line-chart":`{{define "line-chart"}}
-{{if ne .Title ""}}
-<p class="text-center">
-    <strong>{{langHtml .Title}}</strong>
-</p>
-{{end}}
-<div class="chart">
-    <canvas id="{{.ID}}" style="height: {{.Height}}px;"></canvas>
-</div>
-<script>
-    (new Chart($('#{{.ID}}').get(0).getContext('2d'))).Line(JSON.parse({{.Data}}), {
-        // Boolean - If we should show the scale at all
-        showScale               : true,
-        // Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines      : false,
-        // String - Colour of the grid lines
-        scaleGridLineColor      : 'rgba(0,0,0,.05)',
-        // Number - Width of the grid lines
-        scaleGridLineWidth      : 1,
-        // Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
-        // Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines  : true,
-        // Boolean - Whether the line is curved between points
-        bezierCurve             : true,
-        // Number - Tension of the bezier curve between points
-        bezierCurveTension      : 0.3,
-        // Boolean - Whether to show a dot for each point
-        pointDot                : false,
-        // Number - Radius of each point dot in pixels
-        pointDotRadius          : 4,
-        // Number - Pixel width of point dot stroke
-        pointDotStrokeWidth     : 1,
-        // Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius : 20,
-        // Boolean - Whether to show a stroke for datasets
-        datasetStroke           : true,
-        // Number - Pixel width of dataset stroke
-        datasetStrokeWidth      : 2,
-        // Boolean - Whether to fill the dataset with a color
-        datasetFill             : false,
-        // String - A legend template
-        legendTemplate          : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].lineColor%>\'></span><%=datasets[i].label%></li><%}%></ul>',
-        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio     : true,
-        // Boolean - whether to make the chart responsive to window resizing
-        responsive              : true
-    })
-</script>
 {{end}}`,"components/paginator":`{{define "paginator"}}
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
@@ -762,62 +613,24 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 <label class="control-label pull-right">
     <select class="input-sm grid-per-pager" name="per-page">
         <option value="{{.Url}}&__pageSize=10" {{index .Option "10"}}>
-            10 条/页
+            10 {{lang "条/页"}}
         </option>
         <option value="{{.Url}}&__pageSize=20" {{index .Option "20"}}>
-            20 条/页
+            20 {{lang "条/页"}}
         </option>
         <option value="{{.Url}}&__pageSize=30" {{index .Option "30"}}>
-            30 条/页
+            30 {{lang "条/页"}}
         </option>
         <option value="{{.Url}}&__pageSize=50" {{index .Option "50"}}>
-            50 条/页
+            50 {{lang "条/页"}}
         </option>
         <option value="{{.Url}}&__pageSize=100" {{index .Option "100"}}>
-            100 条/页
+            100 {{lang "条/页"}}
         </option>
     </select>
 </label>
 <script>
     $('.grid-per-pager').selectpicker();
-</script>
-{{end}}`,"components/pie-chart":`{{define "pie-chart"}}
-{{if ne .Title ""}}
-<p class="text-center">
-    <strong>{{langHtml .Title}}</strong>
-</p>
-{{end}}
-<div class="chart-responsive">
-    <canvas id="{{.ID}}" style="height: {{.Height}}px"></canvas>
-</div>
-<script>
-    // You can switch between pie and douhnut using the method below.
-    (new Chart($('#{{.ID}}').get(0).getContext('2d'))).Doughnut(JSON.parse({{.Data}}), {
-        // Boolean - Whether we should show a stroke on each segment
-        segmentShowStroke    : true,
-        // String - The colour of each segment stroke
-        segmentStrokeColor   : '#fff',
-        // Number - The width of each segment stroke
-        segmentStrokeWidth   : 1,
-        // Number - The percentage of the chart that we cut out of the middle
-        percentageInnerCutout: 50, // This is 0 for Pie charts
-        // Number - Amount of animation steps
-        animationSteps       : 100,
-        // String - Animation easing effect
-        animationEasing      : 'easeOutBounce',
-        // Boolean - Whether we animate the rotation of the Doughnut
-        animateRotate        : true,
-        // Boolean - Whether we animate scaling the Doughnut from the centre
-        animateScale         : false,
-        // Boolean - whether to make the chart responsive to window resizing
-        responsive           : true,
-        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio  : false,
-        // String - A legend template
-        legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-        // String - A tooltip template
-        tooltipTemplate      : '<%=value %> <%=label%> users'
-    });
 </script>
 {{end}}`,"components/popup":`{{define "popup"}}
 <div class="modal fade" id="{{.ID}}" tabindex="-1" role="dialog" aria-labelledby="{{.ID}}" aria-hidden="true">
@@ -841,55 +654,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </div>
     </div>
 </div>
-{{end}}`,"components/productlist":`{{define "productlist"}}
-<ul class="products-list product-list-in-box">
-    {{range $key, $data := .Data}}
-    <li class="item">
-        <div class="product-img">
-            <img src="{{index $data "img"}}" alt="Product Image">
-        </div>
-        <div class="product-info">
-            <a href="javascript:void(0)" class="product-title">{{index $data "title"}}
-                {{if eq (index $data "has_tabel") "true"}}
-                    <span class="label label-{{index $data "labeltype"}} pull-right">{{index $data "label"}}</span>
-                {{end}}
-            </a>
-            <span class="product-description">
-                {{index $data "description"}}
-            </span>
-        </div>
-    </li>
-    {{end}}
-</ul>
-{{end}}`,"components/progress-group":`{{define "progress-group"}}
-    <div class="progress-group">
-        <span class="progress-text">{{langHtml .Title}}</span>
-        <span class="progress-number"><b>{{.Molecular}}</b>/{{.Denominator}}</span>
-
-        <div class="progress sm">
-            {{if .IsHexColor}}
-                <div class="progress-bar" style="width: {{.Percent}}%;background-color: {{.Color}} !important;"></div>
-            {{else}}
-                <div class="progress-bar progress-bar-{{.Color}}" style="width: {{.Percent}}%"></div>
-            {{end}}
-        </div>
-    </div>
 {{end}}`,"components/row":`{{define "row"}}
 <div class="row">{{langHtml .Content}}</div>
-{{end}}`,"components/smallbox":`{{define "smallbox"}}
-    <div class="small-box bg-{{.Color}}">
-        <div class="inner">
-            <h3>{{langHtml .Value}}</h3>
-            <p>{{langHtml .Title}}</p>
-        </div>
-        <div class="icon">
-            <i class="fa {{.Icon}}"></i>
-        </div>
-        <a href="{{.Url}}" class="small-box-footer">
-            {{lang "more"}}
-            <i class="fa fa-arrow-circle-right"></i>
-        </a>
-    </div>
 {{end}}`,"components/table/box-header":`{{define "box-header"}}
     <div class="pull-right">
 
@@ -1456,8 +1222,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             toastr.success(toastMsg);
         });
     </script>
-    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/chart.js"}}"></script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/fontawesome-iconpicker.min.js"}}"></script>
+    {{.AssetsList}}
     {{if lang .Panel.Title}}
         <section class="content-header">
             <div>

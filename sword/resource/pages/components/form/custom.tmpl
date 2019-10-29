@@ -1,0 +1,22 @@
+{{define "form_custom"}}
+    {{if eq .Must true}}
+        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
+    {{else}}
+        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
+    {{end}}
+    <div class="col-sm-8">
+        <div class="input-group">
+            {{.CustomContent}}
+        </div>
+    </div>
+    {{if .CustomJs}}
+        <script>
+            {{.CustomJs}}
+        </script>
+    {{end}}
+    {{if .CustomCss}}
+        <style>
+            {{.CustomCss}}
+        </style>
+    {{end}}
+{{end}}
