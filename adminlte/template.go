@@ -1106,32 +1106,41 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 </div>
 {{end}}`,"components/tree-header":`{{define "tree-header"}}
 <div class="btn-group">
-    <a class="btn btn-primary btn-sm tree-5b405b7481760-tree-tools" data-action="expand">
+    <a class="btn btn-primary btn-sm tree-model-tree-tools" data-action="expand">
         <i class="fa fa-plus-square-o"></i>&nbsp;{{lang "expand"}}
     </a>
-    <a class="btn btn-primary btn-sm tree-5b405b7481760-tree-tools" data-action="collapse">
+    <a class="btn btn-primary btn-sm tree-model-tree-tools" data-action="collapse">
         <i class="fa fa-minus-square-o"></i>&nbsp;{{lang "collapse"}}
     </a>
 </div>
 
 <div class="btn-group">
-    <a class="btn btn-info btn-sm  tree-5b405b7481760-save"><i class="fa fa-save"></i>&nbsp;{{lang "save"}}</a>
+    <a class="btn btn-info btn-sm  tree-model-save"><i class="fa fa-save"></i>&nbsp;{{lang "save"}}</a>
 </div>
 
 <div class="btn-group">
-    <a class="btn btn-warning btn-sm tree-5b405b7481760-refresh"><i class="fa fa-refresh"></i>&nbsp;{{lang "refresh"}}</a>
+    <a class="btn btn-warning btn-sm tree-model-refresh"><i class="fa fa-refresh"></i>&nbsp;{{lang "refresh"}}</a>
 </div>
 <div class="btn-group">
 </div>
 {{end}}`,"components/tree":`{{define "tree"}}
-<div class="dd" id="tree-5b405b7481760">
+<div class="dd" id="tree-model">
     {{$EditUrl := .EditUrl}}
+    {{$UrlPrefix := .UrlPrefix}}
     <ol class="dd-list">
         {{range $key, $list := .Tree}}
         <li class="dd-item" data-id='{{$list.ID}}'>
             <div class="dd-handle">
-                <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                    href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
+                {{if eq $list.Url ""}}
+                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                        href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
+                {{else if eq $list.Url "/"}}
+                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                            href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
+                {{else}}
+                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                            href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
+                {{end}}
                 <span class="pull-right dd-nodrag">
                 <a href="{{$EditUrl}}?id={{$list.ID}}"><i class="fa fa-edit"></i></a>
                 <a href="javascript:void(0);" data-id="{{$list.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
@@ -1142,8 +1151,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{range $key, $item := $list.ChildrenList}}
                     <li class="dd-item" data-id='{{$item.ID}}'>
                         <div class="dd-handle">
-                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
+                            {{if eq $item.Url ""}}
+                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                    href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
+                            {{else if eq $item.Url "/"}}
+                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                        href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
+                            {{else}}
+                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                        href="{{$UrlPrefix}}{{$item.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$item.Url}}</a>
+                            {{end}}
                             <span class="pull-right dd-nodrag">
                                 <a href="{{$EditUrl}}?id={{$item.ID}}"><i class="fa fa-edit"></i></a>
                                 <a href="javascript:void(0);" data-id="{{$item.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
@@ -1159,7 +1176,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 </div>
 <script data-exec-on-popstate="">
     $(function () {
-        $('#tree-5b405b7481760').nestable([]);
+        $('#tree-model').nestable([]);
         $('.tree_branch_delete').click(function () {
             let id = $(this).data('id');
             swal({
@@ -1187,8 +1204,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         });
                     });
         });
-        $('.tree-5b405b7481760-save').click(function () {
-            let serialize = $('#tree-5b405b7481760').nestable('serialize');
+        $('.tree-model-save').click(function () {
+            let serialize = $('#tree-model').nestable('serialize');
             $.post({{.OrderUrl}}, {
                         _order: JSON.stringify(serialize)
                     },
@@ -1197,11 +1214,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         toastr.success('Save succeeded !');
                     });
         });
-        $('.tree-5b405b7481760-refresh').click(function () {
+        $('.tree-model-refresh').click(function () {
             $.pjax.reload('#pjax-container');
             toastr.success(toastMsg);
         });
-        $('.tree-5b405b7481760-tree-tools').on('click', function (e) {
+        $('.tree-model-tree-tools').on('click', function (e) {
             let target = $(e.target),
                     action = target.data('action');
             if (action === 'expand') {
