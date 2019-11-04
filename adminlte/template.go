@@ -620,22 +620,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 <label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
 
     <small>{{lang "show"}}</small>&nbsp;
+    {{$option := .Option}}
+    {{$url := .Url}}
     <select class="input-sm grid-per-pager" name="per-page">
-        <option value="{{.Url}}&__pageSize=10" {{index .Option "10"}}>
-            10
-        </option>
-        <option value="{{.Url}}&__pageSize=20" {{index .Option "20"}}>
-            20
-        </option>
-        <option value="{{.Url}}&__pageSize=30" {{index .Option "30"}}>
-            30
-        </option>
-        <option value="{{.Url}}&__pageSize=50" {{index .Option "50"}}>
-            50
-        </option>
-        <option value="{{.Url}}&__pageSize=100" {{index .Option "100"}}>
-            100
-        </option>
+        {{range $key, $pageSize := .PageSizeList}}
+            <option value="{{$url}}&__pageSize={{$pageSize}}" {{index $option $pageSize}}>
+                {{$pageSize}}
+            </option>
+        {{end}}
     </select>
     <small>{{lang "entries"}}</small>
 </label>
