@@ -815,9 +815,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{if eq .Type "data-table"}}
             <tr>
                 {{if eq .IsTab false}}
-                    <th>
-                        <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
-                    </th>
+                    <th></th>
                 {{end}}
                 {{range $key, $head := .Thead}}
                     {{if eq (index $head "hide") "0"}}
@@ -846,6 +844,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{$Thead := .Thead}}
         {{$Type := .Type}}
         {{$EditUrl := .EditUrl}}
+        {{$UpdateUrl := .UpdateUrl}}
         {{$IsTab := .IsTab}}
         {{$DeleteUrl := .DeleteUrl}}
         {{$PrimaryKey := .PrimaryKey}}
@@ -853,7 +852,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <tr>
                 {{if eq $Type "data-table"}}
                     {{if eq $IsTab false}}
-                        <td style="width: 15px;">
+                        <td>
                             {{if $DeleteUrl}}
                                 <input type="checkbox" class="grid-row-checkbox" data-id="{{index $info $PrimaryKey}}"
                                        style="position: absolute; opacity: 0;">
@@ -864,14 +863,20 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{if eq $Type "data-table"}}
                     {{range $key2, $head2 := $Thead}}
                         {{if eq (index $head2 "hide") "0"}}
-                            <td>{{index $info (index $head2 "field")}}</td>
+                            {{if eq (index $head2 "editable") "true"}}
+                                <td><a href="#" class="editable-td" data-type="text" data-pk="{{index $info $PrimaryKey}}"
+                                       data-url="{{$UpdateUrl}}" data-name="{{index $head2 "field"}}"
+                                       data-title="Enter {{index $head2 "head"}}">{{index $info (index $head2 "field")}}</a></td>
+                            {{else}}
+                                <td>{{index $info (index $head2 "field")}}</td>
+                            {{end}}
                         {{end}}
                     {{end}}
                     {{if eq $NoAction false}}
                         <td>
                             {{$Action}}
                             {{if $EditUrl}}
-                                <a href='{{$EditUrl}}&id={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>
+                                <a href='{{$EditUrl}}&{{$PrimaryKey}}={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>
                             {{end}}
                             {{if $DeleteUrl}}
                                 <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
@@ -1063,6 +1068,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 return "";
             }
 
+            $(document).ready(function () {
+                $('.editable-td').editable();
+            });
+
         </script>
     {{end}}
 {{end}}`,"components/tabs":`{{define "tabs"}}
@@ -1231,7 +1240,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             toastr.success(toastMsg);
         });
     </script>
-    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/fontawesome-iconpicker.min.js"}}"></script>
+    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
     {{.AssetsList}}
     {{if lang .Panel.Title}}
         <section class="content-header">
