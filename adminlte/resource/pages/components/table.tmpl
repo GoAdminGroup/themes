@@ -15,7 +15,11 @@
         {{if eq .Type "data-table"}}
             <tr>
                 {{if eq .IsTab false}}
-                    <th></th>
+                    <th>
+                        {{if .DeleteUrl}}
+                            <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
+                        {{end}}
+                    </th>
                 {{end}}
                 {{range $key, $head := .Thead}}
                     {{if eq (index $head "hide") "0"}}
@@ -64,9 +68,13 @@
                     {{range $key2, $head2 := $Thead}}
                         {{if eq (index $head2 "hide") "0"}}
                             {{if eq (index $head2 "editable") "true"}}
-                                <td><a href="#" class="editable-td" data-type="text" data-pk="{{index $info $PrimaryKey}}"
-                               data-url="{{$UpdateUrl}}" data-name="{{index $head2 "field"}}"
-                                       data-title="Enter {{index $head2 "head"}}">{{index $info (index $head2 "field")}}</a></td>
+                                <td><a href="#" class="editable-td-{{index $head2 "edittype"}}"
+                                       data-pk="{{index $info $PrimaryKey}}"
+                                       data-source='{{index $head2 "editoption"}}'
+                                       data-url="{{$UpdateUrl}}"
+                                       data-name="{{index $head2 "field"}}"
+                                       data-title="Enter {{index $head2 "head"}}">{{index $info (index $head2 "field")}}</a>
+                                </td>
                             {{else}}
                                 <td>{{index $info (index $head2 "field")}}</td>
                             {{end}}
@@ -76,7 +84,8 @@
                         <td>
                             {{$Action}}
                             {{if $EditUrl}}
-                                <a href='{{$EditUrl}}&{{$PrimaryKey}}={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>
+                                <a href='{{$EditUrl}}&{{$PrimaryKey}}={{index $info $PrimaryKey}}'><i
+                                            class="fa fa-edit"></i></a>
                             {{end}}
                             {{if $DeleteUrl}}
                                 <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
@@ -269,7 +278,60 @@
             }
 
             $(document).ready(function () {
-                $('.editable-td').editable();
+
+                $('.editable-td-select').editable({
+                    "type": "select",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>"
+                });
+                $('.editable-td-text').editable({
+                    emptytext: "<i class=\"fa fa-pencil\"><\/i>",
+                    type: "text"
+                });
+                $('.editable-td-datetime').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "YYYY-MM-DD HH:mm:ss",
+                    "viewformat": "YYYY-MM-DD HH:mm:ss",
+                    "template": "YYYY-MM-DD HH:mm:ss",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-date').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "YYYY-MM-DD",
+                    "viewformat": "YYYY-MM-DD",
+                    "template": "YYYY-MM-DD",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-year').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "YYYY",
+                    "viewformat": "YYYY",
+                    "template": "YYYY",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-month').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "MM",
+                    "viewformat": "MM",
+                    "template": "MM",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-day').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "DD",
+                    "viewformat": "DD",
+                    "template": "DD",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-textarea').editable({
+                    "type": "textarea",
+                    "rows": 10,
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>"
+                });
             });
 
         </script>
