@@ -95,6 +95,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
             <input style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}" value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     <script>
         $('.{{.Field}}').parent().colorpicker([]);
@@ -111,6 +116,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <input style="width: 120px; text-align: right;" type="text" id="{{.Field}}" name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     <script>
         $(function () {
@@ -127,6 +137,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <div class="input-group">
             {{.CustomContent}}
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     {{if .CustomJs}}
         <script>
@@ -150,6 +165,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <input style="width: 160px" type="text" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{lang "Input"}} {{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     <script>
         $(function () {
@@ -172,6 +192,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{.Value}}
             </div>
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
 {{end}}`,"components/form/email":`{{define "form_email"}}
     {{if eq .Must true}}
@@ -185,6 +210,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
 {{end}}`,"components/form/file":`{{define "form_file"}}
 {{if eq .Must true}}
@@ -194,6 +224,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}
 <div class="col-sm-8">
     <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="" data-initial-caption="{{.Value}}">
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 <script>
     $("input.{{.Field}}").fileinput({
@@ -231,6 +266,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                    placeholder="{{lang "Input Icon"}}">
         {{end}}
     </div>
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 <script>
     $('.iconpicker-input').iconpicker({placement:'bottomLeft'});
@@ -247,6 +287,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <input style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
 {{end}}`,"components/form/number":`{{define "form_number"}}
     {{if eq .Must true}}
@@ -260,6 +305,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                    value="{{.Value}}" class="form-control {{.Field}}"
                    placeholder="{{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     <script>
         $(function () {
@@ -289,6 +339,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <div class="box-body">********</div>
          </div>
     {{end}}
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 {{end}}`,"components/form/radio":`{{define "form_radio"}}
     {{if eq .Must true}}
@@ -302,6 +357,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <input type="radio" name="{{index $v "field"}}" value="{{index $v "value"}}"
                    class="minimal {{$field}}" {{index $v "selected"}}
                    style="position: absolute; opacity: 0;">&nbsp;{{index $v "label"}}&nbsp;&nbsp;
+        {{end}}
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
         {{end}}
     </div>
     <script>
@@ -321,6 +381,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </div>
         <input type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
                placeholder="{{lang "Input"}} {{.Head}}">
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     <script type="text/javascript">
         editor = new window.wangEditor('#{{.Field}}-editor');
@@ -350,6 +415,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <!--<span class="help-block">
             <i class="fa fa-info-circle"></i>&nbsp;All methods if empty
         </span>-->
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     <script>
         $(".{{.Field}}").select2({
@@ -369,6 +439,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </select>
     <input type="hidden" name="{{.Field}}[]" />
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 <script>
     $(".{{.Field}}").bootstrapDualListbox({"infoText":"Showing all {0}","infoTextEmpty":"Empty list","infoTextFiltered":"{0} \/ {1}","filterTextClear":"Show all","filterPlaceHolder":"Filter"});
@@ -386,9 +461,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
     {{end}}
     </select>
-    <!--<span class="help-block">
-        <i class="fa fa-info-circle"></i>&nbsp;All methods if empty
-    </span>-->
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 <script>
     $(".{{.Field}}").select2({
@@ -413,6 +490,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <div class="box-body">{{.Value}}</div>
         </div>
     {{end}}
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 {{end}}`,"components/form/textarea":`{{define "form_textarea"}}
     {{if eq .Must true}}
@@ -422,6 +504,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 <div class="col-sm-8">
     <textarea name="{{.Field}}" class="form-control" rows="5" placeholder="{{lang "Input"}} {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 {{end}}`,"components/form/url":`{{define "form_url"}}
     {{if eq .Must true}}
@@ -435,6 +522,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
 {{end}}`,"components/form":`{{define "form"}}
     <script src="{{.Prefix}}/assets/dist/js/form.min.js"></script>
@@ -530,44 +622,48 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/form_components":`{{define "form_components"}}
     {{range $key, $data := .}}
         <div class="form-group">
-            {{if eq $data.FormType.String "default"}}
-                {{ template "form_default" $data }}
-            {{else if eq $data.FormType.String "text"}}
-                {{ template "form_text" $data }}
-            {{else if eq $data.FormType.String "file"}}
-                {{ template "form_file" $data }}
-            {{else if eq $data.FormType.String "password"}}
-                {{ template "form_password" $data }}
-            {{else if eq $data.FormType.String "selectbox"}}
-                {{ template "form_selectbox" $data }}
-            {{else if eq $data.FormType.String "select"}}
-                {{ template "form_select" $data }}
-            {{else if eq $data.FormType.String "select_single"}}
-                {{ template "form_select_single" $data }}
-            {{else if eq $data.FormType.String "textarea"}}
-                {{ template "form_textarea" $data }}
-            {{else if eq $data.FormType.String "iconpicker"}}
-                {{ template "form_iconpicker" $data }}
-            {{else if eq $data.FormType.String "richtext"}}
-                {{ template "form_rich_text" $data }}
-            {{else if eq $data.FormType.String "datetime"}}
-                {{ template "form_datetime" $data }}
-            {{else if eq $data.FormType.String "radio"}}
-                {{ template "form_radio" $data }}
-            {{else if eq $data.FormType.String "email"}}
-                {{ template "form_email" $data }}
-            {{else if eq $data.FormType.String "url"}}
-                {{ template "form_url" $data }}
-            {{else if eq $data.FormType.String "ip"}}
-                {{ template "form_ip" $data }}
-            {{else if eq $data.FormType.String "color"}}
-                {{ template "form_color" $data }}
-            {{else if eq $data.FormType.String "currency"}}
-                {{ template "form_currency" $data }}
-            {{else if eq $data.FormType.String "number"}}
-                {{ template "form_number" $data }}
-            {{else if eq $data.FormType.String "custom"}}
-                {{ template "form_custom" $data }}
+            {{if $data.Hide}}
+                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+            {{else}}
+                {{if eq $data.FormType.String "default"}}
+                    {{ template "form_default" $data }}
+                {{else if eq $data.FormType.String "text"}}
+                    {{ template "form_text" $data }}
+                {{else if eq $data.FormType.String "file"}}
+                    {{ template "form_file" $data }}
+                {{else if eq $data.FormType.String "password"}}
+                    {{ template "form_password" $data }}
+                {{else if eq $data.FormType.String "selectbox"}}
+                    {{ template "form_selectbox" $data }}
+                {{else if eq $data.FormType.String "select"}}
+                    {{ template "form_select" $data }}
+                {{else if eq $data.FormType.String "select_single"}}
+                    {{ template "form_select_single" $data }}
+                {{else if eq $data.FormType.String "textarea"}}
+                    {{ template "form_textarea" $data }}
+                {{else if eq $data.FormType.String "iconpicker"}}
+                    {{ template "form_iconpicker" $data }}
+                {{else if eq $data.FormType.String "richtext"}}
+                    {{ template "form_rich_text" $data }}
+                {{else if eq $data.FormType.String "datetime"}}
+                    {{ template "form_datetime" $data }}
+                {{else if eq $data.FormType.String "radio"}}
+                    {{ template "form_radio" $data }}
+                {{else if eq $data.FormType.String "email"}}
+                    {{ template "form_email" $data }}
+                {{else if eq $data.FormType.String "url"}}
+                    {{ template "form_url" $data }}
+                {{else if eq $data.FormType.String "ip"}}
+                    {{ template "form_ip" $data }}
+                {{else if eq $data.FormType.String "color"}}
+                    {{ template "form_color" $data }}
+                {{else if eq $data.FormType.String "currency"}}
+                    {{ template "form_currency" $data }}
+                {{else if eq $data.FormType.String "number"}}
+                    {{ template "form_number" $data }}
+                {{else if eq $data.FormType.String "custom"}}
+                    {{ template "form_custom" $data }}
+                {{end}}
             {{end}}
         </div>
     {{end}}

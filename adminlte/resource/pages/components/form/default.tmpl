@@ -10,5 +10,10 @@
                 {{.Value}}
             </div>
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
 {{end}}

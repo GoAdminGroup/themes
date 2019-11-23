@@ -8,6 +8,11 @@
         <div class="input-group">
             {{.CustomContent}}
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
     {{if .CustomJs}}
         <script>

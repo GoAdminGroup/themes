@@ -6,5 +6,10 @@
     {{end}}
 <div class="col-sm-8">
     <textarea name="{{.Field}}" class="form-control" rows="5" placeholder="{{lang "Input"}} {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 {{end}}

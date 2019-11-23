@@ -11,6 +11,11 @@
         {{end}}
     </select>
     <input type="hidden" name="{{.Field}}[]" />
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 <script>
     $(".{{.Field}}").bootstrapDualListbox({"infoText":"Showing all {0}","infoTextEmpty":"Empty list","infoTextFiltered":"{0} \/ {1}","filterTextClear":"Show all","filterPlaceHolder":"Filter"});

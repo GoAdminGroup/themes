@@ -6,6 +6,11 @@
 {{end}}
 <div class="col-sm-8">
     <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="" data-initial-caption="{{.Value}}">
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+    {{end}}
 </div>
 <script>
     $("input.{{.Field}}").fileinput({

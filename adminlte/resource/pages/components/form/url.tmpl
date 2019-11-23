@@ -10,5 +10,10 @@
             <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
     </div>
 {{end}}
