@@ -42,6 +42,8 @@
                     {{ template "form_number" $data }}
                 {{else if eq $data.FormType.String "custom"}}
                     {{ template "form_custom" $data }}
+                {{else if eq $data.FormType.String "switch"}}
+                    {{ template "form_switch" $data }}
                 {{end}}
             {{end}}
         </div>

@@ -24,10 +24,10 @@ combine:
 	make combine-css
 
 combine-js:
-	$(CLI) combine js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine2/ --dist=$(ASSETS_PATH)/dist/js/all_2.min.js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine3/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/combine4/ --dist=$(ASSETS_PATH)/dist/js/content.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/all/ --dist=$(ASSETS_PATH)/dist/js/all.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/all_2/ --dist=$(ASSETS_PATH)/dist/js/all_2.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/form/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/content/ --dist=$(ASSETS_PATH)/dist/js/content.min.js
 
 combine-css:
 	$(CLI) combine css

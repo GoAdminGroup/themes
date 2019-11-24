@@ -1,0 +1,40 @@
+{{define "form_switch"}}
+    {{if eq .Must true}}
+        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
+    {{else}}
+        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
+    {{end}}
+    <div class="col-sm-8">
+        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{index (index .Options 0) "selected"}} type="checkbox" name="{{.Field}}">
+        {{$index := 0}}
+        {{if eq (index (index .Options 0) "selected") ""}}
+            {{$index = 1}}
+        {{end}}
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{index (index .Options $index) "value"}}">
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
+    </div>
+    <script>
+        $(".{{.Field}}.ga_checkbox").bootstrapSwitch({
+            size: "small",
+            {{if eq (index (index .Options 0) "text") ""}}
+            onText: "ON",
+            {{else}}
+            onText: "{{index (index .Options 0) "text"}}",
+            {{end}}
+            {{if eq (index (index .Options 1) "text") ""}}
+            offText: "OFF",
+            {{else}}
+            offText: "{{index (index .Options 1) "text"}}",
+            {{end}}
+            onColor: 'primary',
+            offColor: 'default',
+            onSwitchChange: function (event, state) {
+                $(event.target).closest('.bootstrap-switch').next().val(state ? '{{index (index .Options 0) "value"}}' : '{{index (index .Options 1) "value"}}').change();
+            }
+        })
+    </script>
+{{end}}

@@ -11,9 +11,6 @@
         <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
     {{end}}
     </select>
-    <!--<span class="help-block">
-        <i class="fa fa-info-circle"></i>&nbsp;All methods if empty
-    </span>-->
     {{if ne .HelpMsg ""}}
         <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
