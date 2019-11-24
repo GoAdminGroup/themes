@@ -574,7 +574,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </div>
 {{end}}`,"components/form":`{{define "form"}}
-    <script src="{{.Prefix}}/assets/dist/js/form.min.js"></script>
+    <script src={{link .CdnUrl .Prefix "/assets/dist/js/form.min.js"}}></script>
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">{{langHtml .Title}}</h3>
