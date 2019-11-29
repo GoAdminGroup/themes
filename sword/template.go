@@ -406,7 +406,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
     <div class="col-sm-8">
         <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
-                multiple="" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true"
+                multiple="" allowClear="true" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true"
                 {{if not .Editable}}disabled="disabled"{{end}}>
             {{range $key, $v := .Options }}
                 <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
@@ -422,9 +422,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </div>
     <script>
-        $(".{{.Field}}").select2({
-            allowClear: true
-        });
+        $(".{{.Field}}").select2({{.OptionExt}});
     </script>
 {{end}}`,"components/form/selectbox":`{{define "form_selectbox"}}
     {{if eq .Must true}}
@@ -456,7 +454,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 <div class="col-sm-8">
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
-            multiple="" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
+            data-multiple="false" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
     {{range $key, $v := .Options }}
         <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
     {{end}}
@@ -468,10 +466,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 </div>
 <script>
-    $(".{{.Field}}").select2({
-        allowClear: true,
-        maximumSelectionLength: 1
-    });
+    $(".{{.Field}}").select2({{.OptionExt}});
 </script>
 {{end}}`,"components/form/switch":`{{define "form_switch"}}
     {{if eq .Must true}}
