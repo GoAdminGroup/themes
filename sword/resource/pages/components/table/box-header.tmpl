@@ -127,6 +127,7 @@
                 </script>
             {{end}}
         </div>
+        {{.Buttons}}
     </div>
     <span>
     {{if .DeleteUrl}}
@@ -148,4 +149,7 @@
         <i class="fa fa-refresh"></i> {{lang "Refresh"}}
     </a>
 </span>
+<script>
+    {{.ActionJs}}
+</script>
 {{end}}

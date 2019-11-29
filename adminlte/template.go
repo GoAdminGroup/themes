@@ -922,6 +922,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </script>
             {{end}}
         </div>
+        {{.Buttons}}
     </div>
     <span>
     {{if .DeleteUrl}}
@@ -944,6 +945,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <i class="fa fa-refresh"></i> {{lang "Refresh"}}
     </a>
 </span>
+<script>
+    {{.ActionJs}}
+</script>
 {{end}}`,"components/table":`{{define "table"}}
     <table class="table table-hover" style="min-width: {{.MinWidth}}px;">
         {{if eq .Type "table"}}
