@@ -480,7 +480,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
     {{end}}
     <div class="col-sm-8">
-        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{index (index .Options 0) "selected"}} type="checkbox" name="{{.Field}}">
+        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{index (index .Options 0) "selected"}} type="checkbox" name="__checkbox__{{.Field}}">
         {{$index := 0}}
         {{if eq (index (index .Options 0) "selected") ""}}
             {{$index = 1}}
