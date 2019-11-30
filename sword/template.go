@@ -706,7 +706,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/image":`{{define "image"}}
 <img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}">
 {{end}}`,"components/label":`{{define "label"}}
-<span class="label label-{{.Color}}">{{langHtml .Content}}</span>
+<span class="label label-{{.Type}}" style="background-color: {{.Color}};">{{langHtml .Content}}</span>
 {{end}}`,"components/paginator":`{{define "paginator"}}
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
