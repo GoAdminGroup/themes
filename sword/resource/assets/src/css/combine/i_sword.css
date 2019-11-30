@@ -441,3 +441,9 @@ a {
     color: #fff;
     background: #1790ff !important;
 }
+
+.btn-primary.focus, .btn-primary:focus {
+    color: #fff;
+    background-color: #4190ff;
+    border-color: #4190ff;
+}
