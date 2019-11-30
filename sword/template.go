@@ -38,7 +38,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                             <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
                         {{end}}
                         <p>
-                            {{.User.Name}} -{{.User.Level}}
+                            {{.User.Name}} -{{.User.LevelName}}
                             <small>{{.User.CreatedAt}}</small>
                         </p>
                     </li>
