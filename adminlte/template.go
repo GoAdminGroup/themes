@@ -624,8 +624,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 {{ template "form_components" $data}}
                                 {{range $key, $d := $data}}
                                     {{if eq $d.Field $PrimaryKey}}
-
-
+                                        <input type="hidden" name="{{$PrimaryKey}}" value='{{$d.Value}}'>
                                     {{end}}
                                 {{end}}
                             </div>
