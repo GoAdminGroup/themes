@@ -190,6 +190,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
     <div class="col-sm-8">
         <div class="input-group">
+            {{if ne .Label ""}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
             <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
             <input style="width: 160px" type="text" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{lang "Input"}} {{.Head}}">
@@ -206,6 +209,42 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 "format": "YYYY-MM-DD HH:mm:ss",
                 "locale": "zh-CN",
                 "allowInputToggle": true
+            });
+        });
+    </script>
+{{end}}`,"components/form/datetime_range":`{{define "form_datetime_range"}}
+    {{if eq .Must true}}
+        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
+    {{else}}
+        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
+    {{end}}
+    <div class="col-sm-8">
+        <div class="input-group">
+            {{if ne .Label ""}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
+            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
+                   class="form-control {{.Field}}_start__goadmin" placeholder="{{lang "Input"}} {{.Head}}">
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin" value="{{.Value2}}"
+                   class="form-control {{.Field}}_end__goadmin" placeholder="{{lang "Input"}} {{.Head}}">
+        </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
+    </div>
+    <script>
+        $(function () {
+            $('.{{.Field}}_start__goadmin').datetimepicker({"format":"YYYY-MM-DD HH:mm:ss","locale":"zh-CN"});
+            $('.{{.Field}}_end__goadmin').datetimepicker({"format":"YYYY-MM-DD HH:mm:ss","locale":"zh-CN","useCurrent":false});
+            $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
+                $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
+            });
+            $('.{{.Field}}_end__goadmin').on("dp.change", function (e) {
+                $('.{{.Field}}_start__goadmin').data("DateTimePicker").maxDate(e.date);
             });
         });
     </script>
@@ -438,12 +477,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 multiple="" allowClear="true" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true"
                 {{if not .Editable}}disabled="disabled"{{end}}>
             {{range $key, $v := .Options }}
-                <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
+                <option value="{{index $v "value"}}" {{index $v "selected"}}>{{index $v "field"}}</option>
             {{end}}
         </select>
-        <!--<span class="help-block">
-            <i class="fa fa-info-circle"></i>&nbsp;All methods if empty
-        </span>-->
         {{if ne .HelpMsg ""}}
             <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
@@ -611,7 +647,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{end}}
             {{end}}
 
-            {{else}}
+        {{else}}
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     {{range $key, $data := .TabHeaders}}
@@ -649,9 +685,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </div>
                 {{end}}
             </div>
-            <div class="box-footer">
-                {{.OperationFooter}}
-            </div>
+            {{if ne .OperationFooter ""}}
+                <div class="box-footer">
+                    {{.OperationFooter}}
+                </div>
+            {{end}}
 
             <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
             <input type="hidden" name="_t" value='{{.CSRFToken}}'>
@@ -662,49 +700,51 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{if $data.Hide}}
             <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
         {{else}}
-        <div class="form-group">
-            {{if eq $data.FormType.String "default"}}
-                {{ template "form_default" $data }}
-            {{else if eq $data.FormType.String "text"}}
-                {{ template "form_text" $data }}
-            {{else if eq $data.FormType.String "file"}}
-                {{ template "form_file" $data }}
-            {{else if eq $data.FormType.String "password"}}
-                {{ template "form_password" $data }}
-            {{else if eq $data.FormType.String "selectbox"}}
-                {{ template "form_selectbox" $data }}
-            {{else if eq $data.FormType.String "select"}}
-                {{ template "form_select" $data }}
-            {{else if eq $data.FormType.String "select_single"}}
-                {{ template "form_select_single" $data }}
-            {{else if eq $data.FormType.String "textarea"}}
-                {{ template "form_textarea" $data }}
-            {{else if eq $data.FormType.String "iconpicker"}}
-                {{ template "form_iconpicker" $data }}
-            {{else if eq $data.FormType.String "richtext"}}
-                {{ template "form_rich_text" $data }}
-            {{else if eq $data.FormType.String "datetime"}}
-                {{ template "form_datetime" $data }}
-            {{else if eq $data.FormType.String "radio"}}
-                {{ template "form_radio" $data }}
-            {{else if eq $data.FormType.String "email"}}
-                {{ template "form_email" $data }}
-            {{else if eq $data.FormType.String "url"}}
-                {{ template "form_url" $data }}
-            {{else if eq $data.FormType.String "ip"}}
-                {{ template "form_ip" $data }}
-            {{else if eq $data.FormType.String "color"}}
-                {{ template "form_color" $data }}
-            {{else if eq $data.FormType.String "currency"}}
-                {{ template "form_currency" $data }}
-            {{else if eq $data.FormType.String "number"}}
-                {{ template "form_number" $data }}
-            {{else if eq $data.FormType.String "custom"}}
-                {{ template "form_custom" $data }}
-            {{else if eq $data.FormType.String "switch"}}
-                {{ template "form_switch" $data }}
-            {{end}}
-        </div>
+            <div class="form-group">
+                {{if eq $data.FormType.String "default"}}
+                    {{ template "form_default" $data }}
+                {{else if eq $data.FormType.String "text"}}
+                    {{ template "form_text" $data }}
+                {{else if eq $data.FormType.String "file"}}
+                    {{ template "form_file" $data }}
+                {{else if eq $data.FormType.String "password"}}
+                    {{ template "form_password" $data }}
+                {{else if eq $data.FormType.String "selectbox"}}
+                    {{ template "form_selectbox" $data }}
+                {{else if eq $data.FormType.String "select"}}
+                    {{ template "form_select" $data }}
+                {{else if eq $data.FormType.String "select_single"}}
+                    {{ template "form_select_single" $data }}
+                {{else if eq $data.FormType.String "textarea"}}
+                    {{ template "form_textarea" $data }}
+                {{else if eq $data.FormType.String "iconpicker"}}
+                    {{ template "form_iconpicker" $data }}
+                {{else if eq $data.FormType.String "richtext"}}
+                    {{ template "form_rich_text" $data }}
+                {{else if eq $data.FormType.String "datetime"}}
+                    {{ template "form_datetime" $data }}
+                {{else if eq $data.FormType.String "datetime_range"}}
+                    {{ template "form_datetime_range" $data }}
+                {{else if eq $data.FormType.String "radio"}}
+                    {{ template "form_radio" $data }}
+                {{else if eq $data.FormType.String "email"}}
+                    {{ template "form_email" $data }}
+                {{else if eq $data.FormType.String "url"}}
+                    {{ template "form_url" $data }}
+                {{else if eq $data.FormType.String "ip"}}
+                    {{ template "form_ip" $data }}
+                {{else if eq $data.FormType.String "color"}}
+                    {{ template "form_color" $data }}
+                {{else if eq $data.FormType.String "currency"}}
+                    {{ template "form_currency" $data }}
+                {{else if eq $data.FormType.String "number"}}
+                    {{ template "form_number" $data }}
+                {{else if eq $data.FormType.String "custom"}}
+                    {{ template "form_custom" $data }}
+                {{else if eq $data.FormType.String "switch"}}
+                    {{ template "form_switch" $data }}
+                {{end}}
+            </div>
         {{end}}
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}

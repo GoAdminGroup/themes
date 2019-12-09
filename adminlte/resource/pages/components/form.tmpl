@@ -52,9 +52,11 @@
                 </div>
                 {{end}}
             </div>
-            <div class="box-footer">
-                {{.OperationFooter}}
-            </div>
+            {{if ne .OperationFooter ""}}
+                <div class="box-footer">
+                    {{.OperationFooter}}
+                </div>
+            {{end}}
 
             <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
             <input type="hidden" name="_t" value='{{.CSRFToken}}'>
