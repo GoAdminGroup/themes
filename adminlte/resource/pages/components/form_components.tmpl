@@ -42,6 +42,8 @@
                     {{ template "form_currency" $data }}
                 {{else if eq $data.FormType.String "number"}}
                     {{ template "form_number" $data }}
+                {{else if eq $data.FormType.String "number_range"}}
+                    {{ template "form_number_range" $data }}
                 {{else if eq $data.FormType.String "custom"}}
                     {{ template "form_custom" $data }}
                 {{else if eq $data.FormType.String "switch"}}

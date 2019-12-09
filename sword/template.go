@@ -390,6 +390,52 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 });
         })
     </script>
+{{end}}`,"components/form/number_range":`{{define "form_number_range"}}
+    {{if eq .Must true}}
+        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
+    {{else}}
+        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
+    {{end}}
+    <div class="col-sm-8">
+        <div class="input-group number-range">
+            <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
+                   name="{{.Field}}_start__goadmin"
+                   value="{{.Value}}" class="form-control {{.Field}}_start__goadmin"
+                   placeholder="{{.Head}}">
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input style="text-align: center;" type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin"
+                   value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
+                   placeholder="{{.Head}}">
+        </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
+    </div>
+    <script>
+        $(function () {
+            $('.{{.Field}}_start__goadmin:not(.initialized)')
+                .addClass('initialized')
+                .bootstrapNumber({
+                    upClass: 'success',
+                    downClass: 'primary',
+                    center: true
+                });
+            $('.{{.Field}}_end__goadmin:not(.initialized)')
+                .addClass('initialized')
+                .bootstrapNumber({
+                    upClass: 'success',
+                    downClass: 'primary',
+                    center: true
+                });
+        })
+    </script>
+    <style>
+        .number-range .input-group {
+            width: 100%;
+        }
+    </style>
 {{end}}`,"components/form/password":`{{define "form_password"}}
     {{if eq .Must true}}
         <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
@@ -583,6 +629,26 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <div class="input-group">
                 {{if eq .Label ""}}
                     <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                {{else if eq .Label "free"}}
+                    <div class="input-group-btn">
+                        <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="min-width: 32px;" aria-expanded="false">
+                        {{if eq .Value2 ""}}
+                            <span class="{{.Field}}-label"> {{lang ">"}} </span>
+                        {{else}}
+                            <span class="{{.Field}}-label"> {{.Value2}} </span>
+                        {{end}}
+                            <span class="fa fa-caret-down"></span>
+                        </button>
+                        <ul class="dropdown-menu {{.Field}}_ul">
+                            <li><a href="#" data-index="gr"> {{lang ">"}} </a></li>
+                            <li><a href="#" data-index="le"> {{lang "<"}} </a></li>
+                            <li><a href="#" data-index="gq"> {{lang ">="}} </a></li>
+                            <li><a href="#" data-index="lq"> {{lang "<="}} </a></li>
+                            <li><a href="#" data-index="eq"> {{lang "="}} </a></li>
+                            <li><a href="#" data-index="ne"> {{lang "!="}} </a></li>
+                        </ul>
+                    </div>
                 {{else}}
                     <span class="input-group-addon">{{.Label}}</span>
                 {{end}}
@@ -599,6 +665,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             </span>
         {{end}}
     </div>
+    {{if eq .Label "free"}}
+        <script>
+            $(function () {
+                $(".{{.Field}}_ul li a").click(function () {
+                    $(".{{.Field}}-label").text($(this).text());
+                    $(".{{.Field}}-operation").val($(this).data('index'));
+                });
+            })
+        </script>
+    {{end}}
 {{end}}`,"components/form/textarea":`{{define "form_textarea"}}
     {{if eq .Must true}}
         <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
@@ -739,6 +815,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     {{ template "form_currency" $data }}
                 {{else if eq $data.FormType.String "number"}}
                     {{ template "form_number" $data }}
+                {{else if eq $data.FormType.String "number_range"}}
+                    {{ template "form_number_range" $data }}
                 {{else if eq $data.FormType.String "custom"}}
                     {{ template "form_custom" $data }}
                 {{else if eq $data.FormType.String "switch"}}

@@ -447,3 +447,9 @@ a {
     background-color: #4190ff;
     border-color: #4190ff;
 }
+
+.input-group-btn {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+}
