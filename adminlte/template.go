@@ -876,7 +876,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <div class="btn-group pull-right" style="margin-right: 10px">
             {{if .NewUrl}}
                 <a href="{{.NewUrl}}" class="btn btn-sm btn-success">
-                    <i class="fa fa-save"></i>&nbsp;&nbsp;{{lang "New"}}
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;{{lang "New"}}
                 </a>
             {{end}}
             {{if .ExportUrl}}
