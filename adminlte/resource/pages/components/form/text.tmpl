@@ -7,7 +7,11 @@
 <div class="col-sm-8">
     {{if .Editable}}
         <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+            {{if eq .Label ""}}
+                <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+            {{else}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
             <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
         </div>
     {{else}}

@@ -73,7 +73,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
         {{langHtml .Header}}
     </div>
-    <div class="box-body" style="overflow: scroll;">
+    {{if ne .SecondHeader ""}}
+        {{if eq .SecondHeadColor ""}}
+            <div class="box-header {{.SecondHeaderClass}} {{.SecondHeadBorder}}">
+        {{else}}
+            <div class="box-header {{.SecondHeaderClass}} {{.SecondHeadBorder}}" style="background-color: {{.SecondHeadColor}};">
+        {{end}}
+            {{langHtml .SecondHeader}}
+        </div>
+    {{end}}
+    <div class="box-body" {{.Style}}>
         {{langHtml .Body}}
     </div>
     {{if ne .Footer ""}}
@@ -82,6 +91,26 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
     {{end}}
 </div>
+{{end}}`,"components/button":`{{define "button"}}
+    <div class="btn-group {{.Orientation}}" {{.Style}}>
+        {{if eq .Href ""}}
+            {{if ne .LoadingText ""}}
+                <button type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}" data-loading-text="{{.LoadingText}}">
+            {{else}}
+                <button type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}">
+            {{end}}
+                {{langHtml .Content}}
+            </button>
+        {{else}}
+            {{if ne .LoadingText ""}}
+                <a href="{{.Href}}" type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}" data-loading-text="{{.LoadingText}}">
+            {{else}}
+                <a href="{{.Href}}" type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}">
+            {{end}}
+                {{langHtml .Content}}
+            </a>
+        {{end}}
+    </div>
 {{end}}`,"components/col":`{{define "col"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
 {{end}}`,"components/form/color":`{{define "form_color"}}
@@ -513,23 +542,27 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{else}}
         <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
     {{end}}
-<div class="col-sm-8">
-    {{if .Editable}}
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-            <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-    {{else}}
-        <div class="box box-solid box-default no-margin">
-            <div class="box-body">{{.Value}}</div>
-        </div>
-    {{end}}
-    {{if ne .HelpMsg ""}}
-        <span class="help-block">
+    <div class="col-sm-8">
+        {{if .Editable}}
+            <div class="input-group">
+                {{if eq .Label ""}}
+                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                {{else}}
+                    <span class="input-group-addon">{{.Label}}</span>
+                {{end}}
+                <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
+            </div>
+        {{else}}
+            <div class="box box-solid box-default no-margin">
+                <div class="box-body">{{.Value}}</div>
+            </div>
+        {{end}}
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
             </span>
-    {{end}}
-</div>
+        {{end}}
+    </div>
 {{end}}`,"components/form/textarea":`{{define "form_textarea"}}
     {{if eq .Must true}}
         <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
@@ -564,144 +597,115 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
 {{end}}`,"components/form":`{{define "form"}}
     <script src={{link .CdnUrl .Prefix "/assets/dist/js/form.min.js"}}></script>
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{langHtml .Title}}</h3>
-            <div class="box-tools">
-                <!-- <div class="btn-group pull-right" style="margin-right: 10px">
-                <a href='{{.InfoUrl}}' class="btn btn-sm btn-default"><i class="fa fa-list"></i> {{lang "List"}}</a>
-                </div> -->
-                <div class="btn-group pull-right" style="margin-right: 10px">
-                    <a href='{{.InfoUrl}}' class="btn btn-sm btn-default form-history-back"><i
-                                class="fa fa-arrow-left"></i> {{lang "Back"}}</a>
-                </div>
+    {{.Header}}
+    <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container>
+        <div class="box-body">
+            {{if eq (len .TabHeaders) 0}}
+            <div class="fields-group">
+                {{ template "form_components" .Content }}
             </div>
-        </div>
-        {{.Header}}
-        {{$PrimaryKey := .PrimaryKey}}
-        <form action='{{.Url}}' method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container>
-            <div class="box-body">
-                {{if eq (len .TabHeaders) 0}}
-                    <div class="fields-group">
-                        {{ template "form_components" .Content }}
-                    </div>
 
-                    {{range $key, $data := .Content}}
-                        {{if eq $data.Field $PrimaryKey}}
-                            <input type="hidden" name="{{$PrimaryKey}}" value='{{$data.Value}}'>
+            {{range $key, $data := .Content}}
+                {{if eq $data.Field $.PrimaryKey}}
+                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+                {{end}}
+            {{end}}
+
+            {{else}}
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {{range $key, $data := .TabHeaders}}
+                        {{if eq $key 0}}
+                            <li class="active">
+                        {{else}}
+                            <li class="">
                         {{end}}
+                        <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                            {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                        </a>
+                        </li>
                     {{end}}
-                {{else}}
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            {{range $key, $data := .TabHeaders}}
-                                {{if eq $key 0}}
-                                    <li class="active">
-                                {{else}}
-                                    <li class="">
+                </ul>
+                <div class="tab-content fields-group">
+
+                    {{range $key, $data := .TabContents}}
+
+                    {{if eq $key 0}}
+                    <div class="tab-pane active" id="tab-form-{{$key}}">
+                        {{else}}
+                        <div class="tab-pane" id="tab-form-{{$key}}">
+                            {{end}}
+                            {{ template "form_components" $data}}
+                            {{range $key, $d := $data}}
+                                {{if eq $d.Field $.PrimaryKey}}
+                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
                                 {{end}}
-                                <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
-                                    {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
-                                </a>
-                            </li>
                             {{end}}
-                        </ul>
-                        <div class="tab-content fields-group">
-
-                            {{range $key, $data := .TabContents}}
-
-                            {{if eq $key 0}}
-                                <div class="tab-pane active" id="tab-form-{{$key}}">
-                            {{else}}
-                                <div class="tab-pane" id="tab-form-{{$key}}">
-                            {{end}}
-                                {{ template "form_components" $data}}
-                                {{range $key, $d := $data}}
-                                    {{if eq $d.Field $PrimaryKey}}
-                                        <input type="hidden" name="{{$PrimaryKey}}" value='{{$d.Value}}'>
-                                    {{end}}
-                                {{end}}
-                            </div>
-
-                            {{end}}
-
                         </div>
+
+                        {{end}}
+
                     </div>
+                </div>
                 {{end}}
             </div>
             <div class="box-footer">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-8">
-
-                    <div class="btn-group pull-right">
-                        <button type="submit" class="btn btn-primary pull-right"
-                                data-loading-text="&lt;i class='fa fa-spinner fa-spin '&gt;&lt;/i&gt; Save">
-                            {{lang "Save"}}
-                        </button>
-                    </div>
-
-                    <div class="btn-group pull-left">
-                        <button type="reset" class="btn btn-default">{{lang "Reset"}}</button>
-                    </div>
-
-                </div>
+                {{.OperationFooter}}
             </div>
 
             <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
             <input type="hidden" name="_t" value='{{.CSRFToken}}'>
-        </form>
-        {{.Footer}}
-    </div>
+    </form>
+    {{.Footer}}
 {{end}}`,"components/form_components":`{{define "form_components"}}
     {{range $key, $data := .}}
+        {{if $data.Hide}}
+            <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+        {{else}}
         <div class="form-group">
-            {{if $data.Hide}}
-                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
-            {{else}}
-                {{if eq $data.FormType.String "default"}}
-                    {{ template "form_default" $data }}
-                {{else if eq $data.FormType.String "text"}}
-                    {{ template "form_text" $data }}
-                {{else if eq $data.FormType.String "file"}}
-                    {{ template "form_file" $data }}
-                {{else if eq $data.FormType.String "password"}}
-                    {{ template "form_password" $data }}
-                {{else if eq $data.FormType.String "selectbox"}}
-                    {{ template "form_selectbox" $data }}
-                {{else if eq $data.FormType.String "select"}}
-                    {{ template "form_select" $data }}
-                {{else if eq $data.FormType.String "select_single"}}
-                    {{ template "form_select_single" $data }}
-                {{else if eq $data.FormType.String "textarea"}}
-                    {{ template "form_textarea" $data }}
-                {{else if eq $data.FormType.String "iconpicker"}}
-                    {{ template "form_iconpicker" $data }}
-                {{else if eq $data.FormType.String "richtext"}}
-                    {{ template "form_rich_text" $data }}
-                {{else if eq $data.FormType.String "datetime"}}
-                    {{ template "form_datetime" $data }}
-                {{else if eq $data.FormType.String "radio"}}
-                    {{ template "form_radio" $data }}
-                {{else if eq $data.FormType.String "email"}}
-                    {{ template "form_email" $data }}
-                {{else if eq $data.FormType.String "url"}}
-                    {{ template "form_url" $data }}
-                {{else if eq $data.FormType.String "ip"}}
-                    {{ template "form_ip" $data }}
-                {{else if eq $data.FormType.String "color"}}
-                    {{ template "form_color" $data }}
-                {{else if eq $data.FormType.String "currency"}}
-                    {{ template "form_currency" $data }}
-                {{else if eq $data.FormType.String "number"}}
-                    {{ template "form_number" $data }}
-                {{else if eq $data.FormType.String "custom"}}
-                    {{ template "form_custom" $data }}
-                {{else if eq $data.FormType.String "switch"}}
-                    {{ template "form_switch" $data }}
-                {{end}}
+            {{if eq $data.FormType.String "default"}}
+                {{ template "form_default" $data }}
+            {{else if eq $data.FormType.String "text"}}
+                {{ template "form_text" $data }}
+            {{else if eq $data.FormType.String "file"}}
+                {{ template "form_file" $data }}
+            {{else if eq $data.FormType.String "password"}}
+                {{ template "form_password" $data }}
+            {{else if eq $data.FormType.String "selectbox"}}
+                {{ template "form_selectbox" $data }}
+            {{else if eq $data.FormType.String "select"}}
+                {{ template "form_select" $data }}
+            {{else if eq $data.FormType.String "select_single"}}
+                {{ template "form_select_single" $data }}
+            {{else if eq $data.FormType.String "textarea"}}
+                {{ template "form_textarea" $data }}
+            {{else if eq $data.FormType.String "iconpicker"}}
+                {{ template "form_iconpicker" $data }}
+            {{else if eq $data.FormType.String "richtext"}}
+                {{ template "form_rich_text" $data }}
+            {{else if eq $data.FormType.String "datetime"}}
+                {{ template "form_datetime" $data }}
+            {{else if eq $data.FormType.String "radio"}}
+                {{ template "form_radio" $data }}
+            {{else if eq $data.FormType.String "email"}}
+                {{ template "form_email" $data }}
+            {{else if eq $data.FormType.String "url"}}
+                {{ template "form_url" $data }}
+            {{else if eq $data.FormType.String "ip"}}
+                {{ template "form_ip" $data }}
+            {{else if eq $data.FormType.String "color"}}
+                {{ template "form_color" $data }}
+            {{else if eq $data.FormType.String "currency"}}
+                {{ template "form_currency" $data }}
+            {{else if eq $data.FormType.String "number"}}
+                {{ template "form_number" $data }}
+            {{else if eq $data.FormType.String "custom"}}
+                {{ template "form_custom" $data }}
+            {{else if eq $data.FormType.String "switch"}}
+                {{ template "form_switch" $data }}
             {{end}}
         </div>
+        {{end}}
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}
 <img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}">
@@ -812,72 +816,15 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </div>
 
         <div class="btn-group pull-right" style="margin-right: 10px">
-            <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#filter-modal"><i
+            <a href="javascript:;" class="btn btn-sm btn-primary" id="filter-btn"><i
                         class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
-            <a href="{{.InfoUrl}}" class="btn btn-sm btn-default"><i
-                        class="fa fa-undo"></i>&nbsp;&nbsp;{{lang "Reset"}}
-            </a>
-        </div>
-
-        <div class="modal fade" id="filter-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">{{lang "filter"}}</h4>
-                    </div>
-                    <form action="{{.InfoUrl}}" method="get" pjax-container="">
-                        <div class="modal-body">
-                            <div class="form">
-                                {{range $key, $filter := .Filters}}
-                                    <div class="form-group">
-                                        <label>{{index $filter "title"}}</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-pencil"></i>
-                                            </div>
-                                            <input type="text" class="form-control id"
-                                                   placeholder="{{index $filter "title"}}"
-                                                   name="{{index $filter "name"}}" value="">
-                                        </div>
-                                    </div>
-                                {{end}}
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" id="filter-btn"
-                                    class="btn btn-primary submit">{{lang "Submit"}}</button>
-                            <button type="reset" class="btn btn-warning pull-left">{{lang "Reset"}}</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
 
         <script>
             $("#filter-btn").click(function () {
-                $('.modal-backdrop').hide();
+                $('.filter-area').toggle();
             });
         </script>
-
-        <!--
-        <div class="btn-group pull-right" style="margin-right: 10px">
-            <a class="btn btn-sm btn-twitter"><i class="fa fa-download"></i> Export</a>
-            <button type="button" class="btn btn-sm btn-twitter dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="/admin/story/word?_export_=all" target="_blank">All</a></li>
-                <li><a href="/admin/story/word?_export_=page%3A1" target="_blank">Current
-                    page</a></li>
-                <li><a href="/admin/story/word?_export_=selected%3A__rows__" target="_blank" class="export-selected">Selected rows</a></li>
-            </ul>
-        </div>
-        -->
 
         <div class="btn-group pull-right" style="margin-right: 10px">
             {{if .NewUrl}}
@@ -887,7 +834,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{end}}
             {{if .ExportUrl}}
                 <a href="javascript:;" class="btn btn-sm btn-default" id="export-btn">
-                    <i class="fa fa-save"></i>&nbsp;&nbsp;{{lang "Export"}}
+                    <i class="fa fa-download"></i>&nbsp;&nbsp;{{lang "Export"}}
                 </a>
 
                 <script>
@@ -1076,6 +1023,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         }
                     }
                 }
+
+                $('.filter-area').hide();
             });
 
             selectedAllFieldsRows = function () {

@@ -4,21 +4,25 @@
     {{else}}
         <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
     {{end}}
-<div class="col-sm-8">
-    {{if .Editable}}
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-            <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-    {{else}}
-        <div class="box box-solid box-default no-margin">
-            <div class="box-body">{{.Value}}</div>
-        </div>
-    {{end}}
-    {{if ne .HelpMsg ""}}
-        <span class="help-block">
+    <div class="col-sm-8">
+        {{if .Editable}}
+            <div class="input-group">
+                {{if eq .Label ""}}
+                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                {{else}}
+                    <span class="input-group-addon">{{.Label}}</span>
+                {{end}}
+                <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
+            </div>
+        {{else}}
+            <div class="box box-solid box-default no-margin">
+                <div class="box-body">{{.Value}}</div>
+            </div>
+        {{end}}
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
             </span>
-    {{end}}
-</div>
+        {{end}}
+    </div>
 {{end}}
