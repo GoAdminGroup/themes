@@ -940,6 +940,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             </ul>
         </div>
 
+        {{if .HasFilter}}
+
         <div class="btn-group pull-right" style="margin-right: 10px">
             <a href="javascript:;" class="btn btn-sm btn-primary" id="filter-btn"><i
                         class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
@@ -950,6 +952,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 $('.filter-area').toggle();
             });
         </script>
+
+        {{end}}
 
         <div class="btn-group pull-right" style="margin-right: 10px">
             {{if .NewUrl}}
@@ -985,7 +989,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
     <span>
     {{if .DeleteUrl}}
-        <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
         <div class="btn-group">
             <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -1152,7 +1155,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     }
                 }
 
-                $('.filter-area').hide();
+                {{if .HasFilter}}
+                    $('.filter-area').hide();
+                {{end}}
             });
 
             selectedAllFieldsRows = function () {

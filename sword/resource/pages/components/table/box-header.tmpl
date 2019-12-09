@@ -29,6 +29,8 @@
             </ul>
         </div>
 
+        {{if .HasFilter}}
+
         <div class="btn-group pull-right" style="margin-right: 10px">
             <a href="javascript:;" class="btn btn-sm btn-primary" id="filter-btn"><i
                         class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
@@ -39,6 +41,8 @@
                 $('.filter-area').toggle();
             });
         </script>
+
+        {{end}}
 
         <div class="btn-group pull-right" style="margin-right: 10px">
             {{if .NewUrl}}

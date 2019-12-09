@@ -143,7 +143,9 @@
                     }
                 }
 
-                $('.filter-area').hide();
+                {{if .HasFilter}}
+                    $('.filter-area').hide();
+                {{end}}
             });
 
             selectedAllFieldsRows = function () {
