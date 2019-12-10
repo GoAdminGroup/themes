@@ -1410,6 +1410,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{else if eq $list.Url "/"}}
                     <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                             href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
+                {{else if (isLinkUrl $list.Url)}}
+                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                            href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
                 {{else}}
                     <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                             href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
@@ -1428,6 +1431,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                                     href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
                             {{else if eq $item.Url "/"}}
+                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                        href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
+                            {{else if (isLinkUrl $item.Url)}}
                                 <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                                         href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
                             {{else}}
@@ -1453,13 +1459,13 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         $('.tree_branch_delete').click(function () {
             let id = $(this).data('id');
             swal({
-                        title: "Are you sure to delete this item ?",
+                        title: {{lang "are you sure to delete"}} + "?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Confirm",
+                        confirmButtonText: {{lang "confirm"}},
                         closeOnConfirm: false,
-                        cancelButtonText: "Cancel"
+                        cancelButtonText: {{lang "cancel"}}
                     },
                     function () {
                         $.ajax({
@@ -1469,9 +1475,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                             success: function (data) {
                                 $.pjax.reload('#pjax-container');
                                 if (data.code === 200) {
-                                    swal(data.msg, '', 'success');
+                                    swal(data.msg, '', {{lang "success"}});
                                 } else {
-                                    swal(data.msg, '', 'error');
+                                    swal(data.msg, '', {{lang "error"}});
                                 }
                             }
                         });
