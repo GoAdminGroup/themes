@@ -826,7 +826,33 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}
-<img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}">
+    {{if .HasModal}}
+        <img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}" data-toggle="modal" data-target="#img_{{.Uuid}}" style="cursor: zoom-in;">
+        <div id="img_{{.Uuid}}" class="modal fade {{.Uuid}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog {{.Uuid}}">
+                <div class="modal-content {{.Uuid}}">
+                    <div class="modal-body">
+                        <img src="{{.Src}}" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function centerModal() {
+                $(this).css('display', 'block');
+                var $dialog = $(this).find(".modal-dialog.{{.Uuid}}");
+                var offset = ($(window).height() - $dialog.height()) / 2;
+                $dialog.css("margin-top", offset);
+            }
+
+            $('.modal.{{.Uuid}}').on('show.bs.modal', centerModal);
+            $(window).on("resize", function () {
+                $('.modal:visible').each(centerModal);
+            });
+        </script>
+    {{else}}
+        <img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}">
+    {{end}}
 {{end}}`,"components/label":`{{define "label"}}
 <span class="label label-{{.Type}}" style="background-color: {{.Color}};">{{langHtml .Content}}</span>
 {{end}}`,"components/paginator":`{{define "paginator"}}
