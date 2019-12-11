@@ -981,12 +981,28 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </a>
             {{end}}
             {{if .ExportUrl}}
-                <a href="javascript:;" class="btn btn-sm btn-default" id="export-btn">
-                    <i class="fa fa-download"></i>&nbsp;&nbsp;{{lang "Export"}}
-                </a>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default">{{lang "Export"}}</a>
+                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="export-btn-0">{{lang "Current Page"}}</a></li>
+                        {{if .ExportUrl}}
+                            <li><a href="#" id="export-btn-1">{{lang "All"}}</a></li>
+                        {{end}}
+                    </ul>
+                </div>
 
                 <script>
-                    $("#export-btn").click(function () {
+                    $("#export-btn-0").click(function () {
+                        ExportData("false")
+                    });
+                    $("#export-btn-1").click(function () {
+                        ExportData("true")
+                    });
+                    function ExportData(isAll) {
                         let form = $("<form>");
                         form.attr("style", "display:none");
                         form.attr("target", "");
@@ -995,12 +1011,17 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         let input1 = $("<input>");
                         input1.attr("type", "hidden");
                         input1.attr("name", "time");
-                        input1.attr("value", (new Date()).getMilliseconds());
+                        input1.attr("value",  (new Date()).getTime());
+                        let input2 = $("<input>");
+                        input2.attr("type", "hidden");
+                        input2.attr("name", "is_all");
+                        input2.attr("value", isAll);
                         $("body").append(form);
                         form.append(input1);
+                        form.append(input2);
                         form.submit();
                         form.remove()
-                    });
+                    }
                 </script>
             {{end}}
         </div>
