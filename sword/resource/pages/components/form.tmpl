@@ -3,63 +3,25 @@
     {{.Header}}
     <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container>
         <div class="box-body">
-            {{if eq (len .TabHeaders) 0}}
-            <div class="fields-group">
-                {{ template "form_components" .Content }}
-            </div>
 
-            {{range $key, $data := .Content}}
-                {{if eq $data.Field $.PrimaryKey}}
-                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
-                {{end}}
+            {{if ne (len .TabHeaders) 0}}
+                {{ template "form_layout_tab" . }}
+            {{else if ne (len .ContentList) 0}}
+                {{ template "form_layout_two_col" . }}
+            {{else}}
+                {{ template "form_layout_default" . }}
             {{end}}
 
-        {{else}}
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    {{range $key, $data := .TabHeaders}}
-                        {{if eq $key 0}}
-                            <li class="active">
-                        {{else}}
-                            <li class="">
-                        {{end}}
-                        <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
-                            {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
-                        </a>
-                        </li>
-                    {{end}}
-                </ul>
-                <div class="tab-content fields-group">
+        </div>
 
-                    {{range $key, $data := .TabContents}}
-
-                    {{if eq $key 0}}
-                    <div class="tab-pane active" id="tab-form-{{$key}}">
-                        {{else}}
-                        <div class="tab-pane" id="tab-form-{{$key}}">
-                            {{end}}
-                            {{ template "form_components" $data}}
-                            {{range $key, $d := $data}}
-                                {{if eq $d.Field $.PrimaryKey}}
-                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                                {{end}}
-                            {{end}}
-                        </div>
-
-                        {{end}}
-
-                    </div>
-                </div>
-                {{end}}
+        {{if ne .OperationFooter ""}}
+            <div class="box-footer">
+                {{.OperationFooter}}
             </div>
-            {{if ne .OperationFooter ""}}
-                <div class="box-footer">
-                    {{.OperationFooter}}
-                </div>
-            {{end}}
+        {{end}}
 
-            <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
-            <input type="hidden" name="_t" value='{{.CSRFToken}}'>
+        <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
+        <input type="hidden" name="_t" value='{{.CSRFToken}}'>
     </form>
     {{.Footer}}
 {{end}}

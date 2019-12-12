@@ -718,63 +718,25 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{.Header}}
     <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container>
         <div class="box-body">
-            {{if eq (len .TabHeaders) 0}}
-            <div class="fields-group">
-                {{ template "form_components" .Content }}
-            </div>
 
-            {{range $key, $data := .Content}}
-                {{if eq $data.Field $.PrimaryKey}}
-                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
-                {{end}}
-            {{end}}
-
+            {{if ne (len .TabHeaders) 0}}
+                {{ template "form_layout_tab" . }}
+            {{else if ne (len .ContentList) 0}}
+                {{ template "form_layout_two_col" . }}
             {{else}}
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    {{range $key, $data := .TabHeaders}}
-                        {{if eq $key 0}}
-                            <li class="active">
-                        {{else}}
-                            <li class="">
-                        {{end}}
-                        <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
-                            {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
-                        </a>
-                        </li>
-                    {{end}}
-                </ul>
-                <div class="tab-content fields-group">
-
-                    {{range $key, $data := .TabContents}}
-
-                    {{if eq $key 0}}
-                    <div class="tab-pane active" id="tab-form-{{$key}}">
-                        {{else}}
-                        <div class="tab-pane" id="tab-form-{{$key}}">
-                            {{end}}
-                            {{ template "form_components" $data}}
-                            {{range $key, $d := $data}}
-                                {{if eq $d.Field $.PrimaryKey}}
-                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                                {{end}}
-                            {{end}}
-                        </div>
-
-                        {{end}}
-
-                    </div>
-                </div>
-                {{end}}
-            </div>
-            {{if ne .OperationFooter ""}}
-                <div class="box-footer">
-                    {{.OperationFooter}}
-                </div>
+                {{ template "form_layout_default" . }}
             {{end}}
 
-            <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
-            <input type="hidden" name="_t" value='{{.CSRFToken}}'>
+        </div>
+
+        {{if ne .OperationFooter ""}}
+            <div class="box-footer">
+                {{.OperationFooter}}
+            </div>
+        {{end}}
+
+        <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
+        <input type="hidden" name="_t" value='{{.CSRFToken}}'>
     </form>
     {{.Footer}}
 {{end}}`,"components/form_components":`{{define "form_components"}}
@@ -829,6 +791,135 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     {{ template "form_switch" $data }}
                 {{end}}
             </div>
+        {{end}}
+    {{end}}
+{{end}}`,"components/form_layout_default":`{{define "form_layout_default"}}
+
+    <div class="box-body">
+        {{if eq (len .TabHeaders) 0}}
+            <div class="fields-group">
+                {{ template "form_components" .Content }}
+            </div>
+
+            {{range $key, $data := .Content}}
+                {{if eq $data.Field $.PrimaryKey}}
+                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+                {{end}}
+            {{end}}
+        {{else}}
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {{range $key, $data := .TabHeaders}}
+                        {{if eq $key 0}}
+                            <li class="active">
+                                <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                    {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                                </a>
+                            </li>
+                        {{else}}
+                            <li class="">
+                                <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                    {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                                </a>
+                            </li>
+                        {{end}}
+                    {{end}}
+                </ul>
+                <div class="tab-content fields-group">
+                    {{range $key, $data := .TabContents}}
+                        {{if eq $key 0}}
+                            <div class="tab-pane active" id="tab-form-{{$key}}">
+                                {{ template "form_components" $data}}
+                                {{range $key, $d := $data}}
+                                    {{if eq $d.Field $.PrimaryKey}}
+                                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                                    {{end}}
+                                {{end}}
+                            </div>
+                        {{else}}
+                            <div class="tab-pane" id="tab-form-{{$key}}">
+                                {{ template "form_components" $data}}
+                                {{range $key, $d := $data}}
+                                    {{if eq $d.Field $.PrimaryKey}}
+                                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                                    {{end}}
+                                {{end}}
+                            </div>
+                        {{end}}
+                    {{end}}
+                </div>
+            </div>
+        {{end}}
+    </div>
+
+{{end}}`,"components/form_layout_tab":`{{define "form_layout_tab"}}
+
+    <div class="box-body">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                {{range $key, $data := .TabHeaders}}
+                    {{if eq $key 0}}
+                        <li class="active">
+                            <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                            </a>
+                        </li>
+                    {{else}}
+                        <li class="">
+                            <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                            </a>
+                        </li>
+                    {{end}}
+                {{end}}
+            </ul>
+            <div class="tab-content fields-group">
+                {{range $key, $data := .TabContents}}
+                    {{if eq $key 0}}
+                        <div class="tab-pane active" id="tab-form-{{$key}}">
+                            {{ template "form_components" $data}}
+                            {{range $key, $d := $data}}
+                                {{if eq $d.Field $.PrimaryKey}}
+                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                                {{end}}
+                            {{end}}
+                        </div>
+                    {{else}}
+                        <div class="tab-pane" id="tab-form-{{$key}}">
+                            {{ template "form_components" $data}}
+                            {{range $key, $d := $data}}
+                                {{if eq $d.Field $.PrimaryKey}}
+                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                                {{end}}
+                            {{end}}
+                        </div>
+                    {{end}}
+                {{end}}
+            </div>
+        </div>
+    </div>
+
+{{end}}`,"components/form_layout_two_col":`{{define "form_layout_two_col"}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box-body">
+                <div class="fields-group">
+                    {{ template "form_components" (index .ContentList 0)}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box-body">
+                <div class="fields-group">
+                    {{ template "form_components" (index .ContentList 1)}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{range $key, $data := .Content}}
+        {{if eq $data.Field $.PrimaryKey}}
+            <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
         {{end}}
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}
@@ -1203,7 +1294,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 }
 
                 {{if .HasFilter}}
-                    $('.filter-area').hide();
+                    {{if .IsHideFilterArea}}
+                        $('.filter-area').hide();
+                    {{end}}
                 {{end}}
             });
 

@@ -1,0 +1,48 @@
+{{define "form_layout_tab"}}
+
+    <div class="box-body">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                {{range $key, $data := .TabHeaders}}
+                    {{if eq $key 0}}
+                        <li class="active">
+                            <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                            </a>
+                        </li>
+                    {{else}}
+                        <li class="">
+                            <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                            </a>
+                        </li>
+                    {{end}}
+                {{end}}
+            </ul>
+            <div class="tab-content fields-group">
+                {{range $key, $data := .TabContents}}
+                    {{if eq $key 0}}
+                        <div class="tab-pane active" id="tab-form-{{$key}}">
+                            {{ template "form_components" $data}}
+                            {{range $key, $d := $data}}
+                                {{if eq $d.Field $.PrimaryKey}}
+                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                                {{end}}
+                            {{end}}
+                        </div>
+                    {{else}}
+                        <div class="tab-pane" id="tab-form-{{$key}}">
+                            {{ template "form_components" $data}}
+                            {{range $key, $d := $data}}
+                                {{if eq $d.Field $.PrimaryKey}}
+                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                                {{end}}
+                            {{end}}
+                        </div>
+                    {{end}}
+                {{end}}
+            </div>
+        </div>
+    </div>
+
+{{end}}

@@ -144,7 +144,9 @@
                 }
 
                 {{if .HasFilter}}
-                    $('.filter-area').hide();
+                    {{if .IsHideFilterArea}}
+                        $('.filter-area').hide();
+                    {{end}}
                 {{end}}
             });
 
