@@ -1023,6 +1023,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/table/box-header":`{{define "box-header"}}
     <div class="pull-right">
 
+        {{if ne .IsHideRowSelector true}}
         <div class="dropdown pull-right column-selector" style="margin-right: 10px">
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-table"></i>
@@ -1050,6 +1051,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </li>
             </ul>
         </div>
+        {{end}}
 
         {{if .HasFilter}}
 
@@ -1300,6 +1302,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 return selected;
             };
 
+            {{if ne .IsHideRowSelector true}}
             $('.column-select-all').on('click', function (event) {
                 $('.column-select-item').iCheck('check');
             });
@@ -1327,6 +1330,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 let re = eval('/(' + paramName + '=)([^&]*)/gi');
                 return oUrl.replace(re, paramName + '=' + replaceWith);
             }
+            {{end}}
 
             $('.grid-batch-0').on('click', function () {
                 DeletePost(selectedRows().join())

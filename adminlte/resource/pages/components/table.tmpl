@@ -157,7 +157,7 @@
                 });
                 return selected;
             };
-
+            {{if ne .IsHideRowSelector true}}
             $('.column-select-all').on('click', function (event) {
                 $('.column-select-item').iCheck('check');
             });
@@ -185,6 +185,7 @@
                 let re = eval('/(' + paramName + '=)([^&]*)/gi');
                 return oUrl.replace(re, paramName + '=' + replaceWith);
             }
+            {{end}}
 
             $('.grid-batch-0').on('click', function () {
                 DeletePost(selectedRows().join())

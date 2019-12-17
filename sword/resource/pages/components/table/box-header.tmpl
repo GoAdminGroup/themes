@@ -1,6 +1,7 @@
 {{define "box-header"}}
     <div class="pull-right">
 
+        {{if ne .IsHideRowSelector true}}
         <div class="dropdown pull-right column-selector" style="margin-right: 10px">
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-table"></i>
@@ -28,6 +29,7 @@
                 </li>
             </ul>
         </div>
+        {{end}}
 
         {{if .HasFilter}}
 
