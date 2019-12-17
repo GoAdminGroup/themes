@@ -1,4 +1,5 @@
 {{define "paginator"}}
+<div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}</div>
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
     <li class="page-item {{.PreviousClass}}">

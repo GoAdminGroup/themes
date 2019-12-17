@@ -1,5 +1,5 @@
 {{define "paginator"}}
-{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}}
+{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}}  &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
     <li class="page-item {{.PreviousClass}}">

@@ -947,6 +947,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/label":`{{define "label"}}
 <span class="label label-{{.Type}}" style="background-color: {{.Color}};">{{langHtml .Content}}</span>
 {{end}}`,"components/paginator":`{{define "paginator"}}
+<div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}</div>
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
     <li class="page-item {{.PreviousClass}}">
