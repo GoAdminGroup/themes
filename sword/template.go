@@ -522,6 +522,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
                 multiple="" allowClear="true" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true"
                 {{if not .Editable}}disabled="disabled"{{end}}>
+            <option></option>
             {{range $key, $v := .Options }}
                 <option value="{{index $v "value"}}" {{index $v "selected"}}>{{index $v "field"}}</option>
             {{end}}
@@ -566,6 +567,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 <div class="col-sm-8">
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
             data-multiple="false" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
+        <option></option>
     {{range $key, $v := .Options }}
         <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
     {{end}}
