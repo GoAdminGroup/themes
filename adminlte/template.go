@@ -50,7 +50,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     </li>
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="{{.UrlPrefix}}/info/manager/edit?id={{.User.Id}}"
+                            <a href="{{.UrlPrefix}}/info/normal_manager/edit?id={{.User.Id}}"
                                class="btn btn-default btn-flat">{{lang "setting"}}</a>
                         </div>
                         <div class="pull-right">
@@ -953,7 +953,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/label":`{{define "label"}}
 <span class="label label-{{.Type}}" style="background-color: {{.Color}};">{{langHtml .Content}}</span>
 {{end}}`,"components/paginator":`{{define "paginator"}}
-{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}}  &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
+<div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}}  &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}</div>
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
     <li class="page-item {{.PreviousClass}}">

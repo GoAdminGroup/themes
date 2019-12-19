@@ -44,7 +44,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     </li>
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="{{.UrlPrefix}}/info/manager/edit?id={{.User.Id}}"
+                            <a href="{{.UrlPrefix}}/info/normal_manager/edit?id={{.User.Id}}"
                                class="btn btn-default btn-flat">{{lang "setting"}}</a>
                         </div>
                         <div class="pull-right">
