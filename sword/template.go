@@ -1199,6 +1199,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{$UpdateUrl := .UpdateUrl}}
         {{$IsTab := .IsTab}}
         {{$DeleteUrl := .DeleteUrl}}
+        {{$DetailUrl := .DetailUrl}}
         {{$PrimaryKey := .PrimaryKey}}
         {{range $key1, $info := .InfoList}}
             <tr>
@@ -1238,6 +1239,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                    class="grid-row-delete"><i
                                             class="fa fa-trash"></i></a>
                             {{end}}
+                            <a href="{{$DetailUrl}}&{{$PrimaryKey}}={{index $info $PrimaryKey}}" class="grid-row-view">
+                                <i class="fa fa-eye"></i>
+                            </a>
                         </td>
                     {{end}}
                 {{else}}
