@@ -256,7 +256,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
     <div class="col-sm-8">
         <div class="box box-solid box-default no-margin">
-            <div class="box-body">
+            <div class="box-body" style="min-height: 40px;">
                 {{.Value}}
             </div>
         </div>
