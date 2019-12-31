@@ -712,7 +712,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/form":`{{define "form"}}
     <script src={{link .CdnUrl .Prefix "/assets/dist/js/form.min.js"}}></script>
     {{.Header}}
-    <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container>
+    <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container style="background-color: white;">
         <div class="box-body">
 
             {{if ne (len .TabHeaders) 0}}
