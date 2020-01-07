@@ -1239,7 +1239,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         <td>
                             {{$Action}}
                             {{if $EditUrl}}
-                                <a href='{{$EditUrl}}&{{$PrimaryKey}}={{index $info $PrimaryKey}}'><i
+                                <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i
                                             class="fa fa-edit"></i></a>
                             {{end}}
                             {{if $DeleteUrl}}
@@ -1247,7 +1247,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                    class="grid-row-delete"><i
                                             class="fa fa-trash"></i></a>
                             {{end}}
-                            <a href="{{$DetailUrl}}&{{$PrimaryKey}}={{index $info $PrimaryKey}}" class="grid-row-view">
+                            <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
                                 <i class="fa fa-eye"></i>
                             </a>
                         </td>
