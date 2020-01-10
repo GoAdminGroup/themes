@@ -1247,9 +1247,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                    class="grid-row-delete"><i
                                             class="fa fa-trash"></i></a>
                             {{end}}
-                            <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
-                                <i class="fa fa-eye"></i>
-                            </a>
+                            {{if $DetailUrl}}
+                                <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            {{end}}
                         </td>
                     {{end}}
                 {{else}}
