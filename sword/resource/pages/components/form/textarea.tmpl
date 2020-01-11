@@ -1,11 +1,7 @@
 {{define "form_textarea"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
-    <textarea name="{{.Field}}" class="form-control" rows="5" placeholder="{{lang "Input"}} {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+    <textarea {{if .Must}}required="1"{{end}} name="{{.Field}}" class="form-control" rows="5" placeholder="{{lang "Input"}} {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
     {{if ne .HelpMsg ""}}
         <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}

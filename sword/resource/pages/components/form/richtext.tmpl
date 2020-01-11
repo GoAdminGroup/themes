@@ -1,14 +1,10 @@
 {{define "form_rich_text"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div id="{{.Field}}-editor">
             <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
         </div>
-        <input type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+        <input {{if .Must}}required="1"{{end}} type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
                placeholder="{{lang "Input"}} {{.Head}}">
         {{if ne .HelpMsg ""}}
             <span class="help-block">

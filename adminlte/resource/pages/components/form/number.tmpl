@@ -1,12 +1,9 @@
 {{define "form_number"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
-            <input style="width: 100px; text-align: center;" type="text" id="{{.Field}}" name="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
+                   name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}"
                    placeholder="{{.Head}}">
         </div>

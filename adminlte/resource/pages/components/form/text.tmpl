@@ -1,9 +1,5 @@
 {{define "form_text"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         {{if .Editable}}
             <div class="input-group">
@@ -12,12 +8,13 @@
                 {{else if eq .Label "free"}}
                     <div class="input-group-btn">
                         <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="min-width: 32px;" aria-expanded="false">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                style="min-width: 32px;" aria-expanded="false">
                             {{if eq .Value2 ""}}
-                                <span class="{{.Field}}-label"> {{lang ">"}} </span>
-                            {{else}}
-                                <span class="{{.Field}}-label"> {{.Value2}} </span>
-                            {{end}}&nbsp;&nbsp;
+                            <span class="{{.Field}}-label"> {{lang ">"}} </span>
+                        {{else}}
+                            <span class="{{.Field}}-label"> {{.Value2}} </span>
+                        {{end}}&nbsp;&nbsp;
                             <span class="fa fa-caret-down"></span>
                         </button>
                         <ul class="dropdown-menu {{.Field}}_ul">
@@ -32,7 +29,8 @@
                 {{else}}
                     <span class="input-group-addon">{{.Label}}</span>
                 {{end}}
-                <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
+                <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+                       class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
             </div>
         {{else}}
             <div class="box box-solid box-default no-margin">

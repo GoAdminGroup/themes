@@ -1,9 +1,5 @@
 {{define "form_default"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="box box-solid box-default no-margin">
             <div class="box-body" style="min-height: 40px;">

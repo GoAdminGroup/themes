@@ -1,13 +1,9 @@
 {{define "form_url"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
-            <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
+            <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}

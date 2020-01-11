@@ -1,13 +1,10 @@
 {{define "form_currency"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             <span class="input-group-addon">$</span>
-            <input style="width: 120px; text-align: right;" type="text" id="{{.Field}}" name="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
+                   name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}
@@ -18,7 +15,12 @@
     </div>
     <script>
         $(function () {
-            $('.{{.Field}}').inputmask({"alias": "currency", "radixPoint": ".", "prefix": "", "removeMaskOnSubmit": true});
+            $('.{{.Field}}').inputmask({
+                "alias": "currency",
+                "radixPoint": ".",
+                "prefix": "",
+                "removeMaskOnSubmit": true
+            });
         });
     </script>
 {{end}}

@@ -1,16 +1,12 @@
 {{define "form_datetime"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             {{if ne .Label ""}}
                 <span class="input-group-addon">{{.Label}}</span>
             {{end}}
             <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-            <input style="width: 160px" type="text" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 160px" type="text" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{lang "Input"}} {{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}

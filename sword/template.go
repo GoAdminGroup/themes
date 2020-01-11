@@ -114,15 +114,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/col":`{{define "col"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
 {{end}}`,"components/form/color":`{{define "form_color"}}
-    {{if eq .Must true}}
-    <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-    <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group colorpicker-element">
             <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
-            <input style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}" value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
+            <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}" value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
         </div>
         {{if ne .HelpMsg ""}}
             <span class="help-block">
@@ -134,15 +130,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         $('.{{.Field}}').parent().colorpicker([]);
     </script>
 {{end}}`,"components/form/currency":`{{define "form_currency"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             <span class="input-group-addon">$</span>
-            <input style="width: 120px; text-align: right;" type="text" id="{{.Field}}" name="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}" name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}
@@ -157,11 +149,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
 {{end}}`,"components/form/custom":`{{define "form_custom"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             {{.CustomContent}}
@@ -183,18 +171,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </style>
     {{end}}
 {{end}}`,"components/form/datetime":`{{define "form_datetime"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             {{if ne .Label ""}}
                 <span class="input-group-addon">{{.Label}}</span>
             {{end}}
             <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-            <input style="width: 160px" type="text" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 160px" type="text" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{lang "Input"}} {{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}
@@ -213,11 +197,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
 {{end}}`,"components/form/datetime_range":`{{define "form_datetime_range"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             {{if ne .Label ""}}
@@ -249,11 +229,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
 {{end}}`,"components/form/default":`{{define "form_default"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="box box-solid box-default no-margin">
             <div class="box-body" style="min-height: 40px;">
@@ -267,16 +243,13 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </div>
 {{end}}`,"components/form/email":`{{define "form_email"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-            <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
-                   placeholder="{{lang "Input"}} {{.Head}}">
+                <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
+                           placeholder="{{lang "Input"}} {{.Head}}">
+            {{end}}
         </div>
         {{if ne .HelpMsg ""}}
             <span class="help-block">
@@ -285,11 +258,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </div>
 {{end}}`,"components/form/file":`{{define "form_file"}}
-{{if eq .Must true}}
-    <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-{{else}}
-    <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-{{end}}
+<label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
     <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="" data-initial-caption="{{.Value}}">
     {{if ne .HelpMsg ""}}
@@ -316,11 +285,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     });
 </script>
 {{end}}`,"components/form/iconpicker":`{{define "form_iconpicker"}}
-{{if eq .Must true}}
-    <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-{{else}}
-    <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-{{end}}
+<label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
     <div class="input-group">
         <span class="input-group-addon"><i class="fa"></i></span>
@@ -344,15 +309,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     $('.iconpicker-input').iconpicker({placement:'bottomLeft'});
 </script>
 {{end}}`,"components/form/ip":`{{define "form_ip"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
-            <input style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
+            <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}
@@ -362,14 +323,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </div>
 {{end}}`,"components/form/number":`{{define "form_number"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
-            <input style="width: 100px; text-align: center;" type="text" id="{{.Field}}" name="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}" name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}"
                    placeholder="{{.Head}}">
         </div>
@@ -391,11 +348,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         })
     </script>
 {{end}}`,"components/form/number_range":`{{define "form_number_range"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group number-range">
             <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
@@ -437,16 +390,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         }
     </style>
 {{end}}`,"components/form/password":`{{define "form_password"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
     {{if .Editable}}
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
-            <input type="password" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}" class="form-control password" placeholder="{{lang "Input"}} {{.Head}}">
+                <input {{if .Must}}required="1"{{end}} type="password" id="{{.Field}}" name="{{.Field}}" value="{{.Value}}" class="form-control password" placeholder="{{lang "Input"}} {{.Head}}">
         </div>
     {{else}}
         <div class="box box-solid box-default no-margin">
@@ -460,11 +409,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 </div>
 {{end}}`,"components/form/radio":`{{define "form_radio"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         {{$field := .Field}}
         {{range $key, $v := .Options }}
@@ -484,16 +429,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
 {{end}}`,"components/form/richtext":`{{define "form_rich_text"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div id="{{.Field}}-editor">
             <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
         </div>
-        <input type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+        <input {{if .Must}}required="1"{{end}} type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
                placeholder="{{lang "Input"}} {{.Head}}">
         {{if ne .HelpMsg ""}}
             <span class="help-block">
@@ -513,11 +454,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </script>
 {{end}}`,"components/form/select":`{{define "form_select"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
                 multiple="" allowClear="true" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true"
@@ -537,11 +474,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         $(".{{.Field}}").select2({{.OptionExt}});
     </script>
 {{end}}`,"components/form/selectbox":`{{define "form_selectbox"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
     <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple" data-placeholder="Input {{.Head}}"  {{if not .Editable}}disabled="disabled"{{end}}>
         {{range  $key, $v := .Options }}
@@ -559,11 +492,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     $(".{{.Field}}").bootstrapDualListbox({"infoText":"Showing all {0}","infoTextEmpty":"Empty list","infoTextFiltered":"{0} \/ {1}","filterTextClear":"Show all","filterPlaceHolder":"Filter"});
 </script>
 {{end}}`,"components/form/singleselect":`{{define "form_select_single"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
             data-multiple="false" data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
@@ -582,11 +511,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     $(".{{.Field}}").select2({{.OptionExt}});
 </script>
 {{end}}`,"components/form/switch":`{{define "form_switch"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{index (index .Options 0) "selected"}} type="checkbox" name="__checkbox__{{.Field}}">
         {{$index := 0}}
@@ -621,11 +546,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         })
     </script>
 {{end}}`,"components/form/text":`{{define "form_text"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         {{if .Editable}}
             <div class="input-group">
@@ -654,7 +575,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{else}}
                     <span class="input-group-addon">{{.Label}}</span>
                 {{end}}
-                <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
+                <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
             </div>
         {{else}}
             <div class="box box-solid box-default no-margin">
@@ -678,13 +599,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </script>
     {{end}}
 {{end}}`,"components/form/textarea":`{{define "form_textarea"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
-    <textarea name="{{.Field}}" class="form-control" rows="5" placeholder="{{lang "Input"}} {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+    <textarea {{if .Must}}required="1"{{end}} name="{{.Field}}" class="form-control" rows="5" placeholder="{{lang "Input"}} {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
     {{if ne .HelpMsg ""}}
         <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
@@ -692,15 +609,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 </div>
 {{end}}`,"components/form/url":`{{define "form_url"}}
-    {{if eq .Must true}}
-        <label for="{{.Field}}" class="col-sm-2 asterisk control-label">{{.Head}}</label>
-    {{else}}
-        <label for="{{.Field}}" class="col-sm-2 control-label">{{.Head}}</label>
-    {{end}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
-            <input type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
+            <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                    placeholder="{{lang "Input"}} {{.Head}}">
         </div>
         {{if ne .HelpMsg ""}}
@@ -1236,8 +1149,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 {{end}}
                                 {{if $DeleteUrl}}
                                     <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
-                                       class="grid-row-delete"><i
-                                                class="fa fa-trash"></i></a>
+                                       class="grid-row-delete"><i class="fa fa-trash"></i></a>
                                 {{end}}
                                 {{if $DetailUrl}}
                                     <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
