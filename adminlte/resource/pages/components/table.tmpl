@@ -83,20 +83,21 @@
                     {{end}}
                     {{if eq $NoAction false}}
                         <td>
-                            {{$Action}}
-                            {{if $EditUrl}}
-                                <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i
-                                            class="fa fa-edit"></i></a>
-                            {{end}}
-                            {{if $DeleteUrl}}
-                                <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
-                                   class="grid-row-delete"><i
-                                            class="fa fa-trash"></i></a>
-                            {{end}}
-                            {{if $DetailUrl}}
-                                <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
-                                    <i class="fa fa-eye"></i>
-                                </a>
+                            {{if eq $Action ""}}
+                                {{if $EditUrl}}
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>
+                                {{end}}
+                                {{if $DeleteUrl}}
+                                    <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
+                                       class="grid-row-delete"><i class="fa fa-trash"></i></a>
+                                {{end}}
+                                {{if $DetailUrl}}
+                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                {{end}}
+                            {{else}}
+                                {{render $Action (index $info $PrimaryKey)}}
                             {{end}}
                         </td>
                     {{end}}

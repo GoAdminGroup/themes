@@ -7,6 +7,7 @@ import (
 	"github.com/GoAdminGroup/go-admin/template/types"
 	"github.com/GoAdminGroup/themes/sword/resource"
 	"html/template"
+	"strings"
 )
 
 type Theme struct {
@@ -52,6 +53,9 @@ func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 			"isLinkUrl": func(s string) bool {
 				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
 			},
+			"render": func(s, repl template.HTML) template.HTML {
+				return template.HTML(strings.Replace(string(s), "{%v}", string(repl), -1))
+			},
 		}).Parse(TemplateList["layout"] +
 			TemplateList["head"] + TemplateList["header"] + TemplateList["sidebar"] +
 			TemplateList["footer"] + TemplateList["js"] + TemplateList["menu"] +
@@ -66,6 +70,12 @@ func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 					return prefixUrl + assetsUrl
 				}
 				return cdnUrl + assetsUrl
+			},
+			"isLinkUrl": func(s string) bool {
+				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
+			},
+			"render": func(s, repl template.HTML) template.HTML {
+				return template.HTML(strings.Replace(string(s), "{%v}", string(repl), -1))
 			},
 		}).Parse(TemplateList["admin_panel"] + TemplateList["content"])
 	}
