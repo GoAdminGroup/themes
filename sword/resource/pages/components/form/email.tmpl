@@ -5,7 +5,6 @@
             <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
                 <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                            placeholder="{{lang "Input"}} {{.Head}}">
-            {{end}}
         </div>
         {{if ne .HelpMsg ""}}
             <span class="help-block">

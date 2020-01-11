@@ -249,7 +249,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
                 <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}' class="form-control json"
                            placeholder="{{lang "Input"}} {{.Head}}">
-            {{end}}
         </div>
         {{if ne .HelpMsg ""}}
             <span class="help-block">
@@ -258,32 +257,33 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </div>
 {{end}}`,"components/form/file":`{{define "form_file"}}
-<label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-<div class="col-sm-8">
-    <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="" data-initial-caption="{{.Value}}">
-    {{if ne .HelpMsg ""}}
-        <span class="help-block">
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
+    <div class="col-sm-8">
+        <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview=""
+               data-initial-caption="{{.Value}}">
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
             </span>
-    {{end}}
-</div>
-<script>
-    $("input.{{.Field}}").fileinput({
-        "overwriteInitial":true,
-        "initialPreviewAsData":true,
-        "browseLabel":"Browse",
-        "showRemove":false,
-        "showUpload":false,
-        "deleteExtraData":{
-            "avatar":"_file_del_",
-            "_file_del_":"",
-            "_token":"NVXb8lY1QT6oi7DMPFLwU9IlHiSON3C6isKIF1kD",
-            "_method":"PUT"
-        },
-        "deleteUrl":"",
-        "allowedFileTypes":["image"]
-    });
-</script>
+        {{end}}
+    </div>
+    <script>
+        $("input.{{.Field}}").fileinput({
+            "overwriteInitial": true,
+            "initialPreviewAsData": true,
+            "browseLabel": "Browse",
+            "showRemove": false,
+            "showUpload": false,
+            "deleteExtraData": {
+                "avatar": "_file_del_",
+                "_file_del_": "",
+                "_token": "NVXb8lY1QT6oi7DMPFLwU9IlHiSON3C6isKIF1kD",
+                "_method": "PUT"
+            },
+            "deleteUrl": "",
+            "allowedFileTypes": ["image"]
+        });
+    </script>
 {{end}}`,"components/form/iconpicker":`{{define "form_iconpicker"}}
 <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
 <div class="col-sm-8">
