@@ -274,10 +274,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             "initialPreviewAsData": true,
             "browseLabel": "Browse",
             "showRemove": false,
+            "previewClass": "preview-{{.Field}}",
             "showUpload": false,
             "allowedFileTypes": ["image"]
         });
-        $(".close.fileinput-remove").on("click", function (e) {
+        $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
             $(".{{.Field}}__delete_flag").val("1")
         });
     </script>
