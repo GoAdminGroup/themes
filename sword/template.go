@@ -259,7 +259,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/form/file":`{{define "form_file"}}
     <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
-        <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview=""
+        <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
                data-initial-caption="{{.Value}}">
         {{if ne .HelpMsg ""}}
             <span class="help-block">
