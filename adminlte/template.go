@@ -281,6 +281,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
             </span>
         {{end}}
+        <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     </div>
     <script>
         $("input.{{.Field}}").fileinput({
@@ -289,14 +290,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             "browseLabel": "Browse",
             "showRemove": false,
             "showUpload": false,
-            "deleteExtraData": {
-                "avatar": "_file_del_",
-                "_file_del_": "",
-                "_token": "NVXb8lY1QT6oi7DMPFLwU9IlHiSON3C6isKIF1kD",
-                "_method": "PUT"
-            },
-            "deleteUrl": "",
             "allowedFileTypes": ["image"]
+        });
+        $(".close.fileinput-remove").on("click", function (e) {
+            $(".{{.Field}}__delete_flag").val("1")
         });
     </script>
 {{end}}`,"components/form/iconpicker":`{{define "form_iconpicker"}}
@@ -1058,7 +1055,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </script>
             {{end}}
         </div>
-        {{.Buttons}}
+        {{render .Buttons "{%ids}" "selectedRows().join()"}}
     </div>
     <span>
     {{if .DeleteUrl}}
@@ -1081,7 +1078,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </a>
 </span>
 <script>
-    {{.ActionJs}}
+    {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
 </script>
 {{end}}`,"components/table":`{{define "table"}}
     <table class="table table-hover" style="min-width: {{.MinWidth}}px;">
@@ -1182,7 +1179,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{render $Action (index $info $PrimaryKey)}}
+                                {{render (render $Action "{%id}" (index $info $PrimaryKey)) "{%ids}" "selectedRows().join()"}}
                             {{end}}
                         </td>
                     {{end}}

@@ -97,7 +97,7 @@
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{render $Action (index $info $PrimaryKey)}}
+                                {{render (render $Action "{%id}" (index $info $PrimaryKey)) "{%ids}" "selectedRows().join()"}}
                             {{end}}
                         </td>
                     {{end}}

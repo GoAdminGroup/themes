@@ -97,7 +97,7 @@
                 </script>
             {{end}}
         </div>
-        {{.Buttons}}
+        {{render .Buttons "{%ids}" "selectedRows().join()"}}
     </div>
     <span>
     {{if .DeleteUrl}}
@@ -120,6 +120,6 @@
     </a>
 </span>
 <script>
-    {{.ActionJs}}
+    {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
 </script>
 {{end}}

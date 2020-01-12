@@ -8,6 +8,7 @@
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
             </span>
         {{end}}
+        <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     </div>
     <script>
         $("input.{{.Field}}").fileinput({
@@ -16,14 +17,10 @@
             "browseLabel": "Browse",
             "showRemove": false,
             "showUpload": false,
-            "deleteExtraData": {
-                "avatar": "_file_del_",
-                "_file_del_": "",
-                "_token": "NVXb8lY1QT6oi7DMPFLwU9IlHiSON3C6isKIF1kD",
-                "_method": "PUT"
-            },
-            "deleteUrl": "",
             "allowedFileTypes": ["image"]
+        });
+        $(".close.fileinput-remove").on("click", function (e) {
+            $(".{{.Field}}__delete_flag").val("1")
         });
     </script>
 {{end}}
