@@ -859,6 +859,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 {{end}}`,"components/label":`{{define "label"}}
 <span class="label label-{{.Type}}" style="background-color: {{.Color}};">{{langHtml .Content}}</span>
+{{end}}`,"components/link":`{{define "link"}}
+    <a {{if .NewTab}}class="new-tab-link"{{end}} data-title="{{.Title}}" href="{{.URL}}">{{.Content}}</a>
 {{end}}`,"components/paginator":`{{define "paginator"}}
 <div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}</div>
 <ul class="pagination pagination-sm no-margin pull-right">
@@ -1581,8 +1583,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             toastr.success(toastMsg);
         });
         $('a.new-tab-link').on('click', function () {
-            console.log('click', $(this).attr('href'));
-            listenerForAddNavTab($(this).attr('href'))
+            listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>

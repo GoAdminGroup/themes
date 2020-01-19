@@ -129,12 +129,10 @@ $('.sidebar-menu a').on('click', function () {
 });
 
 $('a.new-tab-link').on('click', function () {
-    listenerForAddNavTab($(this).attr('href'))
+    listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
 });
 
-function listenerForAddNavTab(link) {
-    let content = '';
-
+function listenerForAddNavTab(link, content) {
     if (link !== '#' && link.indexOf('http') === -1 && !checkNavExist(link)) {
 
         if (!checkNavLength()) {
@@ -143,13 +141,16 @@ function listenerForAddNavTab(link) {
 
         removeActive();
 
-        let sidebarMenus = $('.sidebar-menu a');
-        let re = new RegExp("\\?(.*)");
+        if (content === "") {
 
-        for (let i = 0; i < sidebarMenus.length; i++) {
-            if (link.replace(re, '') === $(sidebarMenus[i]).attr('href')) {
-                content = $(sidebarMenus[i]).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>');
-                break
+            let sidebarMenus = $('.sidebar-menu a');
+            let re = new RegExp("\\?(.*)");
+
+            for (let i = 0; i < sidebarMenus.length; i++) {
+                if (link.replace(re, '') === $(sidebarMenus[i]).attr('href')) {
+                    content = $(sidebarMenus[i]).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>');
+                    break
+                }
             }
         }
 
