@@ -30,7 +30,6 @@ $(document).on('submit', 'form[pjax-container]', function (event) {
 });
 
 $(document).on('pjax:popstate', function () {
-
     $(document).one('pjax:end', function (event) {
         $(event.target).find('script[data-exec-on-popstate]').each(function () {
             $.globalEval(this.text || this.textContent || this.innerHTML || '');
@@ -56,6 +55,7 @@ $(document).on('pjax:complete', function (xhr) {
         }
     }
     NProgress.done();
+    updateNavURL();
 });
 
 $(function () {
@@ -123,43 +123,74 @@ $('.sidebar-menu a').on('click', function () {
 
         removeActive();
 
-        let addElement = $('<li class="active">\n' +
-            '<a href="' + link + '">\n' +
-            '<span>' + $(this).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>') + '</span>\n' +
-            '</a><i class="close-tab fa fa-remove"></i>\n' +
-            '</li>');
-
-        addElement.find('.close-tab').on('click', function () {
-            let li = $(this).parent();
-            if (li.hasClass('active')) {
-                if (li.prev().length > 0) {
-                    li.prev().addClass('active');
-                    $.pjax({url: li.prev().find('a').attr('href'), container: '#pjax-container'});
-                } else if (li.next().length > 0) {
-                    li.next().addClass('active');
-                    $.pjax({url: li.next().find('a').attr('href'), container: '#pjax-container'});
-                }
-            }
-            li.remove();
-        });
-        addElement.on('mouseover', function () {
-            if ($(this).children('i')) {
-                $(this).children('i').show();
-            }
-        });
-        addElement.on('mouseout', function () {
-            if ($(this).children('i')) {
-                $(this).children('i').hide();
-            }
-        });
-        addElement.on('click', function () {
-            removeActive();
-            $(this).addClass('active');
-        });
-
-        addElement.appendTo('.nav-addtabs');
+        addNavTab(link, $(this).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>'))
     }
 });
+
+function listenerForAddNavTab(link) {
+    let content = '';
+
+    if (link !== '#' && link.indexOf('http') === -1 && !checkNavExist(link)) {
+
+        if (!checkNavLength()) {
+            removeFirst();
+        }
+
+        removeActive();
+
+        let sidebarMenus = $('.sidebar-menu a');
+        let re = new RegExp("\\?(.*)");
+
+        for (let i = 0; i < sidebarMenus.length; i++) {
+            if (link.replace(re, '') === $(sidebarMenus[i]).attr('href')) {
+                content = $(sidebarMenus[i]).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>');
+                break
+            }
+        }
+
+        if (content !== "") {
+            addNavTab(link, content)
+        }
+    }
+}
+
+function addNavTab(link, content) {
+    let addElement = $('<li class="active">\n' +
+        '<a href="' + link + '">\n' +
+        '<span>' + content + '</span>\n' +
+        '</a><i class="close-tab fa fa-remove"></i>\n' +
+        '</li>');
+
+    addElement.find('.close-tab').on('click', function () {
+        let li = $(this).parent();
+        if (li.hasClass('active')) {
+            if (li.prev().length > 0) {
+                li.prev().addClass('active');
+                $.pjax({url: li.prev().find('a').attr('href'), container: '#pjax-container'});
+            } else if (li.next().length > 0) {
+                li.next().addClass('active');
+                $.pjax({url: li.next().find('a').attr('href'), container: '#pjax-container'});
+            }
+        }
+        li.remove();
+    });
+    addElement.on('mouseover', function () {
+        if ($(this).children('i')) {
+            $(this).children('i').show();
+        }
+    });
+    addElement.on('mouseout', function () {
+        if ($(this).children('i')) {
+            $(this).children('i').hide();
+        }
+    });
+    addElement.on('click', function () {
+        removeActive();
+        $(this).addClass('active');
+    });
+
+    addElement.appendTo('.nav-addtabs');
+}
 
 function checkNavExist(link) {
     let navs = $('.nav-addtabs li');
@@ -182,6 +213,15 @@ function removeActive() {
     let lis = $('.nav-addtabs li');
     for (let i = 0; i < lis.length; i++) {
         $(lis[i]).removeClass('active');
+    }
+}
+
+function updateNavURL() {
+    let navs = $('.nav-addtabs li');
+    for (let i = 0; i < navs.length; i++) {
+        if ($(navs[i]).hasClass('active')) {
+            $(navs[i]).find('a').attr('href', location.href);
+        }
     }
 }
 
