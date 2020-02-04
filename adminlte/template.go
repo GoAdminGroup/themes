@@ -1240,6 +1240,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         $('.filter-area').hide();
                     {{end}}
                 {{end}}
+
+                let lastTd = $("table tr:last td:last div");
+                if (lastTd.hasClass("dropdown")) {
+                    lastTd.removeClass("dropdown");
+                    lastTd.addClass("dropup");
+                }
             });
 
             selectedAllFieldsRows = function () {
