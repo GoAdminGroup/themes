@@ -1218,8 +1218,19 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
                 let lastTd = $("table tr:last td:last div");
                 if (lastTd.hasClass("dropdown")) {
-                    lastTd.removeClass("dropdown");
-                    lastTd.addClass("dropup");
+                    let popUpHeight = $("table tr:last td:last div ul").height();
+                    let trs = $("table tr");
+                    for (let i = trs.length - 1; i > 0; i--) {
+                        let td = $(trs[i]).find("td:last-child div");
+                        let combineHeight = $(trs[i]).height()/2 - 20;
+                        for (let j = i + 1; j < trs.length; j++) {
+                            combineHeight += $(trs[j]).height();
+                        }
+                        if (combineHeight < popUpHeight) {
+                            td.removeClass("dropdown");
+                            td.addClass("dropup");
+                        }
+                    }
                 }
             });
 
