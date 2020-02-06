@@ -201,13 +201,18 @@ function addNavTab(link, content) {
 function checkNavExist(link) {
     let navs = $('.nav-addtabs li');
     for (let i = 0; i < navs.length; i++) {
-        if ($(navs[i]).find('a').attr('href') === link) {
+        if (parseURL($(navs[i]).find('a').attr('href')) === link) {
             removeActive();
             $(navs[i]).addClass('active');
             return true;
         }
     }
     return false;
+}
+
+function parseURL(url) {
+    let t = url.substring(url.indexOf("//") + 2);
+    return t.substring(t.indexOf("/"));
 }
 
 function updateNavURL() {
