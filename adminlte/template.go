@@ -1080,9 +1080,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <i class="fa fa-refresh"></i> {{lang "Refresh"}}
     </a>
 </span>
-<script>
-    {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
-</script>
 {{end}}`,"components/table":`{{define "table"}}
     <table class="table table-hover" style="min-width: {{.MinWidth}}px;">
         {{if eq .Type "table"}}
@@ -1477,6 +1474,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 });
             });
 
+            {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
         </script>
     {{end}}
 {{end}}`,"components/tabs":`{{define "tabs"}}

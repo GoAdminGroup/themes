@@ -1451,6 +1451,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 });
             });
 
+            {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
         </script>
     {{end}}
 {{end}}`,"components/tabs":`{{define "tabs"}}
