@@ -1170,14 +1170,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         <td>
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
-                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i
+                                                class="fa fa-edit"></i></a>
                                 {{end}}
                                 {{if $DeleteUrl}}
                                     <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
                                        class="grid-row-delete"><i class="fa fa-trash"></i></a>
                                 {{end}}
                                 {{if $DetailUrl}}
-                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
+                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}"
+                                       class="grid-row-view">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 {{end}}
@@ -1236,18 +1238,29 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 }
 
                 {{if .HasFilter}}
-                    {{if .IsHideFilterArea}}
-                        $('.filter-area').hide();
-                    {{end}}
+                {{if .IsHideFilterArea}}
+                $('.filter-area').hide();
+                {{end}}
                 {{end}}
 
                 let lastTd = $("table tr:last td:last div");
                 if (lastTd.hasClass("dropdown")) {
                     let popUpHeight = $("table tr:last td:last div ul").height();
+
                     let trs = $("table tr");
-                    for (let i = trs.length - 1; i > 0; i--) {
+                    let totalHeight = 0;
+                    for (let i = 1; i < trs.length - 1; i++) {
+                        totalHeight += $(trs[i]).height();
+                    }
+                    if (popUpHeight > totalHeight) {
+                        let h = popUpHeight + 16;
+                        $("table tbody").append("<tr style='height:" + h + "px;'></tr>");
+                    }
+
+                    trs = $("table tr");
+                    for (let i = trs.length - 1; i > 1; i--) {
                         let td = $(trs[i]).find("td:last-child div");
-                        let combineHeight = $(trs[i]).height()/2 - 20;
+                        let combineHeight = $(trs[i]).height() / 2 - 20;
                         for (let j = i + 1; j < trs.length; j++) {
                             combineHeight += $(trs[j]).height();
                         }
@@ -1356,6 +1369,20 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 }
                                 if (data.code === 200) {
                                     $('#_TOKEN').val(data.data);
+                                    let lastTd = $("table tr:last td:last div");
+                                    if (lastTd.hasClass("dropdown")) {
+                                        let popUpHeight = $("table tr:last td:last div ul").height();
+
+                                        let trs = $("table tr");
+                                        let totalHeight = 0;
+                                        for (let i = 1; i < trs.length - 1; i++) {
+                                            totalHeight += $(trs[i]).height();
+                                        }
+                                        if (popUpHeight > totalHeight) {
+                                            let h = popUpHeight + 16;
+                                            $("table tbody").append("<tr style='height:" + h + "px;'></tr>");
+                                        }
+                                    }
                                     swal(data.msg, '', 'success');
                                 } else {
                                     swal(data.msg, '', 'error');
