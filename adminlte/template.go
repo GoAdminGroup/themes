@@ -1081,7 +1081,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </a>
 </span>
 {{end}}`,"components/table":`{{define "table"}}
-    <table class="table table-hover" style="min-width: {{.MinWidth}}px;">
+    <table class="table table-hover" style="min-width: {{.MinWidth}}px;table-layout: {{.Layout}};">
         {{if eq .Type "table"}}
             <thead>
             <tr>
@@ -1097,7 +1097,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{if eq .Type "data-table"}}
             <tr>
                 {{if eq .IsTab false}}
-                    <th>
+                    <th style="text-align: center;">
                         {{if .DeleteUrl}}
                             <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
                         {{end}}
@@ -1119,7 +1119,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     {{end}}
                 {{end}}
                 {{if eq .NoAction false}}
-                    <th>{{lang "operation"}}</th>
+                    <th style="text-align: center;">{{lang "operation"}}</th>
                 {{end}}
             </tr>
         {{end}}
@@ -1139,7 +1139,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <tr>
                 {{if eq $Type "data-table"}}
                     {{if eq $IsTab false}}
-                        <td>
+                        <td style="text-align: center;">
                             {{if $DeleteUrl}}
                                 <input type="checkbox" class="grid-row-checkbox" data-id="{{index $info $PrimaryKey}}"
                                        style="position: absolute; opacity: 0;">
@@ -1476,6 +1476,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
             {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
         </script>
+        <style>
+            table tbody tr td {
+                word-wrap: break-word;
+                word-break: break-all;
+            }
+        </style>
     {{end}}
 {{end}}`,"components/tabs":`{{define "tabs"}}
 <div class="nav-tabs-custom">
