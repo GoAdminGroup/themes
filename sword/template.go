@@ -1077,9 +1077,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <tr>
                 {{if eq .IsTab false}}
                     <th style="text-align: center;">
-                        {{if .DeleteUrl}}
-                            <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
-                        {{end}}
+                        <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
                     </th>
                 {{end}}
                 {{range $key, $head := .Thead}}
@@ -1119,10 +1117,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{if eq $Type "data-table"}}
                     {{if eq $IsTab false}}
                         <td style="text-align: center;">
-                            {{if $DeleteUrl}}
-                                <input type="checkbox" class="grid-row-checkbox" data-id="{{index $info $PrimaryKey}}"
+                            <input type="checkbox" class="grid-row-checkbox" data-id="{{index $info $PrimaryKey}}"
                                        style="position: absolute; opacity: 0;">
-                            {{end}}
                         </td>
                     {{end}}
                 {{end}}
