@@ -1037,7 +1037,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{render .Buttons "{%ids}" "selectedRows().join()"}}
     </div>
     <span>
-    {{if .DeleteUrl}}
+    {{if or .DeleteUrl .ExportUrl}}
         <div class="btn-group">
             <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -1045,7 +1045,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
+                {{if .DeleteUrl}}
+                    <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
+                {{end}}
                 {{if .ExportUrl}}
                     <li><a href="#" class="grid-batch-1">{{lang "Export"}}</a></li>
                 {{end}}
@@ -1138,7 +1140,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         {{end}}
                     {{end}}
                     {{if eq $NoAction false}}
-                        <td>
+                        <td style="text-align: center;">
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
                                     <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>

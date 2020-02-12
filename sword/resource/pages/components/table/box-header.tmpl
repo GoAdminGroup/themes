@@ -100,7 +100,7 @@
         {{render .Buttons "{%ids}" "selectedRows().join()"}}
     </div>
     <span>
-    {{if .DeleteUrl}}
+    {{if or .DeleteUrl .ExportUrl}}
         <div class="btn-group">
             <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -108,7 +108,9 @@
             <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
+                {{if .DeleteUrl}}
+                    <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
+                {{end}}
                 {{if .ExportUrl}}
                     <li><a href="#" class="grid-batch-1">{{lang "Export"}}</a></li>
                 {{end}}

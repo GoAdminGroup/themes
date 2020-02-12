@@ -78,7 +78,7 @@
                         {{end}}
                     {{end}}
                     {{if eq $NoAction false}}
-                        <td>
+                        <td style="text-align: center;">
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
                                     <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i
@@ -208,7 +208,7 @@
                     }
                 }
 
-                $.pjax({url: newUrl, container: '#pjax-container'})
+                $.pjax({url: newUrl, container: '#pjax-container'});
 
                 toastr.success('{{lang "reload succeeded"}} !');
             });
