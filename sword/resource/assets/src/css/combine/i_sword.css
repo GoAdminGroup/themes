@@ -126,7 +126,7 @@ body {
     box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 }
 
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     vertical-align: middle;
 }
 
@@ -412,7 +412,7 @@ a {
 .bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
     background-color: #1790ff;
     color: #fff;
-    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 .form-control:focus {
@@ -425,11 +425,11 @@ a {
     color: white;
 }
 
-.nav-tabs-custom>.nav-tabs>li.active {
+.nav-tabs-custom > .nav-tabs > li.active {
     border-top-color: #1790ff;
 }
 
-.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
     background-color: #1790ff;
 }
 
@@ -452,4 +452,8 @@ a {
     position: relative;
     font-size: 0;
     white-space: nowrap;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    z-index: 10002;
 }

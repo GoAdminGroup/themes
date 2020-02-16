@@ -123,3 +123,7 @@
     font-size: 0;
     white-space: nowrap;
 }
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    z-index: 10002;
+}
