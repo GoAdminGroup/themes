@@ -454,6 +454,6 @@ a {
     white-space: nowrap;
 }
 
-.bootstrap-datetimepicker-widget.dropdown-menu {
+.bootstrap-datetimepicker-widget.dropdown-menu, .select2-results__options {
     z-index: 10002;
 }
