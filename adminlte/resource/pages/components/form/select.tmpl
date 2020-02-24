@@ -6,7 +6,7 @@
                 {{if not .Editable}}disabled="disabled"{{end}}>
             <option></option>
             {{range $key, $v := .Options }}
-                <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
+                <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
             {{end}}
         </select>
         {{if ne .HelpMsg ""}}

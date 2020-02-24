@@ -430,9 +430,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="col-sm-8">
         {{$field := .Field}}
         {{range $key, $v := .Options }}
-            <input type="radio" name="{{index $v "field"}}" value="{{index $v "value"}}"
-                   class="minimal {{$field}}" {{index $v "selected"}}
-                   style="position: absolute; opacity: 0;">&nbsp;{{index $v "label"}}&nbsp;&nbsp;
+            <input type="radio" name="{{$field}}" value="{{$v.Value}}"
+                   class="minimal {{$field}}" {{$v.SelectedLabel}}
+                   style="position: absolute; opacity: 0;">&nbsp;{{$v.Text}}&nbsp;&nbsp;
         {{end}}
         {{if ne .HelpMsg ""}}
             <span class="help-block">
@@ -478,7 +478,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{if not .Editable}}disabled="disabled"{{end}}>
             <option></option>
             {{range $key, $v := .Options }}
-                <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
+                <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
             {{end}}
         </select>
         {{if ne .HelpMsg ""}}
@@ -495,7 +495,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 <div class="col-sm-8">
     <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple" data-placeholder="Input {{.Head}}"  {{if not .Editable}}disabled="disabled"{{end}}>
         {{range  $key, $v := .Options }}
-            <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
         {{end}}
     </select>
     <input type="hidden" name="{{.Field}}[]" />
@@ -515,7 +515,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             data-multiple="false"  data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
     {{range $key, $v := .Options }}
-        <option value='{{index $v "value"}}' {{index $v "selected"}}>{{index $v "field"}}</option>
+        <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
     {{end}}
     </select>
     {{if ne .HelpMsg ""}}
