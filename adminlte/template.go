@@ -1878,7 +1878,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="pull-right hidden-xs">
         <b>Version</b> {{.System.Version}}
     </div>
-    <strong>Copyright &copy; 2018 <a href="https://github.com/GoAdminGroup/go-admin">GoAdmin</a>.</strong> All rights
+    <strong>Copyright &copy; 2018-2020 <a href="https://github.com/GoAdminGroup/go-admin">GoAdmin</a>.</strong> All rights
     reserved.
 </footer>
 {{end}}`,"head":`{{define "head"}}
