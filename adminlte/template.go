@@ -546,12 +546,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/form/switch":`{{define "form_switch"}}
     <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     <div class="col-sm-8">
-        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{index (index .Options 0) "selected"}} type="checkbox" name="__checkbox__{{.Field}}">
+        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox" name="__checkbox__{{.Field}}">
         {{$index := 0}}
-        {{if eq (index (index .Options 0) "selected") ""}}
+        {{if eq (index .Options 0).SelectedLabel ""}}
             {{$index = 1}}
         {{end}}
-        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{index (index .Options $index) "value"}}">
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{(index .Options $index).Value}}">
         {{if ne .HelpMsg ""}}
             <span class="help-block">
                 <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
@@ -561,20 +561,20 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <script>
         $(".{{.Field}}.ga_checkbox").bootstrapSwitch({
             size: "small",
-            {{if eq (index (index .Options 0) "text") ""}}
+            {{if eq (index .Options 0).Text ""}}
             onText: "ON",
             {{else}}
-            onText: "{{index (index .Options 0) "text"}}",
+            onText: "{{(index .Options 0).Text}}",
             {{end}}
-            {{if eq (index (index .Options 1) "text") ""}}
+            {{if eq (index .Options 1).Text ""}}
             offText: "OFF",
             {{else}}
-            offText: "{{index (index .Options 1) "text"}}",
+            offText: "{{(index .Options 1).Text}}",
             {{end}}
             onColor: 'primary',
             offColor: 'default',
             onSwitchChange: function (event, state) {
-                $(event.target).closest('.bootstrap-switch').next().val(state ? '{{index (index .Options 0) "value"}}' : '{{index (index .Options 1) "value"}}').change();
+                $(event.target).closest('.bootstrap-switch').next().val(state ? '{{(index .Options 0).Value}}' : '{{(index .Options 1).Value}}').change();
             }
         })
     </script>
