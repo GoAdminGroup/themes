@@ -1,13 +1,11 @@
 package sword
 
 import (
-	"github.com/GoAdminGroup/go-admin/modules/language"
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 	"github.com/GoAdminGroup/go-admin/template/components"
 	"github.com/GoAdminGroup/go-admin/template/types"
 	"github.com/GoAdminGroup/themes/sword/resource"
 	"html/template"
-	"strings"
 )
 
 type Theme struct {
@@ -41,46 +39,15 @@ func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 
 	if !isPjax {
 		name = "layout"
-		tmpl, err = template.New("layout").Funcs(template.FuncMap{
-			"lang":     language.Get,
-			"langHtml": language.GetFromHtml,
-			"link": func(cdnUrl, prefixUrl, assetsUrl string) string {
-				if cdnUrl == "" {
-					return prefixUrl + assetsUrl
-				}
-				return cdnUrl + assetsUrl
-			},
-			"isLinkUrl": func(s string) bool {
-				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
-			},
-			"render": func(s, old, repl template.HTML) template.HTML {
-				return template.HTML(strings.Replace(string(s), string(old), string(repl), -1))
-			},
-		}).Parse(TemplateList["layout"] +
-			TemplateList["head"] + TemplateList["header"] + TemplateList["sidebar"] +
-			TemplateList["footer"] + TemplateList["js"] + TemplateList["menu"] +
-			TemplateList["admin_panel"] + TemplateList["content"])
+		tmpl, err = template.New("layout").Funcs(adminTemplate.DefaultFuncMap).
+			Parse(TemplateList["layout"] +
+				TemplateList["head"] + TemplateList["header"] + TemplateList["sidebar"] +
+				TemplateList["footer"] + TemplateList["js"] + TemplateList["menu"] +
+				TemplateList["admin_panel"] + TemplateList["content"])
 	} else {
 		name = "content"
-		tmpl, err = template.New("content").Funcs(template.FuncMap{
-			"lang":     language.Get,
-			"langHtml": language.GetFromHtml,
-			"link": func(cdnUrl, prefixUrl, assetsUrl string) string {
-				if cdnUrl == "" {
-					return prefixUrl + assetsUrl
-				}
-				return cdnUrl + assetsUrl
-			},
-			"isLinkUrl": func(s string) bool {
-				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
-			},
-			"render": func(s, old, repl template.HTML) template.HTML {
-				return template.HTML(strings.Replace(string(s), string(old), string(repl), -1))
-			},
-			"renderJS": func(s template.JS, old, repl template.HTML) template.JS {
-				return template.JS(strings.Replace(string(s), string(old), string(repl), -1))
-			},
-		}).Parse(TemplateList["admin_panel"] + TemplateList["content"])
+		tmpl, err = template.New("content").Funcs(adminTemplate.DefaultFuncMap).
+			Parse(TemplateList["admin_panel"] + TemplateList["content"])
 	}
 
 	if err != nil {

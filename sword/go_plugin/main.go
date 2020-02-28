@@ -7,6 +7,7 @@ import (
 	"github.com/GoAdminGroup/themes/sword"
 	"github.com/GoAdminGroup/themes/sword/resource"
 	"html/template"
+	"strings"
 )
 
 type Theme struct {
@@ -44,6 +45,15 @@ func (Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
 			"isLinkUrl": func(s string) bool {
 				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
 			},
+			"render": func(s, old, repl template.HTML) template.HTML {
+				return template.HTML(strings.Replace(string(s), string(old), string(repl), -1))
+			},
+			"renderJS": func(s template.JS, old, repl template.HTML) template.JS {
+				return template.JS(strings.Replace(string(s), string(old), string(repl), -1))
+			},
+			"divide": func(a, b int) int {
+				return a / b
+			},
 		}).Parse(sword.TemplateList["layout"] +
 			sword.TemplateList["head"] + sword.TemplateList["header"] + sword.TemplateList["sidebar"] +
 			sword.TemplateList["footer"] + sword.TemplateList["js"] + sword.TemplateList["menu"] +
@@ -58,6 +68,18 @@ func (Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
 					return prefixUrl + assetsUrl
 				}
 				return cdnUrl + assetsUrl
+			},
+			"isLinkUrl": func(s string) bool {
+				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
+			},
+			"render": func(s, old, repl template.HTML) template.HTML {
+				return template.HTML(strings.Replace(string(s), string(old), string(repl), -1))
+			},
+			"renderJS": func(s template.JS, old, repl template.HTML) template.JS {
+				return template.JS(strings.Replace(string(s), string(old), string(repl), -1))
+			},
+			"divide": func(a, b int) int {
+				return a / b
 			},
 		}).Parse(sword.TemplateList["admin_panel"] + sword.TemplateList["content"])
 	}

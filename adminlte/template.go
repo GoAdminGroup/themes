@@ -848,20 +848,15 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
 {{end}}`,"components/form_layout_two_col":`{{define "form_layout_two_col"}}
     <div class="row">
-        <div class="col-md-6">
-            <div class="box-body">
-                <div class="fields-group">
-                    {{ template "form_components" (index .ContentList 0)}}
+        {{range $key, $data := .ContentList}}
+            <div class="col-md-{{divide 12 (len $.ContentList)}}">
+                <div class="box-body">
+                    <div class="fields-group">
+                        {{ template "form_components" $data}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="box-body">
-                <div class="fields-group">
-                    {{ template "form_components" (index .ContentList 1)}}
-                </div>
-            </div>
-        </div>
+        {{end}}
     </div>
 
     {{range $key, $data := .Content}}

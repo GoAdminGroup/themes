@@ -3,8 +3,8 @@ package progress_group
 import (
 	"bytes"
 	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/language"
 	"github.com/GoAdminGroup/go-admin/modules/logger"
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 	"github.com/GoAdminGroup/themes/sword/components"
 	"html/template"
 	"strings"
@@ -54,19 +54,7 @@ func (p ProgressGroup) SetMolecular(value int) ProgressGroup {
 
 func (p ProgressGroup) GetTemplate() (*template.Template, string) {
 	tmpl, err := template.New("progress-group").
-		Funcs(template.FuncMap{
-			"lang":     language.Get,
-			"langHtml": language.GetFromHtml,
-			"link": func(cdnUrl, prefixUrl, assetsUrl string) string {
-				if cdnUrl == "" {
-					return prefixUrl + assetsUrl
-				}
-				return cdnUrl + assetsUrl
-			},
-			"isLinkUrl": func(s string) bool {
-				return (len(s) > 7 && s[:7] == "http://") || (len(s) > 8 && s[:8] == "https://")
-			},
-		}).
+		Funcs(adminTemplate.DefaultFuncMap).
 		Parse(List["progress-group"])
 
 	if err != nil {
