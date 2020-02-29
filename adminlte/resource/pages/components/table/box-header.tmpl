@@ -14,8 +14,8 @@
                         {{range $key, $head := .Thead}}
                             <li class="checkbox icheck" style="margin: 0;">
                                 <label style="width: 100%;padding: 3px;">
-                                    <input type="checkbox" class="column-select-item" data-id="{{index $head "field"}}"
-                                           style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{index $head "head"}}
+                                    <input type="checkbox" class="column-select-item" data-id="{{$head.Field}}"
+                                           style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{$head.Head}}
                                 </label>
                             </li>
                         {{end}}

@@ -963,8 +963,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         {{range $key, $head := .Thead}}
                             <li class="checkbox icheck" style="margin: 0;">
                                 <label style="width: 100%;padding: 3px;">
-                                    <input type="checkbox" class="column-select-item" data-id="{{index $head "field"}}"
-                                           style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{index $head "head"}}
+                                    <input type="checkbox" class="column-select-item" data-id="{{$head.Field}}"
+                                           style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{$head.Head}}
                                 </label>
                             </li>
                         {{end}}
@@ -1080,7 +1080,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <tr>
                 {{range $key, $head := .Thead}}
                     <th>
-                        {{index $head "head"}}
+                        {{$head.Head}}
                     </th>
                 {{end}}
             </tr>
@@ -1095,16 +1095,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     </th>
                 {{end}}
                 {{range $key, $head := .Thead}}
-                    {{if eq (index $head "hide") "0"}}
-                        {{if eq (index $head "width") "0"}}
+                    {{if eq $head.Hide false}}
+                        {{if eq $head.Width 0}}
                             <th>
                         {{else}}
-                            <th style="width: {{index $head "width"}}px">
+                            <th style="width: {{$head.Width}}px">
                         {{end}}
-                        {{index $head "head"}}
-                        {{if eq (index $head "sortable") "1"}}
-                            <a class="fa fa-fw fa-sort" id="sort-{{index $head "field"}}"
-                               href="?__sort={{index $head "field"}}&__sort_type=desc"></a>
+                        {{$head.Head}}
+                        {{if $head.Sortable}}
+                            <a class="fa fa-fw fa-sort" id="sort-{{$head.Field}}"
+                               href="?__sort={{$head.Field}}&__sort_type=desc"></a>
                         {{end}}
                         </th>
                     {{end}}
@@ -1131,23 +1131,45 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{if eq $Type "data-table"}}
                     {{if eq $IsTab false}}
                         <td style="text-align: center;">
-                            <input type="checkbox" class="grid-row-checkbox" data-id="{{index $info $PrimaryKey}}"
+                            <input type="checkbox" class="grid-row-checkbox" data-id="{{(index $info $PrimaryKey).Content}}"
                                        style="position: absolute; opacity: 0;">
                         </td>
                     {{end}}
                 {{end}}
                 {{if eq $Type "data-table"}}
                     {{range $key2, $head2 := $Thead}}
-                        {{if eq (index $head2 "hide") "0"}}
-                            {{if eq (index $head2 "editable") "true"}}
-                                <td><a href="#" class="editable-td-{{index $head2 "edittype"}}"
-                                       data-pk="{{index $info $PrimaryKey}}"
-                                       data-source='{{index $head2 "editoption"}}'
+                        {{if eq $head2.Hide false}}
+                            {{if $head2.Editable}}
+                                <td>
+                                    {{if eq $head2.EditType "switch"}}
+                                        <input class="info_edit_switch ga_checkbox"
+                                               data-off-text="{{(index $head2.EditOption 1).Text}}"
+                                               data-on-text="{{js (index $head2.EditOption 0).Text}}"
+                                               data-size="{{index (index $head2.EditOption 0).Extra "size"}}"
+                                               data-on-color="{{js (index (index $head2.EditOption 0).Extra "onColor")}}"
+                                               data-off-color="{{index (index $head2.EditOption 0).Extra "offColor"}}"
+                                               data-field="{{$head2.Field}}"
+                                               data-updateurl="{{$UpdateUrl}}"
+                                               data-pk="{{(index $info $PrimaryKey).Content}}"
+                                               type="checkbox" name="__checkbox__edit_info"
+                                               {{if eq (index $head2.EditOption 0).Value (index $info $head2.Field).Value}}
+                                                   checked
+                                               {{end}}
+                                               >
+                                        <input type="hidden" value="{{(index $head2.EditOption 0).Value}}">
+                                        <input type="hidden" value="{{(index $head2.EditOption 1).Value}}">
+                                    {{else}}
+                                    <a href="#" class="editable-td-{{$head2.EditType}}"
+                                       data-pk="{{(index $info $PrimaryKey).Content}}"
+                                       data-source='{{$head2.EditOption.Marshal}}'
                                        data-url="{{$UpdateUrl}}"
-                                       data-name="{{index $head2 "field"}}"
-                                       data-title="Enter {{index $head2 "head"}}">{{index $info (index $head2 "field")}}</a>
+                                       data-value="{{(index $info $head2.Field).Value}}"
+                                       data-name="{{$head2.Field}}"
+                                       data-title="Enter {{$head2.Head}}">{{(index $info $head2.Field).Content}}</a>
+                                    {{end}}
+                                </td>
                             {{else}}
-                                <td>{{index $info (index $head2 "field")}}</td>
+                                <td>{{(index $info $head2.Field).Content}}</td>
                             {{end}}
                         {{end}}
                     {{end}}
@@ -1155,25 +1177,25 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         <td style="text-align: center;">
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
-                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{index $info $PrimaryKey}}'><i class="fa fa-edit"></i></a>
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}'><i class="fa fa-edit"></i></a>
                                 {{end}}
                                 {{if $DeleteUrl}}
-                                    <a href="javascript:void(0);" data-id='{{index $info $PrimaryKey}}'
+                                    <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}'
                                        class="grid-row-delete"><i class="fa fa-trash"></i></a>
                                 {{end}}
                                 {{if $DetailUrl}}
-                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{index $info $PrimaryKey}}" class="grid-row-view">
+                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}" class="grid-row-view">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{render (render $Action "{%id}" (index $info $PrimaryKey)) "{%ids}" "selectedRows().join()"}}
+                                {{render (render $Action "{%id}" ((index $info $PrimaryKey).Content)) "{%ids}" "selectedRows().join()"}}
                             {{end}}
                         </td>
                     {{end}}
                 {{else}}
                     {{range $key2, $head2 := $Thead}}
-                        <td>{{index $info (index $head2 "head")}}</td>
+                        <td>{{(index $info $head2.Head).Content}}</td>
                     {{end}}
                 {{end}}
             </tr>
@@ -1459,6 +1481,36 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     "rows": 10,
                     "emptytext": "<i class=\"fa fa-pencil\"><\/i>"
                 });
+                $(".info_edit_switch").bootstrapSwitch({
+                    onColor: 'primary',
+                    offColor: 'default',
+                    onSwitchChange: function (event, state) {
+                        let obejct = $(event.target);
+                        let val = "";
+                        if (state) {
+                            val = obejct.closest('.bootstrap-switch').next().val();
+                        } else {
+                            val = obejct.closest('.bootstrap-switch').next().next().val()
+                        }
+                        $.ajax({
+                            method: 'post',
+                            url: obejct.data("updateurl"),
+                            data: {
+                                name: obejct.data("field"),
+                                value: val,
+                                pk: obejct.data("pk")
+                            },
+                            success: function (data) {
+                                if (typeof (data) === "string") {
+                                    data = JSON.parse(data);
+                                }
+                                if (data.code !== 200) {
+                                    swal(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                    }
+                })
             });
 
             {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
