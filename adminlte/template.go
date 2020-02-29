@@ -682,8 +682,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             </div>
         {{end}}
 
-        <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
-        <input type="hidden" name="_t" value='{{.CSRFToken}}'>
+        {{range $key, $value := .HiddenFields}}
+            <input type="hidden" name="{{$key}}" value='{{$value}}'>
+        {{end}}
     </form>
     {{.Footer}}
 {{end}}`,"components/form_components":`{{define "form_components"}}

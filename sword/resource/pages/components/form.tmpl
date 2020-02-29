@@ -20,8 +20,9 @@
             </div>
         {{end}}
 
-        <input type="hidden" name="_previous_" value='{{.InfoUrl}}'>
-        <input type="hidden" name="_t" value='{{.CSRFToken}}'>
+        {{range $key, $value := .HiddenFields}}
+            <input type="hidden" name="{{$key}}" value='{{$value}}'>
+        {{end}}
     </form>
     {{.Footer}}
 {{end}}
