@@ -1544,8 +1544,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     "emptytext": "<i class=\"fa fa-pencil\"><\/i>"
                 });
                 $(".info_edit_switch").bootstrapSwitch({
-                    onColor: 'primary',
-                    offColor: 'default',
                     onSwitchChange: function (event, state) {
                         let obejct = $(event.target);
                         let val = "";
