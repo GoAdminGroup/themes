@@ -1,0 +1,26 @@
+{{define "content"}}
+    <script>
+        $('a.new-tab-link').on('click', function () {
+            listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
+        });
+    </script>
+    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
+    {{.AssetsList}}
+    {{if lang .Panel.Title}}
+        <section class="content-header">
+            <h1>
+                {{lang .Panel.Title}}
+                <small>{{lang .Panel.Description}}</small>
+            </h1>
+            <ol class="breadcrumb" style="margin-right: 30px;">
+                <li><a href="{{.IndexUrl}}"><i class="fa fa-dashboard"></i> {{lang "home"}}</a></li>
+                {{.Menu.FormatPath}}
+            </ol>
+        </section>
+    {{end}}
+
+    <!-- Main content -->
+    <section class="content">
+        {{.Panel.Content}}
+    </section>
+{{end}}

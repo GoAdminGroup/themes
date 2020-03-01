@@ -1,0 +1,19 @@
+{{define "form_layout_two_col"}}
+    <div class="row">
+        {{range $key, $data := .ContentList}}
+            <div class="col-md-{{divide 12 (len $.ContentList)}}">
+                <div class="box-body">
+                    <div class="fields-group">
+                        {{ template "form_components" $data}}
+                    </div>
+                </div>
+            </div>
+        {{end}}
+    </div>
+
+    {{range $key, $data := .Content}}
+        {{if eq $data.Field $.PrimaryKey}}
+            <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+        {{end}}
+    {{end}}
+{{end}}

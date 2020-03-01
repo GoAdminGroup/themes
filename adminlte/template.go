@@ -898,55 +898,65 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/link":`{{define "link"}}
     <a {{if .NewTab}}class="new-tab-link"{{end}} data-title="{{.Title}}" href="{{.URL}}">{{.Content}}</a>
 {{end}}`,"components/paginator":`{{define "paginator"}}
-<div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}} <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}}  &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}</div>
-<ul class="pagination pagination-sm no-margin pull-right">
-    <!-- Previous Page Link -->
-    <li class="page-item {{.PreviousClass}}">
-        {{if eq .PreviousClass "disabled"}}
-            <span class="page-link">«</span>
-        {{else}}
-            <a class="page-link" href='{{.PreviousUrl}}' rel="next">«</a>
-        {{end}}
-    </li>
-
-    <!-- Array Of Links -->
-    {{range $key, $page := .Pages}}
-        {{if eq (index $page "isSplit") "0"}}
-            {{if eq (index $page "active") "active"}}
-                <li class="page-item active"><span class="page-link">{{index $page "page"}}</span></li>
+    <div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}}
+        <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
+    </div>
+    <ul class="pagination pagination-sm no-margin pull-right">
+        <!-- Previous Page Link -->
+        <li class="page-item {{.PreviousClass}}">
+            {{if eq .PreviousClass "disabled"}}
+                <span class="page-link">«</span>
             {{else}}
-                <li class="page-item"><a class="page-link" href='{{index $page "url"}}'>{{index $page "page"}}</a></li>
+                <a class="page-link" href='{{.PreviousUrl}}' rel="next">«</a>
             {{end}}
-        {{else}}
-            <li class="page-item disabled"><span class="page-link">...</span></li>
+        </li>
+
+        <!-- Array Of Links -->
+        {{range $key, $page := .Pages}}
+            {{if eq (index $page "isSplit") "0"}}
+                {{if eq (index $page "active") "active"}}
+                    <li class="page-item active"><span class="page-link">{{index $page "page"}}</span></li>
+                {{else}}
+                    <li class="page-item"><a class="page-link" href='{{index $page "url"}}'>{{index $page "page"}}</a>
+                    </li>
+                {{end}}
+            {{else}}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {{end}}
         {{end}}
-    {{end}}
 
 
-    <!-- Next Page Link -->
-    <li class='page-item {{.NextClass}}'>
-        {{if eq .NextClass "disabled"}}
-            <span class="page-link">»</span>
-        {{else}}
-            <a class="page-link" href='{{.NextUrl}}' rel="next">»</a>
-        {{end}}
-    </li>
-</ul>
+        <!-- Next Page Link -->
+        <li class='page-item {{.NextClass}}'>
+            {{if eq .NextClass "disabled"}}
+                <span class="page-link">»</span>
+            {{else}}
+                <a class="page-link" href='{{.NextUrl}}' rel="next">»</a>
+            {{end}}
+        </li>
+    </ul>
 
-<label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
+    <label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
 
-    <small>{{lang "show"}}</small>&nbsp;
-    {{$option := .Option}}
-    {{$url := .Url}}
-    <select class="input-sm grid-per-pager" name="per-page">
-        {{range $key, $pageSize := .PageSizeList}}
-            <option value="{{$url}}&__pageSize={{$pageSize}}" {{index $option $pageSize}}>
-                {{$pageSize}}
-            </option>
-        {{end}}
-    </select>
-    <small>{{lang "entries"}}</small>
-</label>
+        <small>{{lang "show"}}</small>&nbsp;
+        {{$option := .Option}}
+        {{$url := .Url}}
+        <select class="input-sm grid-per-pager" name="per-page">
+            {{range $key, $pageSize := .PageSizeList}}
+                <option value="{{$url}}&__pageSize={{$pageSize}}" {{index $option $pageSize}}>
+                    {{$pageSize}}
+                </option>
+            {{end}}
+        </select>
+        <small>{{lang "entries"}}</small>
+    </label>
+
+    <script>
+        let gridPerPaper = $('.grid-per-pager');
+        gridPerPaper.on('change', function () {
+            $.pjax({url: this.value, container: '#pjax-container'});
+        });
+    </script>
 {{end}}`,"components/popup":`{{define "popup"}}
 <div class="modal fade" id="{{.ID}}" tabindex="-1" role="dialog" aria-labelledby="{{.ID}}" aria-hidden="true">
     <div class="modal-dialog modal-{{.Size}}" role="document">
@@ -975,47 +985,47 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="pull-right">
 
         {{if ne .IsHideRowSelector true}}
-        <div class="dropdown pull-right column-selector" style="margin-right: 10px">
-            <button type="button" class="btn btn-sm btn-instagram dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-table"></i>
-                &nbsp;
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" style="padding: 10px;max-height: 400px;overflow: scroll;">
-                <li>
-                    <ul style="padding: 0;">
-                        {{range $key, $head := .Thead}}
-                            <li class="checkbox icheck" style="margin: 0;">
-                                <label style="width: 100%;padding: 3px;">
-                                    <input type="checkbox" class="column-select-item" data-id="{{$head.Field}}"
-                                           style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{$head.Head}}
-                                </label>
-                            </li>
-                        {{end}}
-                    </ul>
-                </li>
-                <li class="divider">
-                </li>
-                <li class="text-right">
-                    <button class="btn btn-sm btn-default column-select-all">{{lang "all"}}</button>&nbsp;&nbsp;
-                    <button class="btn btn-sm btn-primary column-select-submit">{{lang "submit"}}</button>
-                </li>
-            </ul>
-        </div>
+            <div class="dropdown pull-right column-selector" style="margin-right: 10px">
+                <button type="button" class="btn btn-sm btn-instagram dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-table"></i>
+                    &nbsp;
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" style="padding: 10px;max-height: 400px;overflow: scroll;">
+                    <li>
+                        <ul style="padding: 0;">
+                            {{range $key, $head := .Thead}}
+                                <li class="checkbox icheck" style="margin: 0;">
+                                    <label style="width: 100%;padding: 3px;">
+                                        <input type="checkbox" class="column-select-item" data-id="{{$head.Field}}"
+                                               style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{$head.Head}}
+                                    </label>
+                                </li>
+                            {{end}}
+                        </ul>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li class="text-right">
+                        <button class="btn btn-sm btn-default column-select-all">{{lang "all"}}</button>&nbsp;&nbsp;
+                        <button class="btn btn-sm btn-primary column-select-submit">{{lang "submit"}}</button>
+                    </li>
+                </ul>
+            </div>
         {{end}}
 
         {{if .HasFilter}}
 
-        <div class="btn-group pull-right" style="margin-right: 10px">
-            <a href="javascript:;" class="btn btn-sm btn-primary" id="filter-btn"><i
-                        class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
-        </div>
+            <div class="btn-group pull-right" style="margin-right: 10px">
+                <a href="javascript:;" class="btn btn-sm btn-primary" id="filter-btn"><i
+                            class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
+            </div>
 
-        <script>
-            $("#filter-btn").click(function () {
-                $('.filter-area').toggle();
-            });
-        </script>
+            <script>
+                $("#filter-btn").click(function () {
+                    $('.filter-area').toggle();
+                });
+            </script>
 
         {{end}}
 
@@ -1039,61 +1049,71 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         {{end}}
                     </ul>
                 </div>
-
-                <script>
-                    $("#export-btn-0").click(function () {
-                        ExportData("false")
-                    });
-                    $("#export-btn-1").click(function () {
-                        ExportData("true")
-                    });
-                    function ExportData(isAll) {
-                        let form = $("<form>");
-                        form.attr("style", "display:none");
-                        form.attr("target", "");
-                        form.attr("method", "post");
-                        form.attr("action",{{.ExportUrl}});
-                        let input1 = $("<input>");
-                        input1.attr("type", "hidden");
-                        input1.attr("name", "time");
-                        input1.attr("value",  (new Date()).getTime());
-                        let input2 = $("<input>");
-                        input2.attr("type", "hidden");
-                        input2.attr("name", "is_all");
-                        input2.attr("value", isAll);
-                        $("body").append(form);
-                        form.append(input1);
-                        form.append(input2);
-                        form.submit();
-                        form.remove()
-                    }
-                </script>
             {{end}}
         </div>
         {{render .Buttons "{%ids}" "selectedRows().join()"}}
     </div>
     <span>
-    {{if or .DeleteUrl .ExportUrl}}
-        <div class="btn-group">
-            <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
-            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-            <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                {{if .DeleteUrl}}
-                <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
-                {{end}}
-                {{if .ExportUrl}}
-                    <li><a href="#" class="grid-batch-1">{{lang "Export"}}</a></li>
-                {{end}}
-            </ul>
-        </div>
-    {{end}}
-    <a class="btn btn-sm btn-primary grid-refresh">
-        <i class="fa fa-refresh"></i> {{lang "Refresh"}}
-    </a>
-</span>
+        {{if or .DeleteUrl .ExportUrl}}
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {{if .DeleteUrl}}
+                        <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
+                    {{end}}
+                    {{if .ExportUrl}}
+                        <li><a href="#" class="grid-batch-1">{{lang "Export"}}</a></li>
+                    {{end}}
+                </ul>
+            </div>
+        {{end}}
+        <a class="btn btn-sm btn-primary grid-refresh">
+            <i class="fa fa-refresh"></i> {{lang "Refresh"}}
+        </a>
+    </span>
+    <script>
+        let toastMsg = '{{lang "Refresh succeeded"}} !';
+        $('.grid-refresh').on('click', function () {
+            $.pjax.reload('#pjax-container');
+            toastr.success(toastMsg);
+        });
+
+        {{if .ExportUrl}}
+
+        $("#export-btn-0").click(function () {
+            ExportData("false")
+        });
+        $("#export-btn-1").click(function () {
+            ExportData("true")
+        });
+
+        function ExportData(isAll) {
+            let form = $("<form>");
+            form.attr("style", "display:none");
+            form.attr("target", "");
+            form.attr("method", "post");
+            form.attr("action",{{.ExportUrl}});
+            let input1 = $("<input>");
+            input1.attr("type", "hidden");
+            input1.attr("name", "time");
+            input1.attr("value", (new Date()).getTime());
+            let input2 = $("<input>");
+            input2.attr("type", "hidden");
+            input2.attr("name", "is_all");
+            input2.attr("value", isAll);
+            $("body").append(form);
+            form.append(input1);
+            form.append(input2);
+            form.submit();
+            form.remove()
+        }
+
+        {{end}}
+    </script>
 {{end}}`,"components/table":`{{define "table"}}
     <table class="table table-hover" style="min-width: {{.MinWidth}}px;table-layout: {{.Layout}};">
         {{if eq .Type "table"}}
@@ -1165,19 +1185,19 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 <td>
                                     {{if eq $head2.EditType "switch"}}
                                         <input class="info_edit_switch ga_checkbox"
-                                                data-off-text="{{(index $head2.EditOption 1).Text}}"
-                                                data-on-text="{{js (index $head2.EditOption 0).Text}}"
-                                                data-size="{{index (index $head2.EditOption 0).Extra "size"}}"
-                                                data-on-color="{{js (index (index $head2.EditOption 0).Extra "onColor")}}"
-                                                data-off-color="{{index (index $head2.EditOption 0).Extra "offColor"}}"
-                                                data-field="{{$head2.Field}}"
-                                                data-pk="{{(index $info $PrimaryKey).Content}}"
-                                                data-updateurl="{{$UpdateUrl}}"
-                                                type="checkbox" name="__checkbox__edit_info"
+                                               data-off-text="{{(index $head2.EditOption 1).Text}}"
+                                               data-on-text="{{js (index $head2.EditOption 0).Text}}"
+                                               data-size="{{index (index $head2.EditOption 0).Extra "size"}}"
+                                               data-on-color="{{js (index (index $head2.EditOption 0).Extra "onColor")}}"
+                                               data-off-color="{{index (index $head2.EditOption 0).Extra "offColor"}}"
+                                               data-field="{{$head2.Field}}"
+                                               data-updateurl="{{$UpdateUrl}}"
+                                               data-pk="{{(index $info $PrimaryKey).Content}}"
+                                               type="checkbox" name="__checkbox__edit_info"
                                                 {{if eq (index $head2.EditOption 0).Value (index $info $head2.Field).Value}}
                                                     checked
                                                 {{end}}
-                                                >
+                                        >
                                         <input type="hidden" value="{{(index $head2.EditOption 0).Value}}">
                                         <input type="hidden" value="{{(index $head2.EditOption 1).Value}}">
                                     {{else}}
@@ -1213,13 +1233,13 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{render (render $Action "{%id}" (index $info $PrimaryKey).Content) "{%ids}" "selectedRows().join()"}}
+                                {{render (render $Action "{%id}" ((index $info $PrimaryKey).Content)) "{%ids}" "selectedRows().join()"}}
                             {{end}}
                         </td>
                     {{end}}
                 {{else}}
                     {{range $key2, $head2 := $Thead}}
-                        <td>{{(index $info (index $head2 "head")).Content}}</td>
+                        <td>{{(index $info $head2.Head).Content}}</td>
                     {{end}}
                 {{end}}
             </tr>
@@ -1647,68 +1667,68 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 <div class="btn-group">
 </div>
 {{end}}`,"components/tree":`{{define "tree"}}
-<div class="dd" id="tree-model">
-    {{$EditUrl := .EditUrl}}
-    {{$UrlPrefix := .UrlPrefix}}
-    <ol class="dd-list">
-        {{range $key, $list := .Tree}}
-        <li class="dd-item" data-id='{{$list.ID}}'>
-            <div class="dd-handle">
-                {{if eq $list.Url ""}}
-                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                        href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
-                {{else if eq $list.Url "/"}}
-                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                            href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
-                {{else if (isLinkUrl $list.Url)}}
-                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                            href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
-                {{else}}
-                    <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                            href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
-                {{end}}
-                <span class="pull-right dd-nodrag">
+    <div class="dd" id="tree-model">
+        {{$EditUrl := .EditUrl}}
+        {{$UrlPrefix := .UrlPrefix}}
+        <ol class="dd-list">
+            {{range $key, $list := .Tree}}
+                <li class="dd-item" data-id='{{$list.ID}}'>
+                    <div class="dd-handle">
+                        {{if eq $list.Url ""}}
+                            <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                    href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
+                        {{else if eq $list.Url "/"}}
+                            <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                    href="{{$UrlPrefix}}" class="dd-nodrag">{{$UrlPrefix}}</a>
+                        {{else if (isLinkUrl $list.Url)}}
+                            <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                    href="{{$list.Url}}" class="dd-nodrag">{{$list.Url}}</a>
+                        {{else}}
+                            <i class="fa {{$list.Icon}}"></i>&nbsp;<strong>{{$list.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                    href="{{$UrlPrefix}}{{$list.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$list.Url}}</a>
+                        {{end}}
+                        <span class="pull-right dd-nodrag">
                 <a href="{{$EditUrl}}?id={{$list.ID}}"><i class="fa fa-edit"></i></a>
                 <a href="javascript:void(0);" data-id="{{$list.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
             </span>
-            </div>
-            {{if gt (len $list.ChildrenList) 0}}
-            <ol class="dd-list">
-                {{range $key, $item := $list.ChildrenList}}
-                    <li class="dd-item" data-id='{{$item.ID}}'>
-                        <div class="dd-handle">
-                            {{if eq $item.Url ""}}
-                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                    href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
-                            {{else if eq $item.Url "/"}}
-                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                        href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
-                            {{else if (isLinkUrl $item.Url)}}
-                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                        href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
-                            {{else}}
-                                <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                        href="{{$UrlPrefix}}{{$item.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$item.Url}}</a>
-                            {{end}}
-                            <span class="pull-right dd-nodrag">
+                    </div>
+                    {{if gt (len $list.ChildrenList) 0}}
+                        <ol class="dd-list">
+                            {{range $key, $item := $list.ChildrenList}}
+                                <li class="dd-item" data-id='{{$item.ID}}'>
+                                    <div class="dd-handle">
+                                        {{if eq $item.Url ""}}
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                    href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
+                                        {{else if eq $item.Url "/"}}
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                    href="{{$UrlPrefix}}" class="dd-nodrag">{{$UrlPrefix}}</a>
+                                        {{else if (isLinkUrl $item.Url)}}
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                    href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
+                                        {{else}}
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                    href="{{$UrlPrefix}}{{$item.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$item.Url}}</a>
+                                        {{end}}
+                                        <span class="pull-right dd-nodrag">
                                 <a href="{{$EditUrl}}?id={{$item.ID}}"><i class="fa fa-edit"></i></a>
                                 <a href="javascript:void(0);" data-id="{{$item.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
                             </span>
-                        </div>
-                    </li>
-                {{end}}
-            </ol>
+                                    </div>
+                                </li>
+                            {{end}}
+                        </ol>
+                    {{end}}
+                </li>
             {{end}}
-        </li>
-        {{end}}
-    </ol>
-</div>
-<script data-exec-on-popstate="">
-    $(function () {
-        $('#tree-model').nestable([]);
-        $('.tree_branch_delete').click(function () {
-            let id = $(this).data('id');
-            swal({
+        </ol>
+    </div>
+    <script data-exec-on-popstate="">
+        $(function () {
+            $('#tree-model').nestable([]);
+            $('.tree_branch_delete').click(function () {
+                let id = $(this).data('id');
+                swal({
                         title: {{lang "are you sure to delete"}} + "?",
                         type: "warning",
                         showCancelButton: true,
@@ -1732,47 +1752,38 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                             }
                         });
                     });
-        });
-        $('.tree-model-save').click(function () {
-            let serialize = $('#tree-model').nestable('serialize');
-            $.post({{.OrderUrl}}, {
+            });
+            $('.tree-model-save').click(function () {
+                let serialize = $('#tree-model').nestable('serialize');
+                $.post({{.OrderUrl}}, {
                         _order: JSON.stringify(serialize)
                     },
                     function (data) {
                         $.pjax.reload('#pjax-container');
                         toastr.success('Save succeeded !');
                     });
-        });
-        $('.tree-model-refresh').click(function () {
-            $.pjax.reload('#pjax-container');
-            toastr.success(toastMsg);
-        });
-        $('.tree-model-tree-tools').on('click', function (e) {
-            let target = $(e.target),
+            });
+            $('.tree-model-refresh').click(function () {
+                $.pjax.reload('#pjax-container');
+                toastr.success(toastMsg);
+            });
+            $('.tree-model-tree-tools').on('click', function (e) {
+                let target = $(e.target),
                     action = target.data('action');
-            if (action === 'expand') {
-                $('.dd').nestable('expandAll');
-            }
-            if (action === 'collapse') {
-                $('.dd').nestable('collapseAll');
-            }
+                if (action === 'expand') {
+                    $('.dd').nestable('expandAll');
+                }
+                if (action === 'collapse') {
+                    $('.dd').nestable('collapseAll');
+                }
+            });
+            $(".parent_id").select2({"allowClear": true, "placeholder": "Parent"});
+            $('.icon').iconpicker({placement: 'bottomLeft'});
+            $(".roles").select2({"allowClear": true, "placeholder": "Roles"});
         });
-        $(".parent_id").select2({"allowClear": true, "placeholder": "Parent"});
-        $('.icon').iconpicker({placement: 'bottomLeft'});
-        $(".roles").select2({"allowClear": true, "placeholder": "Roles"});
-    });
-</script>
+    </script>
 {{end}}`,"content":`{{define "content"}}
     <script>
-        let toastMsg = '{{lang "Refresh succeeded"}} !';
-        $('.grid-per-pager').on("change", function (e) {
-            console.log("changing...");
-            $.pjax({url: this.value, container: '#pjax-container'});
-        });
-        $('.grid-refresh').on('click', function () {
-            $.pjax.reload('#pjax-container');
-            toastr.success(toastMsg);
-        });
         $('a.new-tab-link').on('click', function () {
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });

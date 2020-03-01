@@ -1,0 +1,16 @@
+{{define "form_url"}}
+    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
+    <div class="col-sm-8">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
+            <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control json"
+                   placeholder="{{lang "Input"}} {{.Head}}">
+        </div>
+        {{if ne .HelpMsg ""}}
+            <span class="help-block">
+                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+            </span>
+        {{end}}
+    </div>
+{{end}}
