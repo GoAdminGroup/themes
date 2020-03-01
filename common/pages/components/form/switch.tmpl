@@ -1,18 +1,11 @@
 {{define "form_switch"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox" name="__checkbox__{{.Field}}">
-        {{$index := 0}}
-        {{if eq (index .Options 0).SelectedLabel ""}}
-            {{$index = 1}}
-        {{end}}
-        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{(index .Options $index).Value}}">
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-    </div>
+    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
+           name="__checkbox__{{.Field}}">
+    {{$index := 0}}
+    {{if eq (index .Options 0).SelectedLabel ""}}
+        {{$index = 1}}
+    {{end}}
+    <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{(index .Options $index).Value}}">
     <script>
         $(".{{.Field}}.ga_checkbox").bootstrapSwitch({
             size: "small",

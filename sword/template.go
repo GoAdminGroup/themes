@@ -114,36 +114,20 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/col":`{{define "col"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
 {{end}}`,"components/form/color":`{{define "form_color"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group colorpicker-element">
-            <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}"
-                   value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group colorpicker-element">
+        <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
+        <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}"
+               value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
     </div>
     <script>
         $('.{{.Field}}').parent().colorpicker([]);
     </script>
 {{end}}`,"components/form/currency":`{{define "form_currency"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
-                   name="{{.Field}}"
-                   value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
+               name="{{.Field}}"
+               value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
     </div>
     <script>
         $(function () {
@@ -156,16 +140,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
 {{end}}`,"components/form/custom":`{{define "form_custom"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            {{.CustomContent}}
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        {{.CustomContent}}
     </div>
     {{if .CustomJs}}
         <script>
@@ -178,37 +154,22 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </style>
     {{end}}
 {{end}}`,"components/form/datetime":`{{define "form_datetime"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
     {{if not .Editable}}
-        <div class="col-sm-8">
-            <div class="box box-solid box-default no-margin">
-                <div class="box-body" style="min-height: 40px;">
-                    {{.Value}}
-                </div>
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body" style="min-height: 40px;">
+                {{.Value}}
             </div>
-            {{if ne .HelpMsg ""}}
-                <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-            {{end}}
         </div>
     {{else}}
-        <div class="col-sm-8">
-            <div class="input-group">
-                {{if ne .Label ""}}
-                    <span class="input-group-addon">{{.Label}}</span>
-                {{end}}
-                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                <input {{if .Must}}required="1"{{end}} style="width: 160px" type="text" id="{{.Field}}"
-                       name="{{.Field}}"
-                       value="{{.Value}}"
-                       class="form-control {{.Field}}" placeholder="{{lang "Input"}} {{.Head}}">
-            </div>
-            {{if ne .HelpMsg ""}}
-                <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
+        <div class="input-group">
+            {{if ne .Label ""}}
+                <span class="input-group-addon">{{.Label}}</span>
             {{end}}
+            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            <input {{if .Must}}required="1"{{end}} style="width: 160px" type="text" id="{{.Field}}"
+                   name="{{.Field}}"
+                   value="{{.Value}}"
+                   class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
         </div>
         <script>
             $(function () {
@@ -221,29 +182,25 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </script>
     {{end}}
 {{end}}`,"components/form/datetime_range":`{{define "form_datetime_range"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            {{if ne .Label ""}}
-                <span class="input-group-addon">{{.Label}}</span>
-            {{end}}
-            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-            <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
-                   class="form-control {{.Field}}_start__goadmin" placeholder="{{lang "Input"}} {{.Head}}">
-            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
-            <input type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin" value="{{.Value2}}"
-                   class="form-control {{.Field}}_end__goadmin" placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
+    <div class="input-group">
+        {{if ne .Label ""}}
+            <span class="input-group-addon">{{.Label}}</span>
         {{end}}
+        <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+        <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
+               class="form-control {{.Field}}_start__goadmin" placeholder="{{.Placeholder}}">
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+        <input type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin" value="{{.Value2}}"
+               class="form-control {{.Field}}_end__goadmin" placeholder="{{.Placeholder}}">
     </div>
     <script>
         $(function () {
-            $('.{{.Field}}_start__goadmin').datetimepicker({"format":"YYYY-MM-DD HH:mm:ss","locale":"zh-CN"});
-            $('.{{.Field}}_end__goadmin').datetimepicker({"format":"YYYY-MM-DD HH:mm:ss","locale":"zh-CN","useCurrent":false});
+            $('.{{.Field}}_start__goadmin').datetimepicker({"format": "YYYY-MM-DD HH:mm:ss", "locale": "zh-CN"});
+            $('.{{.Field}}_end__goadmin').datetimepicker({
+                "format": "YYYY-MM-DD HH:mm:ss",
+                "locale": "zh-CN",
+                "useCurrent": false
+            });
             $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
                 $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
             });
@@ -253,46 +210,22 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
 {{end}}`,"components/form/default":`{{define "form_default"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="box box-solid box-default no-margin">
-            <div class="box-body" style="min-height: 40px;">
-                {{.Value}}
-            </div>
+    <div class="box box-solid box-default no-margin">
+        <div class="box-body" style="min-height: 40px;">
+            {{.Value}}
         </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
     </div>
 {{end}}`,"components/form/email":`{{define "form_email"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-                   class="form-control json"
-                   placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+        <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+               class="form-control json"
+               placeholder="{{.Placeholder}}">
     </div>
 {{end}}`,"components/form/file":`{{define "form_file"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
-               data-initial-caption="{{.Value}}">
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-        <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
-    </div>
+    <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
+           data-initial-caption="{{.Value}}">
+    <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     <script>
         $("input.{{.Field}}").fileinput({
             "overwriteInitial": true,
@@ -307,59 +240,41 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             $(".{{.Field}}__delete_flag").val("1")
         });
     </script>
+{{end}}`,"components/form/help_block":`{{define "help_block"}}
+    {{if ne . ""}}
+        <span class="help-block">
+            <i class="fa fa-info-circle"></i>&nbsp;{{.}}
+        </span>
+    {{end}}
 {{end}}`,"components/form/iconpicker":`{{define "form_iconpicker"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa"></i></span>
-            {{if eq .Value ""}}
-                <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="fa-bars"
-                       class="form-control icon iconpicker-element iconpicker-input"
-                       placeholder="{{lang "Input Icon"}}">
-            {{else}}
-                <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="{{.Value}}"
-                       class="form-control icon iconpicker-element iconpicker-input"
-                       placeholder="{{lang "Input Icon"}}">
-            {{end}}
-            {{if ne .HelpMsg ""}}
-                <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-            {{end}}
-        </div>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa"></i></span>
+        {{if eq .Value ""}}
+            <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="fa-bars"
+                   class="form-control icon iconpicker-element iconpicker-input"
+                   placeholder="{{lang "Input Icon"}}">
+        {{else}}
+            <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="{{.Value}}"
+                   class="form-control icon iconpicker-element iconpicker-input"
+                   placeholder="{{lang "Input Icon"}}">
+        {{end}}
     </div>
     <script>
         $('.iconpicker-input').iconpicker({placement: 'bottomLeft'});
     </script>
 {{end}}`,"components/form/ip":`{{define "form_ip"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
-                   value='{{.Value}}' class="form-control json"
-                   placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+        <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
+               value='{{.Value}}' class="form-control json"
+               placeholder="{{.Placeholder}}">
     </div>
 {{end}}`,"components/form/number":`{{define "form_number"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
-                   name="{{.Field}}"
-                   value="{{.Value}}" class="form-control {{.Field}}"
-                   placeholder="{{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
+               name="{{.Field}}"
+               value="{{.Value}}" class="form-control {{.Field}}"
+               placeholder="{{.Head}}">
     </div>
     <script>
         $(function () {
@@ -373,23 +288,15 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         })
     </script>
 {{end}}`,"components/form/number_range":`{{define "form_number_range"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group number-range">
-            <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
-                   name="{{.Field}}_start__goadmin"
-                   value="{{.Value}}" class="form-control {{.Field}}_start__goadmin"
-                   placeholder="{{.Head}}">
-            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
-            <input style="text-align: center;" type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin"
-                   value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
-                   placeholder="{{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group number-range">
+        <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
+               name="{{.Field}}_start__goadmin"
+               value="{{.Value}}" class="form-control {{.Field}}_start__goadmin"
+               placeholder="{{.Head}}">
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+        <input style="text-align: center;" type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin"
+               value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
+               placeholder="{{.Head}}">
     </div>
     <script>
         $(function () {
@@ -415,60 +322,36 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         }
     </style>
 {{end}}`,"components/form/password":`{{define "form_password"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        {{if .Editable}}
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
-                <input {{if .Must}}required="1"{{end}} type="password" id="{{.Field}}" name="{{.Field}}"
-                       value="{{.Value}}"
-                       class="form-control password" placeholder="{{lang "Input"}} {{.Head}}">
-            </div>
-        {{else}}
-            <div class="box box-solid box-default no-margin">
-                <div class="box-body">********</div>
-            </div>
-        {{end}}
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-    </div>
+    {{if .Editable}}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
+            <input {{if .Must}}required="1"{{end}} type="password" id="{{.Field}}" name="{{.Field}}"
+                   value="{{.Value}}"
+                   class="form-control password" placeholder="{{.Placeholder}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">********</div>
+        </div>
+    {{end}}
 {{end}}`,"components/form/radio":`{{define "form_radio"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        {{$field := .Field}}
-        {{range $key, $v := .Options }}
-            <input type="radio" name="{{$field}}" value="{{$v.Value}}"
-                   class="minimal {{$field}}" {{$v.SelectedLabel}}
-                   style="position: absolute; opacity: 0;">&nbsp;{{$v.Text}}&nbsp;&nbsp;
-        {{end}}
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-    </div>
+    {{$field := .Field}}
+    {{range $key, $v := .Options }}
+        <input type="radio" name="{{$field}}" value="{{$v.Value}}"
+               class="minimal {{$field}}" {{$v.SelectedLabel}}
+               style="position: absolute; opacity: 0;">&nbsp;{{$v.Text}}&nbsp;&nbsp;
+    {{end}}
     <script>
         $(function () {
             $('.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});
         });
     </script>
 {{end}}`,"components/form/richtext":`{{define "form_rich_text"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div id="{{.Field}}-editor">
-            <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-        </div>
-        <input type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-               placeholder="{{lang "Input"}} {{.Head}}">
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div id="{{.Field}}-editor">
+        <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
     </div>
+    <input type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+           placeholder="{{.Placeholder}}">
     <script type="text/javascript">
         editor = new window.wangEditor('#{{.Field}}-editor');
         editor.customConfig.onchange = function (html) {
@@ -481,77 +364,54 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </script>
 {{end}}`,"components/form/select":`{{define "form_select"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
-                multiple=""  data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true"
-                {{if not .Editable}}disabled="disabled"{{end}}>
-            <option></option>
-            {{range $key, $v := .Options }}
-                <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
-            {{end}}
-        </select>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
+    <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
+            multiple="" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
+            {{if not .Editable}}disabled="disabled"{{end}}>
+        <option></option>
+        {{range $key, $v := .Options }}
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
         {{end}}
-    </div>
+    </select>
     <script>
         $(".{{.Field}}").select2({{.OptionExt}});
     </script>
 {{end}}`,"components/form/selectbox":`{{define "form_selectbox"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-<div class="col-sm-8">
-    <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple" data-placeholder="Input {{.Head}}"  {{if not .Editable}}disabled="disabled"{{end}}>
+    <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
+            data-placeholder="Input {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>
         {{range  $key, $v := .Options }}
             <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
         {{end}}
     </select>
-    <input type="hidden" name="{{.Field}}[]" />
-    {{if ne .HelpMsg ""}}
-        <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-    {{end}}
-</div>
-<script>
-    $(".{{.Field}}").bootstrapDualListbox({"infoText":"Showing all {0}","infoTextEmpty":"Empty list","infoTextFiltered":"{0} \/ {1}","filterTextClear":"Show all","filterPlaceHolder":"Filter"});
-</script>
+    <input type="hidden" name="{{.Field}}[]"/>
+    <script>
+        $(".{{.Field}}").bootstrapDualListbox({
+            "infoText": "Showing all {0}",
+            "infoTextEmpty": "Empty list",
+            "infoTextFiltered": "{0} \/ {1}",
+            "filterTextClear": "Show all",
+            "filterPlaceHolder": "Filter"
+        });
+    </script>
 {{end}}`,"components/form/singleselect":`{{define "form_select_single"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-<div class="col-sm-8">
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
-            data-multiple="false"  data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
+            data-multiple="false" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
+            {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
-    {{range $key, $v := .Options }}
-        <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
-    {{end}}
+        {{range $key, $v := .Options }}
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
+        {{end}}
     </select>
-    {{if ne .HelpMsg ""}}
-        <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-    {{end}}
-</div>
-<script>
-    $(".{{.Field}}").select2({{.OptionExt}});
-</script>
+    <script>
+        $(".{{.Field}}").select2({{.OptionExt}});
+    </script>
 {{end}}`,"components/form/switch":`{{define "form_switch"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox" name="__checkbox__{{.Field}}">
-        {{$index := 0}}
-        {{if eq (index .Options 0).SelectedLabel ""}}
-            {{$index = 1}}
-        {{end}}
-        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{(index .Options $index).Value}}">
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-    </div>
+    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
+           name="__checkbox__{{.Field}}">
+    {{$index := 0}}
+    {{if eq (index .Options 0).SelectedLabel ""}}
+        {{$index = 1}}
+    {{end}}
+    <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{(index .Options $index).Value}}">
     <script>
         $(".{{.Field}}.ga_checkbox").bootstrapSwitch({
             size: "small",
@@ -573,50 +433,42 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         })
     </script>
 {{end}}`,"components/form/text":`{{define "form_text"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        {{if .Editable}}
-            <div class="input-group">
-                {{if eq .Label ""}}
-                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-                {{else if eq .Label "free"}}
-                    <div class="input-group-btn">
-                        <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                style="min-width: 32px;" aria-expanded="false">
-                            {{if eq .Value2 ""}}
-                            <span class="{{.Field}}-label"> {{lang ">"}} </span>
-                        {{else}}
-                            <span class="{{.Field}}-label"> {{.Value2}} </span>
-                        {{end}}&nbsp;&nbsp;
-                            <span class="fa fa-caret-down"></span>
-                        </button>
-                        <ul class="dropdown-menu {{.Field}}_ul">
-                            <li><a href="#" data-index="gr"> {{lang ">"}} </a></li>
-                            <li><a href="#" data-index="le"> {{lang "<"}} </a></li>
-                            <li><a href="#" data-index="gq"> {{lang ">="}} </a></li>
-                            <li><a href="#" data-index="lq"> {{lang "<="}} </a></li>
-                            <li><a href="#" data-index="eq"> {{lang "="}} </a></li>
-                            <li><a href="#" data-index="ne"> {{lang "!="}} </a></li>
-                        </ul>
-                    </div>
-                {{else}}
-                    <span class="input-group-addon">{{.Label}}</span>
-                {{end}}
-                <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-                       class="form-control json" placeholder="{{lang "Input"}} {{.Head}}">
-            </div>
-        {{else}}
-            <div class="box box-solid box-default no-margin">
-                <div class="box-body">{{.Value}}</div>
-            </div>
-        {{end}}
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-    </div>
+    {{if .Editable}}
+        <div class="input-group">
+            {{if eq .Label ""}}
+                <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+            {{else if eq .Label "free"}}
+                <div class="input-group-btn">
+                    <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            style="min-width: 32px;" aria-expanded="false">
+                        {{if eq .Value2 ""}}
+                        <span class="{{.Field}}-label"> {{lang ">"}} </span>
+                    {{else}}
+                        <span class="{{.Field}}-label"> {{.Value2}} </span>
+                    {{end}}&nbsp;&nbsp;
+                        <span class="fa fa-caret-down"></span>
+                    </button>
+                    <ul class="dropdown-menu {{.Field}}_ul">
+                        <li><a href="#" data-index="gr"> {{lang ">"}} </a></li>
+                        <li><a href="#" data-index="le"> {{lang "<"}} </a></li>
+                        <li><a href="#" data-index="gq"> {{lang ">="}} </a></li>
+                        <li><a href="#" data-index="lq"> {{lang "<="}} </a></li>
+                        <li><a href="#" data-index="eq"> {{lang "="}} </a></li>
+                        <li><a href="#" data-index="ne"> {{lang "!="}} </a></li>
+                    </ul>
+                </div>
+            {{else}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
+            <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control json" placeholder="{{.Placeholder}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+    {{end}}
     {{if eq .Label "free"}}
         <script>
             $(function () {
@@ -628,31 +480,15 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </script>
     {{end}}
 {{end}}`,"components/form/textarea":`{{define "form_textarea"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-            <textarea {{if .Must}}required="1"{{end}} name="{{.Field}}" class="form-control" rows="5"
-                      placeholder="{{lang "Input"}} {{.Head}}"
+    <textarea {{if .Must}}required="1"{{end}} name="{{.Field}}" class="form-control" rows="5"
+              placeholder="{{.Placeholder}}"
                       {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
-    </div>
 {{end}}`,"components/form/url":`{{define "form_url"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-                   class="form-control json"
-                   placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
+        <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+               class="form-control json"
+               placeholder="{{.Placeholder}}">
     </div>
 {{end}}`,"components/form":`{{define "form"}}
     <script src={{link .CdnUrl .Prefix "/assets/dist/js/form.min.js"}}></script>
@@ -664,6 +500,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{ template "form_layout_tab" . }}
             {{else if ne (len .ContentList) 0}}
                 {{ template "form_layout_two_col" . }}
+            {{else if .Layout.Flow}}
+                {{ template "form_layout_flow" . }}
             {{else}}
                 {{ template "form_layout_default" . }}
             {{end}}
@@ -682,115 +520,173 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </form>
     {{.Footer}}
 {{end}}`,"components/form_components":`{{define "form_components"}}
-    {{range $key, $data := .}}
-        {{if $data.Hide}}
-            <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
-        {{else}}
-            <div class="form-group">
-                {{if eq $data.FormType.String "default"}}
-                    {{ template "form_default" $data }}
-                {{else if eq $data.FormType.String "text"}}
-                    {{ template "form_text" $data }}
-                {{else if eq $data.FormType.String "file"}}
-                    {{ template "form_file" $data }}
-                {{else if eq $data.FormType.String "password"}}
-                    {{ template "form_password" $data }}
-                {{else if eq $data.FormType.String "selectbox"}}
-                    {{ template "form_selectbox" $data }}
-                {{else if eq $data.FormType.String "select"}}
-                    {{ template "form_select" $data }}
-                {{else if eq $data.FormType.String "select_single"}}
-                    {{ template "form_select_single" $data }}
-                {{else if eq $data.FormType.String "textarea"}}
-                    {{ template "form_textarea" $data }}
-                {{else if eq $data.FormType.String "iconpicker"}}
-                    {{ template "form_iconpicker" $data }}
-                {{else if eq $data.FormType.String "richtext"}}
-                    {{ template "form_rich_text" $data }}
-                {{else if eq $data.FormType.String "datetime"}}
-                    {{ template "form_datetime" $data }}
-                {{else if eq $data.FormType.String "datetime_range"}}
-                    {{ template "form_datetime_range" $data }}
-                {{else if eq $data.FormType.String "radio"}}
-                    {{ template "form_radio" $data }}
-                {{else if eq $data.FormType.String "email"}}
-                    {{ template "form_email" $data }}
-                {{else if eq $data.FormType.String "url"}}
-                    {{ template "form_url" $data }}
-                {{else if eq $data.FormType.String "ip"}}
-                    {{ template "form_ip" $data }}
-                {{else if eq $data.FormType.String "color"}}
-                    {{ template "form_color" $data }}
-                {{else if eq $data.FormType.String "currency"}}
-                    {{ template "form_currency" $data }}
-                {{else if eq $data.FormType.String "number"}}
-                    {{ template "form_number" $data }}
-                {{else if eq $data.FormType.String "number_range"}}
-                    {{ template "form_number_range" $data }}
-                {{else if eq $data.FormType.String "custom"}}
-                    {{ template "form_custom" $data }}
-                {{else if eq $data.FormType.String "switch"}}
-                    {{ template "form_switch" $data }}
+    {{if eq .FormType.String "default"}}
+        {{ template "form_default" .  }}
+    {{else if eq .FormType.String "text"}}
+        {{ template "form_text" .  }}
+    {{else if eq .FormType.String "file"}}
+        {{ template "form_file" .  }}
+    {{else if eq .FormType.String "password"}}
+        {{ template "form_password" .  }}
+    {{else if eq .FormType.String "selectbox"}}
+        {{ template "form_selectbox" .  }}
+    {{else if eq .FormType.String "select"}}
+        {{ template "form_select" .  }}
+    {{else if eq .FormType.String "select_single"}}
+        {{ template "form_select_single" .  }}
+    {{else if eq .FormType.String "textarea"}}
+        {{ template "form_textarea" .  }}
+    {{else if eq .FormType.String "iconpicker"}}
+        {{ template "form_iconpicker" .  }}
+    {{else if eq .FormType.String "richtext"}}
+        {{ template "form_rich_text" .  }}
+    {{else if eq .FormType.String "datetime"}}
+        {{ template "form_datetime" .  }}
+    {{else if eq .FormType.String "datetime_range"}}
+        {{ template "form_datetime_range" .  }}
+    {{else if eq .FormType.String "radio"}}
+        {{ template "form_radio" .  }}
+    {{else if eq .FormType.String "email"}}
+        {{ template "form_email" .  }}
+    {{else if eq .FormType.String "url"}}
+        {{ template "form_url" .  }}
+    {{else if eq .FormType.String "ip"}}
+        {{ template "form_ip" .  }}
+    {{else if eq .FormType.String "color"}}
+        {{ template "form_color" .  }}
+    {{else if eq .FormType.String "currency"}}
+        {{ template "form_currency" .  }}
+    {{else if eq .FormType.String "number"}}
+        {{ template "form_number" .  }}
+    {{else if eq .FormType.String "number_range"}}
+        {{ template "form_number_range" .  }}
+    {{else if eq .FormType.String "custom"}}
+        {{ template "form_custom" .  }}
+    {{else if eq .FormType.String "switch"}}
+        {{ template "form_switch" .  }}
+    {{end}}
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+            <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+        </span>
+    {{end}}
+{{end}}`,"components/form_components_layout":`{{define "form_components_layout"}}
+
+    {{if ne (len .ContentList) 0}}
+
+        {{range $key, $content := .ContentList}}
+            <div class="col-md-{{divide 12 (len $.ContentList)}}">
+                <div class="box-body">
+                    <div class="fields-group">
+                        {{range $key, $data := $content}}
+                            {{if $data.Hide}}
+                                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+                            {{else}}
+                                <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                                    {{if ne $data.Head ""}}
+                                        <label for="{{$data.Field}}"
+                                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                    {{end}}
+                                    <div class="col-sm-{{$.InputWidth}}">
+                                        {{template "form_components" $data}}
+                                    </div>
+                                </div>
+                            {{end}}
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        {{end}}
+
+    {{else if ne (len .TabHeaders) 0}}
+
+        {{range $key, $content := .TabContents}}
+            <div class="tab-pane {{if eq $key 0}}active{{end}}" id="tab-form-{{$key}}">
+                {{range $key, $data := $content}}
+                    {{if $data.Hide}}
+                        <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+                    {{else}}
+                        <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                            {{if ne $data.Head ""}}
+                                <label for="{{$data.Field}}"
+                                       class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                            {{end}}
+                            <div class="col-sm-{{$.InputWidth}}">
+                                {{template "form_components" $data}}
+                            </div>
+                        </div>
+                    {{end}}
+                {{end}}
+                {{range $key, $d := $content}}
+                    {{if eq $d.Field $.PrimaryKey}}
+                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                    {{end}}
                 {{end}}
             </div>
         {{end}}
+
+    {{else if .Layout.Flow}}
+
+        {{range $key, $data := .Content}}
+            {{if $data.Hide}}
+                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+            {{else}}
+                <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{end}}">
+                    {{if ne $data.Head ""}}
+                        <label for="{{$data.Field}}"
+                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                    {{end}}
+                    <div class="col-sm-{{$.InputWidth}}">
+                        {{template "form_components" $data}}
+                    </div>
+                </div>
+            {{end}}
+        {{end}}
+
+    {{else}}
+
+        {{range $key, $data := .Content}}
+            {{if $data.Hide}}
+                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+            {{else}}
+                <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                    {{if ne $data.Head ""}}
+                        <label for="{{$data.Field}}"
+                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                    {{end}}
+                    <div class="col-sm-{{$.InputWidth}}">
+                        {{template "form_components" $data}}
+                    </div>
+                </div>
+            {{end}}
+        {{end}}
+
     {{end}}
 {{end}}`,"components/form_layout_default":`{{define "form_layout_default"}}
 
     <div class="box-body">
-        {{if eq (len .TabHeaders) 0}}
-            <div class="fields-group">
-                {{ template "form_components" .Content }}
-            </div>
+        <div class="fields-group">
+            {{ template "form_components_layout" . }}
+        </div>
 
-            {{range $key, $data := .Content}}
-                {{if eq $data.Field $.PrimaryKey}}
-                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
-                {{end}}
+        {{range $key, $data := .Content}}
+            {{if eq $data.Field $.PrimaryKey}}
+                <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
             {{end}}
-        {{else}}
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    {{range $key, $data := .TabHeaders}}
-                        {{if eq $key 0}}
-                            <li class="active">
-                                <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
-                                    {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
-                                </a>
-                            </li>
-                        {{else}}
-                            <li class="">
-                                <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
-                                    {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
-                                </a>
-                            </li>
-                        {{end}}
-                    {{end}}
-                </ul>
-                <div class="tab-content fields-group">
-                    {{range $key, $data := .TabContents}}
-                        {{if eq $key 0}}
-                            <div class="tab-pane active" id="tab-form-{{$key}}">
-                                {{ template "form_components" $data}}
-                                {{range $key, $d := $data}}
-                                    {{if eq $d.Field $.PrimaryKey}}
-                                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                                    {{end}}
-                                {{end}}
-                            </div>
-                        {{else}}
-                            <div class="tab-pane" id="tab-form-{{$key}}">
-                                {{ template "form_components" $data}}
-                                {{range $key, $d := $data}}
-                                    {{if eq $d.Field $.PrimaryKey}}
-                                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                                    {{end}}
-                                {{end}}
-                            </div>
-                        {{end}}
-                    {{end}}
-                </div>
-            </div>
+        {{end}}
+    </div>
+
+{{end}}`,"components/form_layout_flow":`{{define "form_layout_flow"}}
+
+    <div class="box-body">
+        <div class="fields-group">
+            {{ template "form_components_layout" . }}
+        </div>
+
+        {{range $key, $data := .Content}}
+            {{if eq $data.Field $.PrimaryKey}}
+                <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+            {{end}}
         {{end}}
     </div>
 
@@ -816,42 +712,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{end}}
             </ul>
             <div class="tab-content fields-group">
-                {{range $key, $data := .TabContents}}
-                    {{if eq $key 0}}
-                        <div class="tab-pane active" id="tab-form-{{$key}}">
-                            {{ template "form_components" $data}}
-                            {{range $key, $d := $data}}
-                                {{if eq $d.Field $.PrimaryKey}}
-                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                                {{end}}
-                            {{end}}
-                        </div>
-                    {{else}}
-                        <div class="tab-pane" id="tab-form-{{$key}}">
-                            {{ template "form_components" $data}}
-                            {{range $key, $d := $data}}
-                                {{if eq $d.Field $.PrimaryKey}}
-                                    <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                                {{end}}
-                            {{end}}
-                        </div>
-                    {{end}}
-                {{end}}
+                {{ template "form_components_layout" .}}
             </div>
         </div>
     </div>
 
 {{end}}`,"components/form_layout_two_col":`{{define "form_layout_two_col"}}
     <div class="row">
-        {{range $key, $data := .ContentList}}
-            <div class="col-md-{{divide 12 (len $.ContentList)}}">
-                <div class="box-body">
-                    <div class="fields-group">
-                        {{ template "form_components" $data}}
-                    </div>
-                </div>
-            </div>
-        {{end}}
+        {{ template "form_components_layout" .}}
     </div>
 
     {{range $key, $data := .Content}}

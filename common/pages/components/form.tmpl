@@ -8,6 +8,8 @@
                 {{ template "form_layout_tab" . }}
             {{else if ne (len .ContentList) 0}}
                 {{ template "form_layout_two_col" . }}
+            {{else if .Layout.Flow}}
+                {{ template "form_layout_flow" . }}
             {{else}}
                 {{ template "form_layout_default" . }}
             {{end}}

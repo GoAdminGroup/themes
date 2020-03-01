@@ -1,20 +1,13 @@
 {{define "form_select_single"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-<div class="col-sm-8">
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
-            data-multiple="false"  data-placeholder="{{lang "Input"}} {{.Head}}" tabindex="-1" aria-hidden="true" {{if not .Editable}}disabled="disabled"{{end}}>
+            data-multiple="false" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
+            {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
-    {{range $key, $v := .Options }}
-        <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
-    {{end}}
+        {{range $key, $v := .Options }}
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
+        {{end}}
     </select>
-    {{if ne .HelpMsg ""}}
-        <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-    {{end}}
-</div>
-<script>
-    $(".{{.Field}}").select2({{.OptionExt}});
-</script>
+    <script>
+        $(".{{.Field}}").select2({{.OptionExt}});
+    </script>
 {{end}}

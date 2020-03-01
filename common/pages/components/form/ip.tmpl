@@ -1,16 +1,8 @@
 {{define "form_ip"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
-                   value='{{.Value}}' class="form-control json"
-                   placeholder="{{lang "Input"}} {{.Head}}">
-        </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+        <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
+               value='{{.Value}}' class="form-control json"
+               placeholder="{{.Placeholder}}">
     </div>
 {{end}}

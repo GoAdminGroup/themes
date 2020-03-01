@@ -1,23 +1,15 @@
 {{define "form_iconpicker"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa"></i></span>
-            {{if eq .Value ""}}
-                <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="fa-bars"
-                       class="form-control icon iconpicker-element iconpicker-input"
-                       placeholder="{{lang "Input Icon"}}">
-            {{else}}
-                <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="{{.Value}}"
-                       class="form-control icon iconpicker-element iconpicker-input"
-                       placeholder="{{lang "Input Icon"}}">
-            {{end}}
-            {{if ne .HelpMsg ""}}
-                <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-            {{end}}
-        </div>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa"></i></span>
+        {{if eq .Value ""}}
+            <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="fa-bars"
+                   class="form-control icon iconpicker-element iconpicker-input"
+                   placeholder="{{lang "Input Icon"}}">
+        {{else}}
+            <input style="width: 140px" type="text" id="icon" name="{{.Field}}" value="{{.Value}}"
+                   class="form-control icon iconpicker-element iconpicker-input"
+                   placeholder="{{lang "Input Icon"}}">
+        {{end}}
     </div>
     <script>
         $('.iconpicker-input').iconpicker({placement: 'bottomLeft'});

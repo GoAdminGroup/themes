@@ -1,15 +1,7 @@
 {{define "form_default"}}
-    <label for="{{.Field}}" class="col-sm-2 {{if .Must}}asterisk{{end}} control-label">{{.Head}}</label>
-    <div class="col-sm-8">
-        <div class="box box-solid box-default no-margin">
-            <div class="box-body" style="min-height: 40px;">
-                {{.Value}}
-            </div>
+    <div class="box box-solid box-default no-margin">
+        <div class="box-body" style="min-height: 40px;">
+            {{.Value}}
         </div>
-        {{if ne .HelpMsg ""}}
-            <span class="help-block">
-                <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
-            </span>
-        {{end}}
     </div>
 {{end}}

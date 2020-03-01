@@ -1,14 +1,6 @@
 {{define "form_layout_two_col"}}
     <div class="row">
-        {{range $key, $data := .ContentList}}
-            <div class="col-md-{{divide 12 (len $.ContentList)}}">
-                <div class="box-body">
-                    <div class="fields-group">
-                        {{ template "form_components" $data}}
-                    </div>
-                </div>
-            </div>
-        {{end}}
+        {{ template "form_components_layout" .}}
     </div>
 
     {{range $key, $data := .Content}}
