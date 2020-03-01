@@ -1132,8 +1132,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{if eq $Type "data-table"}}
                     {{if eq $IsTab false}}
                         <td style="text-align: center;">
-                            <input type="checkbox" class="grid-row-checkbox" data-id="{{(index $info $PrimaryKey).Content}}"
-                                       style="position: absolute; opacity: 0;">
+                            <input type="checkbox" class="grid-row-checkbox"
+                                   data-id="{{(index $info $PrimaryKey).Content}}"
+                                   style="position: absolute; opacity: 0;">
                         </td>
                     {{end}}
                 {{end}}
@@ -1153,20 +1154,20 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                                data-updateurl="{{$UpdateUrl}}"
                                                data-pk="{{(index $info $PrimaryKey).Content}}"
                                                type="checkbox" name="__checkbox__edit_info"
-                                               {{if eq (index $head2.EditOption 0).Value (index $info $head2.Field).Value}}
-                                                   checked
-                                               {{end}}
-                                               >
+                                                {{if eq (index $head2.EditOption 0).Value (index $info $head2.Field).Value}}
+                                                    checked
+                                                {{end}}
+                                        >
                                         <input type="hidden" value="{{(index $head2.EditOption 0).Value}}">
                                         <input type="hidden" value="{{(index $head2.EditOption 1).Value}}">
                                     {{else}}
-                                    <a href="#" class="editable-td-{{$head2.EditType}}"
-                                       data-pk="{{(index $info $PrimaryKey).Content}}"
-                                       data-source='{{$head2.EditOption.Marshal}}'
-                                       data-url="{{$UpdateUrl}}"
-                                       data-value="{{(index $info $head2.Field).Value}}"
-                                       data-name="{{$head2.Field}}"
-                                       data-title="Enter {{$head2.Head}}">{{(index $info $head2.Field).Content}}</a>
+                                        <a href="#" class="editable-td-{{$head2.EditType}}"
+                                           data-pk="{{(index $info $PrimaryKey).Content}}"
+                                           data-source='{{$head2.EditOption.Marshal}}'
+                                           data-url="{{$UpdateUrl}}"
+                                           data-value="{{(index $info $head2.Field).Value}}"
+                                           data-name="{{$head2.Field}}"
+                                           data-title="Enter {{$head2.Head}}">{{(index $info $head2.Field).Content}}</a>
                                     {{end}}
                                 </td>
                             {{else}}
@@ -1178,14 +1179,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         <td style="text-align: center;">
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
-                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}'><i class="fa fa-edit"></i></a>
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}'><i
+                                                class="fa fa-edit"></i></a>
                                 {{end}}
                                 {{if $DeleteUrl}}
                                     <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}'
                                        class="grid-row-delete"><i class="fa fa-trash"></i></a>
                                 {{end}}
                                 {{if $DetailUrl}}
-                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}" class="grid-row-view">
+                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}"
+                                       class="grid-row-view">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 {{end}}
@@ -1205,11 +1208,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </table>
     {{if eq $Type "data-table"}}
         <script>
-            $('.grid-row-delete').unbind('click').click(function () {
-                DeletePost($(this).data('id'))
-            });
-
-            selectedRows = function () {
+            const selectedRows = function () {
                 let selected = [];
                 $('.grid-row-checkbox:checked').each(function () {
                     selected.push($(this).data('id'));
@@ -1217,7 +1216,29 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 return selected;
             };
 
+            const selectedAllFieldsRows = function () {
+                let selected = [];
+                $('.column-select-item:checked').each(function () {
+                    selected.push($(this).data('id'));
+                });
+                return selected;
+            };
+
+            const pjaxContainer = "#pjax-container";
+            const noAnimation = "__go_admin_no_animation_";
+
+            function iCheck(el) {
+                el.iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function () {
+                    if (this.checked) {
+                        $(this).closest('tr').css('background-color', "#ffffd5");
+                    } else {
+                        $(this).closest('tr').css('background-color', '');
+                    }
+                });
+            }
+
             $(function () {
+
                 $('.grid-select-all').iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function (event) {
                     console.log("event", event);
                     if (this.checked) {
@@ -1243,11 +1264,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     }
                 }
 
-                {{if .HasFilter}}
-                    {{if .IsHideFilterArea}}
-                        $('.filter-area').hide();
-                    {{end}}
-                {{end}}
+                {{if .HasFilter}}{{if .IsHideFilterArea}}
+                $('.filter-area').hide();
+                {{end}}{{end}}
+
+                // Fix PopUp error of table row action
 
                 let lastTd = $("table tr:last td:last div");
                 if (lastTd.hasClass("dropdown")) {
@@ -1276,51 +1297,60 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         }
                     }
                 }
+
+                // Initialize sort parameters
+
+                let sort = getQueryVariable("__sort");
+                let sort_type = getQueryVariable("__sort_type");
+
+                if (sort !== "" && sort_type !== "") {
+                    let sortFa = $('#sort-' + sort);
+                    if (sort_type === 'asc') {
+                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=desc")
+                    } else {
+                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=asc")
+                    }
+                    sortFa.removeClass('fa-sort');
+                    sortFa.addClass('fa-sort-amount-' + sort_type);
+                }
             });
 
-            selectedAllFieldsRows = function () {
-                let selected = [];
-                $('.column-select-item:checked').each(function () {
-                    selected.push($(this).data('id'));
-                });
-                return selected;
-            };
+            // ============================
+            // .IsHideRowSelector
+            // ============================
 
             {{if ne .IsHideRowSelector true}}
-            $('.column-select-all').on('click', function (event) {
+
+            $('.column-select-all').on('click', function () {
                 $('.column-select-item').iCheck('check');
             });
 
             $('.column-select-submit').on('click', function () {
 
-                let newUrl = "";
-                if (getQueryVariable('__columns') !== '') {
-                    newUrl = replaceParamVal('__columns', selectedAllFieldsRows().join(","));
-                } else {
-                    if (location.href.indexOf("?") > 0) {
-                        newUrl = location.href + "&__columns=" + selectedAllFieldsRows().join(",");
-                    } else {
-                        newUrl = location.href + "?__columns=" + selectedAllFieldsRows().join(",");
-                    }
-                }
+                let param = new Map();
+                param.set("__columns", selectedAllFieldsRows().join(","));
+                param.set(noAnimation, "true");
 
-                $.pjax({url: newUrl, container: '#pjax-container'})
+                $.pjax({
+                    url: addParameterToURL(param),
+                    container: pjaxContainer
+                });
 
                 toastr.success('{{lang "reload succeeded"}} !');
             });
 
-            function replaceParamVal(paramName, replaceWith) {
-                let oUrl = this.location.href.toString();
-                let re = eval('/(' + paramName + '=)([^&]*)/gi');
-                return oUrl.replace(re, paramName + '=' + replaceWith);
-            }
             {{end}}
 
-            $('.grid-batch-0').on('click', function () {
-                DeletePost(selectedRows().join())
-            });
+            // ============================
+            // end
+            // ============================
+
+            // ============================
+            // .ExportUrl
+            // ============================
 
             {{if .ExportUrl}}
+
             $('.grid-batch-1').on('click', function () {
                 ExportAll(selectedRows().join())
             });
@@ -1340,17 +1370,26 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 form.submit();
                 form.remove()
             }
+
             {{end}}
 
-            function iCheck(el) {
-                el.iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function () {
-                    if (this.checked) {
-                        $(this).closest('tr').css('background-color', "#ffffd5");
-                    } else {
-                        $(this).closest('tr').css('background-color', '');
-                    }
-                });
-            }
+            // ============================
+            // end
+            // ============================
+
+            // ============================
+            // .DeleteUrl
+            // ============================
+
+            {{if .DeleteUrl}}
+
+            $('.grid-row-delete').unbind('click').click(function () {
+                DeletePost($(this).data('id'))
+            });
+
+            $('.grid-batch-0').on('click', function () {
+                DeletePost(selectedRows().join())
+            });
 
             function DeletePost(id) {
                 swal({
@@ -1370,7 +1409,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 id: id
                             },
                             success: function (data) {
-                                $.pjax.reload('#pjax-container');
+                                let param = new Map();
+                                param.set(noAnimation, "true");
+                                $.pjax({
+                                    url: addParameterToURL(param),
+                                    container: pjaxContainer
+                                });
                                 if (typeof (data) === "string") {
                                     data = JSON.parse(data);
                                 }
@@ -1399,21 +1443,15 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     });
             }
 
-            $(function () {
-                let sort = getQueryVariable("__sort");
-                let sort_type = getQueryVariable("__sort_type");
+            {{end}}
 
-                if (sort !== "" && sort_type !== "") {
-                    let sortFa = $('#sort-' + sort);
-                    if (sort_type === 'asc') {
-                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=desc")
-                    } else {
-                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=asc")
-                    }
-                    sortFa.removeClass('fa-sort');
-                    sortFa.addClass('fa-sort-amount-' + sort_type);
-                }
-            });
+            // ============================
+            // end
+            // ============================
+
+            // ============================
+            // Helper functions
+            // ============================
 
             function getQueryVariable(variable) {
                 let query = window.location.search.substring(1);
@@ -1427,7 +1465,30 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 return "";
             }
 
-            $(document).ready(function () {
+            function addParameterToURL(params) {
+                let newUrl = location.href.replace("#", "");
+
+                for (let [field, value] of params) {
+                    if (getQueryVariable(field) !== '') {
+                        newUrl = replaceParamVal(newUrl, field, value);
+                    } else {
+                        if (newUrl.indexOf("?") > 0) {
+                            newUrl = newUrl + "&" + field + "=" + value;
+                        } else {
+                            newUrl = newUrl + "?" + field + "=" + value;
+                        }
+                    }
+                }
+
+                return newUrl
+            }
+
+            function replaceParamVal(oUrl, paramName, replaceWith) {
+                let re = eval('/(' + paramName + '=)([^&]*)/gi');
+                return oUrl.replace(re, paramName + '=' + replaceWith);
+            }
+
+            $(function () {
 
                 $('.editable-td-select').editable({
                     "type": "select",
