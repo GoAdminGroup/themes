@@ -216,7 +216,7 @@ function addNavTab(link, content) {
 function checkNavExist(link) {
     let navs = $('.nav-addtabs li');
     for (let i = 0; i < navs.length; i++) {
-        if (parseURL($(navs[i]).find('a').attr('href')) === link) {
+        if (parseURL($(navs[i]).find('a').attr('href')) === link.split("?")[0]) {
             removeActive();
             $(navs[i]).addClass('active');
             return true;
@@ -227,7 +227,7 @@ function checkNavExist(link) {
 
 function parseURL(url) {
     let t = url.substring(url.indexOf("//") + 2);
-    return t.substring(t.indexOf("/"));
+    return t.substring(t.indexOf("/")).split("?")[0];
 }
 
 function updateNavURL() {
