@@ -1166,7 +1166,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 iCheck(items);
                 iCheck($('.grid-row-checkbox'));
                 let columns = getQueryVariable("__columns");
-                if (columns === "") {
+                if (columns === -1) {
                     items.iCheck('check');
                 } else {
                     let columnsArr = columns.split(",");
@@ -1218,7 +1218,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 let sort = getQueryVariable("__sort");
                 let sort_type = getQueryVariable("__sort_type");
 
-                if (sort !== "" && sort_type !== "") {
+                if (sort !== -1 && sort_type !== -1) {
                     let sortFa = $('#sort-' + sort);
                     if (sort_type === 'asc') {
                         sortFa.attr('href', '?__sort=' + sort + "&__sort_type=desc")
@@ -1237,14 +1237,20 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{if ne .IsHideRowSelector true}}
 
             $('.column-select-all').on('click', function () {
-                $('.column-select-item').iCheck('check');
+                if ($(this).data('check') === '') {
+                    $('.column-select-item').iCheck('check');
+                    $(this).data('check', 'true')
+                } else {
+                    $('.column-select-item').iCheck('uncheck');
+                    $(this).data('check', '')
+                }
             });
 
             $('.column-select-submit').on('click', function () {
 
                 let param = new Map();
-                param.set("__columns", selectedAllFieldsRows().join(","));
-                param.set(noAnimation, "true");
+                param.set('__columns', selectedAllFieldsRows().join(','));
+                param.set(noAnimation, 'true');
 
                 $.pjax({
                     url: addParameterToURL(param),
@@ -1267,7 +1273,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{if .ExportUrl}}
 
             $('.grid-batch-1').on('click', function () {
-                ExportAll(selectedRows().join())
+                let rows = selectedRows();
+                if (rows.length > 0) {
+                    ExportAll(rows.join())
+                }
             });
 
             function ExportAll(id) {
@@ -1303,7 +1312,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             });
 
             $('.grid-batch-0').on('click', function () {
-                DeletePost(selectedRows().join())
+                let rows = selectedRows();
+                if (rows.length > 0) {
+                    DeletePost(rows.join())
+                }
             });
 
             function DeletePost(id) {
@@ -1377,14 +1389,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         return pair[1];
                     }
                 }
-                return "";
+                return -1;
             }
 
             function addParameterToURL(params) {
                 let newUrl = location.href.replace("#", "");
 
                 for (let [field, value] of params) {
-                    if (getQueryVariable(field) !== '') {
+                    if (getQueryVariable(field) !== -1) {
                         newUrl = replaceParamVal(newUrl, field, value);
                     } else {
                         if (newUrl.indexOf("?") > 0) {
