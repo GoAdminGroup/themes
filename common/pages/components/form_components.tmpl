@@ -5,6 +5,8 @@
         {{ template "form_text" .  }}
     {{else if eq .FormType.String "file"}}
         {{ template "form_file" .  }}
+    {{else if eq .FormType.String "multi_file"}}
+        {{ template "form_multi_file" .  }}
     {{else if eq .FormType.String "password"}}
         {{ template "form_password" .  }}
     {{else if eq .FormType.String "selectbox"}}

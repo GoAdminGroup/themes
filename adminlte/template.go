@@ -233,15 +233,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
            data-initial-caption="{{.Value}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     <script>
-        $("input.{{.Field}}").fileinput({
-            "overwriteInitial": true,
-            "initialPreviewAsData": true,
-            "browseLabel": "Browse",
-            "showRemove": false,
-            "previewClass": "preview-{{.Field}}",
-            "showUpload": false,
-            "allowedFileTypes": ["image"]
-        });
+        $("input.{{.Field}}").fileinput({{.OptionExt}});
         $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
             $(".{{.Field}}__delete_flag").val("1")
         });
@@ -275,6 +267,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                value='{{.Value}}' class="form-control json"
                placeholder="{{.Placeholder}}">
     </div>
+{{end}}`,"components/form/multi_file":`{{define "form_multi_file"}}
+    <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-preview="{{.Value2}}"
+           data-initial-caption="{{.Value}}">
+    <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
+    <script>
+        $("input.{{.Field}}").fileinput({{.OptionExt}});
+        $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
+            $(".{{.Field}}__delete_flag").val("1")
+        });
+    </script>
 {{end}}`,"components/form/number":`{{define "form_number"}}
     <div class="input-group">
         <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
@@ -354,19 +356,22 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </script>
 {{end}}`,"components/form/richtext":`{{define "form_rich_text"}}
     <div id="{{.Field}}-editor">
-        <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
     </div>
     <input type="hidden" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
            placeholder="{{.Placeholder}}">
     <script type="text/javascript">
-        editor = new window.wangEditor('#{{.Field}}-editor');
-        editor.customConfig.onchange = function (html) {
+        {{$field := (js .Field)}}
+        {{$field}}editor = new window.wangEditor('#{{.Field}}-editor');
+        {{$field}}editor.customConfig.onchange = function (html) {
             $('#{{.Field}}').val(html)
         };
-        editor.create();
-        editor.txt.html('{{.Value}}');
+        {{$field}}editor.customConfig.uploadImgServer = '/editor/imgs/upload';
+        {{$field}}editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+        {{$field}}editor.customConfig.uploadImgMaxLength = 5;
+        {{$field}}editor.create();
+        {{$field}}editor.txt.html('{{.Value}}');
         {{if not .Editable}}
-        editor.$textElem.attr('contenteditable', false);
+        {{$field}}editor.$textElem.attr('contenteditable', false);
         {{end}}
     </script>
 {{end}}`,"components/form/select":`{{define "form_select"}}
@@ -532,6 +537,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{ template "form_text" .  }}
     {{else if eq .FormType.String "file"}}
         {{ template "form_file" .  }}
+    {{else if eq .FormType.String "multi_file"}}
+        {{ template "form_multi_file" .  }}
     {{else if eq .FormType.String "password"}}
         {{ template "form_password" .  }}
     {{else if eq .FormType.String "selectbox"}}

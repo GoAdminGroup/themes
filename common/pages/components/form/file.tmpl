@@ -3,15 +3,7 @@
            data-initial-caption="{{.Value}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     <script>
-        $("input.{{.Field}}").fileinput({
-            "overwriteInitial": true,
-            "initialPreviewAsData": true,
-            "browseLabel": "Browse",
-            "showRemove": false,
-            "previewClass": "preview-{{.Field}}",
-            "showUpload": false,
-            "allowedFileTypes": ["image"]
-        });
+        $("input.{{.Field}}").fileinput({{.OptionExt}});
         $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
             $(".{{.Field}}__delete_flag").val("1")
         });
