@@ -365,9 +365,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{$field}}editor.customConfig.onchange = function (html) {
             $('#{{.Field}}').val(html)
         };
-        {{$field}}editor.customConfig.uploadImgServer = '/editor/imgs/upload';
-        {{$field}}editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
-        {{$field}}editor.customConfig.uploadImgMaxLength = 5;
+        {{.OptionExt}}
         {{$field}}editor.create();
         {{$field}}editor.txt.html('{{.Value}}');
         {{if not .Editable}}
