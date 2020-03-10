@@ -15,5 +15,6 @@
         {{if not .Editable}}
         {{$field}}editor.$textElem.attr('contenteditable', false);
         {{end}}
+        window.wangEditor.fullscreen.init('#{{.Field}}-editor');
     </script>
 {{end}}

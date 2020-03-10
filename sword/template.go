@@ -262,11 +262,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                placeholder="{{.Placeholder}}">
     </div>
 {{end}}`,"components/form/multi_file":`{{define "form_multi_file"}}
-    <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-preview="{{.Value2}}"
-           data-initial-caption="{{.Value}}">
+    <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{lang "Input"}} {{.Field}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     <script>
-        $("input.{{.Field}}").fileinput({{.OptionExt}});
+        mutilfileoptions = {{.OptionExt}};
+        {{if ne .Value ""}}
+        mutilfileoptions.initialPreview = {{js .Value}};
+        {{end}}
+        $("input.{{.Field}}").fileinput(mutilfileoptions);
         $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
             $(".{{.Field}}__delete_flag").val("1")
         });
@@ -365,6 +368,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{if not .Editable}}
         {{$field}}editor.$textElem.attr('contenteditable', false);
         {{end}}
+        window.wangEditor.fullscreen.init('#{{.Field}}-editor');
     </script>
 {{end}}`,"components/form/select":`{{define "form_select"}}
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"

@@ -450,10 +450,6 @@ a {
     white-space: nowrap;
 }
 
-.bootstrap-datetimepicker-widget.dropdown-menu, .select2-results__options {
-    z-index: 10002;
-}
-
 .skin-black .content-header {
     background: #fff !important;
 }
@@ -524,30 +520,4 @@ form .nav-tabs-custom > .tab-content {
     padding-left: 18px !important;
     padding-top: 21px !important;
     font-size: 20px;
-}
-
-.box-header.filter-area form .select2-selection.select2-selection--single {
-    height: 34px !important;
-    line-height: 24px !important;
-}
-
-.box-header.filter-area form .select2-selection__rendered {
-    line-height: 28px !important;
-}
-
-.box-header.filter-area form .select2-selection.select2-selection--multiple .select2-selection__choice {
-    height: 24px;
-    line-height: 19px;
-}
-
-.box-header.filter-area form .select2-selection.select2-selection--multiple {
-    height: 34px;
-}
-
-.box-header.filter-area form .select2-selection.select2-selection--multiple .select2-selection__clear {
-    margin-top: 3px !important;
-}
-
-.box-header.filter-area form .select2-search__field {
-    line-height: 24px !important;
 }
