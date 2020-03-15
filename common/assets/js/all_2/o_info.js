@@ -260,10 +260,12 @@ $('.fixed-btn').on('click', function () {
     if (clicked === "false") {
         $('.main-sidebar').css('position', 'fixed');
         $('.main-header .logo').css('position', 'fixed');
-        $(this).attr('data-click', 'true')
+        $(this).attr('data-click', 'true');
+        $(this).css('background-color', '#f3f3f3');
     } else {
         $('.main-sidebar').css('position', '');
         $('.main-header .logo').css('position', '');
-        $(this).attr('data-click', 'false')
+        $(this).attr('data-click', 'false');
+        $(this).css('background-color', 'white');
     }
 });
