@@ -255,17 +255,31 @@ function checkNavLength() {
     return $('#firstnav').width() * 0.6 - $('.nav-addtabs').width() >= 120;
 }
 
+const fixedKey = "go_admin__sidebar_fixed";
+
+$(function () {
+    let isFixed = window.localStorage.getItem(fixedKey);
+    if (isFixed === "true") {
+        $('.main-sidebar').css('position', 'fixed');
+        $('.main-header .logo').css('position', 'fixed');
+        $('.fixed-btn').attr('data-click', 'true');
+    }
+});
+
+
 $('.fixed-btn').on('click', function () {
     let clicked = $(this).attr('data-click');
     if (clicked === "false") {
         $('.main-sidebar').css('position', 'fixed');
         $('.main-header .logo').css('position', 'fixed');
         $(this).attr('data-click', 'true');
+        window.localStorage.setItem(fixedKey, "true");
         $(this).css('background-color', '#f3f3f3');
     } else {
         $('.main-sidebar').css('position', '');
         $('.main-header .logo').css('position', '');
         $(this).attr('data-click', 'false');
+        window.localStorage.removeItem(fixedKey);
         $(this).css('background-color', 'white');
     }
 });
