@@ -68,7 +68,7 @@
                 </div>
             {{end}}
         </div>
-        {{render .Buttons "{%ids}" "selectedRows().join()"}}
+        {{renderRowDataHTML "" .Buttons}}
     </div>
     <span>
         {{if or .DeleteUrl .ExportUrl}}

@@ -924,7 +924,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </div>
             {{end}}
         </div>
-        {{render .Buttons "{%ids}" "selectedRows().join()"}}
+        {{renderRowDataHTML "" .Buttons}}
     </div>
     <span>
         {{if or .DeleteUrl .ExportUrl}}
@@ -1106,7 +1106,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{render (render $Action "{%id}" ((index $info $PrimaryKey).Content)) "{%ids}" "selectedRows().join()"}}
+                                {{renderRowDataHTML (index $info $PrimaryKey).Content $Action}}
                             {{end}}
                         </td>
                     {{end}}
@@ -1121,7 +1121,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </table>
     {{if eq $Type "data-table"}}
         <script>
-            const selectedRows = function () {
+            window.selectedRows = function () {
                 let selected = [];
                 $('.grid-row-checkbox:checked').each(function () {
                     selected.push($(this).data('id'));
@@ -1498,7 +1498,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 })
             });
 
-            {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
+            {{renderRowDataJS "" .ActionJs}}
         </script>
         <style>
             table tbody tr td {

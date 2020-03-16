@@ -117,7 +117,7 @@
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{render (render $Action "{%id}" ((index $info $PrimaryKey).Content)) "{%ids}" "selectedRows().join()"}}
+                                {{renderRowDataHTML (index $info $PrimaryKey).Content $Action}}
                             {{end}}
                         </td>
                     {{end}}
@@ -132,7 +132,7 @@
     </table>
     {{if eq $Type "data-table"}}
         <script>
-            const selectedRows = function () {
+            window.selectedRows = function () {
                 let selected = [];
                 $('.grid-row-checkbox:checked').each(function () {
                     selected.push($(this).data('id'));
@@ -509,7 +509,7 @@
                 })
             });
 
-            {{renderJS .ActionJs "{%ids}" "selectedRows().join()"}}
+            {{renderRowDataJS "" .ActionJs}}
         </script>
         <style>
             table tbody tr td {
