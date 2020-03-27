@@ -4,6 +4,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
+            {{.NavButtonsHTML}}
+
             <li title="{{lang "Fixed the sidebar"}}">
                 <a href="javascript:void(0);" class="fixed-btn" data-click="false">
                     <i class="fa fa-thumb-tack"></i>
