@@ -224,6 +224,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{.Value}}
         </div>
     </div>
+    <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
 {{end}}`,"components/form/email":`{{define "form_email"}}
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
