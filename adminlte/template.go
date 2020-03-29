@@ -1162,7 +1162,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             $(function () {
 
                 $('.grid-select-all').iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function (event) {
-                    console.log("event", event);
                     if (this.checked) {
                         $('.grid-row-checkbox').iCheck('check');
                     } else {
@@ -1179,7 +1178,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     let columnsArr = columns.split(",");
                     for (let i = 0; i < columnsArr.length; i++) {
                         for (let j = 0; j < items.length; j++) {
-                            if (columnsArr[i] === $(items[j]).attr("data-id")) {
+                            if (decodeURI(columnsArr[i]) === $(items[j]).attr("data-id")) {
                                 $(items[j]).iCheck('check');
                             }
                         }
