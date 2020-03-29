@@ -4,6 +4,7 @@
             <div class="box-body" style="min-height: 40px;">
                 {{.Value}}
             </div>
+            <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
         </div>
     {{else}}
         <div class="input-group">

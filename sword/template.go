@@ -167,6 +167,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             <div class="box-body" style="min-height: 40px;">
                 {{.Value}}
             </div>
+            <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
         </div>
     {{else}}
         <div class="input-group">
@@ -483,6 +484,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     {{if eq .Label "free"}}
         <script>

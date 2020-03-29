@@ -34,6 +34,7 @@
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     {{if eq .Label "free"}}
         <script>
