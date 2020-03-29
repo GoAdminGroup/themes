@@ -1894,12 +1894,13 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         </div>
     </aside>
 {{end}}`,"footer":`{{define "footer"}}
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> {{.System.Version}}
-    </div>
-    <strong>Powered by <a href="https://github.com/GoAdminGroup/go-admin">GoAdmin</a>.</strong>
-</footer>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> {{.System.Version}}
+        </div>
+        <strong>Powered by <a href="https://github.com/GoAdminGroup/go-admin">GoAdmin</a>.</strong>
+        {{.FooterInfo}}
+    </footer>
 {{end}}`,"head":`{{define "head"}}
     <head>
         <meta charset="utf-8">
