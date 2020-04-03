@@ -1500,7 +1500,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 if (data.code !== 200) {
                                     swal(data.msg, '', 'error');
                                 }
-                            }
+                            },
+                            error: function (data) {
+                                if (data.responseText !== "") {
+                                    swal(data.responseJSON.msg, '', 'error');
+                                } else {
+                                    swal("{{lang "error"}}", '', 'error');
+                                }
+                            },
                         });
                     }
                 })
