@@ -511,8 +511,9 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 {{end}}`,"components/form":`{{define "form"}}
     <script src={{link .CdnUrl .Prefix "/assets/dist/js/form.min.js"}}></script>
     {{.Header}}
-    <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container style="background-color: white;">
-        <div class="box-body">
+    <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container
+          style="background-color: white;">
+        <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
 
             {{if ne (len .TabHeaders) 0}}
                 {{ template "form_layout_tab" . }}
@@ -712,7 +713,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
 {{end}}`,"components/form_layout_tab":`{{define "form_layout_tab"}}
 
-    <div class="box-body">
+    <div class="col-md-12">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 {{range $key, $data := .TabHeaders}}
