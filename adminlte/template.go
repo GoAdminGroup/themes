@@ -126,8 +126,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <textarea {{if .Must}}required="1"{{end}} class="ace_text-input {{.Field}}"
                 {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
     </pre>
-    <input type="hidden" id="{{.Field}}_input" name="{{.Field}}" value='{{.Value}}'
-           placeholder="{{.Placeholder}}">
+    <textarea style="display:none;" id="{{.Field}}_input" name="{{.Field}}">{{.Value}}</textarea>
     <script>
         {{.OptionExt}}
         {{$field := (js .Field)}}
@@ -138,7 +137,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{$field}}editor.setReadOnly({{if not .Editable}}true{{else}}false{{end}});
         {{$field}}editor.setOptions(options);
         {{$field}}editor.session.on('change', function(delta) {
-            $('#{{.Field}}_input').val({{$field}}editor.getValue());
+            $('#{{.Field}}_input').html({{$field}}editor.getValue());
         });
     </script>
 {{end}}`,"components/form/color":`{{define "form_color"}}
