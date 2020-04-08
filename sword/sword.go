@@ -65,3 +65,9 @@ func (*Theme) GetAsset(path string) ([]byte, error) {
 func (*Theme) GetAssetList() []string {
 	return resource.AssetsList
 }
+
+const Version = "0.0.30"
+
+func (*Theme) GetVersion() string {
+	return Version
+}
