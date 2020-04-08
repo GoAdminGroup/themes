@@ -1,0 +1,21 @@
+{{define "form_code"}}
+    <pre id="{{.Field}}" class="ace_editor" style="min-height:200px">
+        <textarea {{if .Must}}required="1"{{end}} class="ace_text-input {{.Field}}"
+                {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+    </pre>
+    <input type="hidden" id="{{.Field}}_input" name="{{.Field}}" value='{{.Value}}'
+           placeholder="{{.Placeholder}}">
+    <script>
+        {{.OptionExt}}
+        {{$field := (js .Field)}}
+        {{$field}}editor = ace.edit("{{.Field}}");
+        {{$field}}editor.setTheme("ace/theme/" + theme);
+        {{$field}}editor.session.setMode("ace/mode/" + language);
+        {{$field}}editor.setFontSize(font_size);
+        {{$field}}editor.setReadOnly({{if not .Editable}}true{{else}}false{{end}});
+        {{$field}}editor.setOptions(options);
+        {{$field}}editor.session.on('change', function(delta) {
+            $('#{{.Field}}_input').val({{$field}}editor.getValue());
+        });
+    </script>
+{{end}}

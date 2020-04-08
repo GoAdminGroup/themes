@@ -121,6 +121,26 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </div>
 {{end}}`,"components/col":`{{define "col"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
+{{end}}`,"components/form/code":`{{define "form_code"}}
+    <pre id="{{.Field}}" class="ace_editor" style="min-height:200px">
+        <textarea {{if .Must}}required="1"{{end}} class="ace_text-input {{.Field}}"
+                {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+    </pre>
+    <input type="hidden" id="{{.Field}}_input" name="{{.Field}}" value='{{.Value}}'
+           placeholder="{{.Placeholder}}">
+    <script>
+        {{.OptionExt}}
+        {{$field := (js .Field)}}
+        {{$field}}editor = ace.edit("{{.Field}}");
+        {{$field}}editor.setTheme("ace/theme/" + theme);
+        {{$field}}editor.session.setMode("ace/mode/" + language);
+        {{$field}}editor.setFontSize(font_size);
+        {{$field}}editor.setReadOnly({{if not .Editable}}true{{else}}false{{end}});
+        {{$field}}editor.setOptions(options);
+        {{$field}}editor.session.on('change', function(delta) {
+            $('#{{.Field}}_input').val({{$field}}editor.getValue());
+        });
+    </script>
 {{end}}`,"components/form/color":`{{define "form_color"}}
     <div class="input-group colorpicker-element">
         <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
@@ -561,6 +581,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{ template "form_iconpicker" .  }}
     {{else if eq .FormType.String "richtext"}}
         {{ template "form_rich_text" .  }}
+    {{else if eq .FormType.String "code"}}
+        {{ template "form_code" .  }}
     {{else if eq .FormType.String "datetime"}}
         {{ template "form_datetime" .  }}
     {{else if eq .FormType.String "datetime_range"}}
