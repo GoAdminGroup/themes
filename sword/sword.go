@@ -4,6 +4,7 @@ import (
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 	"github.com/GoAdminGroup/go-admin/template/components"
 	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/GoAdminGroup/themes/common"
 	"github.com/GoAdminGroup/themes/sword/resource"
 	"html/template"
 )
@@ -11,6 +12,7 @@ import (
 type Theme struct {
 	Name string
 	components.Base
+	common.BaseTheme
 }
 
 var Sword = Theme{
@@ -64,10 +66,4 @@ func (*Theme) GetAsset(path string) ([]byte, error) {
 
 func (*Theme) GetAssetList() []string {
 	return resource.AssetsList
-}
-
-const Version = "0.0.30"
-
-func (*Theme) GetVersion() string {
-	return Version
 }
