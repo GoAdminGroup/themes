@@ -1725,7 +1725,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 
     <!-- Main content -->
-    <section class="content">
+    <section {{if lang .Panel.Title}}class="content"{{end}}>
         {{.Panel.Content}}
     </section>
 {{end}}`,"control_panel":`{{define "control_panel"}}
