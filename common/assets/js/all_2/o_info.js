@@ -26,6 +26,8 @@ $(document).pjax('a:not(a[target="_blank"])', {
     container: '#pjax-container'
 });
 
+$(document).on("pjax:click", "a.no-pjax", false);
+
 $(document).on('pjax:timeout', function (event) {
     event.preventDefault();
 });
