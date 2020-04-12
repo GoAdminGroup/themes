@@ -1711,11 +1711,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
     {{.AssetsList}}
-    {{if lang .Panel.Title}}
+    {{if ne .Panel.Title ""}}
         <section class="content-header">
             <h1>
-                {{lang .Panel.Title}}
-                <small>{{lang .Panel.Description}}</small>
+                {{langHtml .Panel.Title}}
+                <small>{{langHtml .Panel.Description}}</small>
             </h1>
             <ol class="breadcrumb" style="margin-right: 30px;">
                 <li><a href="{{.IndexUrl}}"><i class="fa fa-dashboard"></i> {{lang "home"}}</a></li>
@@ -1725,7 +1725,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{end}}
 
     <!-- Main content -->
-    <section {{if lang .Panel.Title}}class="content"{{end}}>
+    <section {{if ne .Panel.Title ""}}class="content"{{end}}>
         {{.Panel.Content}}
     </section>
 {{end}}`,"control_panel":`{{define "control_panel"}}
