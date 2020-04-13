@@ -1707,7 +1707,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
     {{.AssetsList}}
-    {{if lang .Panel.Title}}
+    {{if ne .Panel.Title ""}}
         <section class="content-header">
             <div>
                 <ol class="breadcrumb">
@@ -1716,8 +1716,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </ol>
             </div>
             <h4>
-                {{lang .Panel.Title}}
-                <small>{{lang .Panel.Description}}</small>
+                {{langHtml .Panel.Title}}
+                <small>{{langHtml .Panel.Description}}</small>
             </h4>
         </section>
     {{end}}
