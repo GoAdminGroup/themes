@@ -56,7 +56,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                class="btn btn-default btn-flat">{{lang "setting"}}</a>
                         </div>
                         <div class="pull-right">
-                            <a href="{{.UrlPrefix}}/logout" class="btn btn-default btn-flat">{{lang "sign out"}}</a>
+                            <a href="{{.UrlPrefix}}/logout" class="no-pjax btn btn-default btn-flat">{{lang "sign out"}}</a>
                         </div>
                     </li>
                 </ul>
