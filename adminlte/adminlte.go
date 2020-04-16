@@ -25,13 +25,13 @@ const (
 )
 
 type Theme struct {
-	Name string
+	ThemeName string
 	components.Base
 	common.BaseTheme
 }
 
 var Adminlte = Theme{
-	Name: "adminlte",
+	ThemeName: "adminlte",
 	Base: components.Base{
 		Attribute: types.Attribute{
 			TemplateList: TemplateList,
@@ -45,6 +45,10 @@ func init() {
 
 func Get() *Theme {
 	return &Adminlte
+}
+
+func (t *Theme) Name() string {
+	return t.ThemeName
 }
 
 func (*Theme) GetTmplList() map[string]string {
