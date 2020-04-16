@@ -621,6 +621,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 <div class="box-body">
                     <div class="fields-group">
                         {{range $key, $data := $content}}
+                            {{if $data.Divider}}
+                                {{if $data.DividerTitle}}
+                                    <div class='form-group'>
+                                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                                    </div>
+                                {{end}}
+                                <div class='col-sm-12 pb-3'>
+                                    <hr>
+                                </div>
+                            {{end}}
                             {{if $data.Hide}}
                                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
                             {{else}}
@@ -645,6 +655,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{range $key, $content := .TabContents}}
             <div class="tab-pane {{if eq $key 0}}active{{end}}" id="tab-form-{{$key}}">
                 {{range $key, $data := $content}}
+                    {{if $data.Divider}}
+                        {{if $data.DividerTitle}}
+                            <div class='form-group'>
+                                <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                            </div>
+                        {{end}}
+                        <div class='col-sm-12 pb-3'>
+                            <hr>
+                        </div>
+                    {{end}}
                     {{if $data.Hide}}
                         <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
                     {{else}}
@@ -670,6 +690,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{else if .Layout.Flow}}
 
         {{range $key, $data := .Content}}
+            {{if $data.Divider}}
+                {{if $data.DividerTitle}}
+                    <div class='form-group'>
+                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                    </div>
+                {{end}}
+                <div class='col-sm-12 pb-3'>
+                    <hr>
+                </div>
+            {{end}}
             {{if $data.Hide}}
                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
             {{else}}
@@ -688,6 +718,16 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{else}}
 
         {{range $key, $data := .Content}}
+            {{if $data.Divider}}
+                {{if $data.DividerTitle}}
+                    <div class='form-group'>
+                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                    </div>
+                {{end}}
+                <div class='col-sm-12 pb-3'>
+                    <hr>
+                </div>
+            {{end}}
             {{if $data.Hide}}
                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
             {{else}}

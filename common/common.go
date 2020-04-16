@@ -2,7 +2,7 @@ package common
 
 type BaseTheme struct{}
 
-const Version = "0.0.31"
+const Version = "v0.0.31"
 
 func (BaseTheme) GetVersion() string {
 	return Version

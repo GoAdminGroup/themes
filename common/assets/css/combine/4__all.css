@@ -654,3 +654,11 @@
 form .tab-content {
     margin-top: 16px;
 }
+
+form .col-sm-12 hr {
+    margin-top: 3px;
+}
+
+form .control-label.divider-title {
+    color: #a0a0a0;
+}
