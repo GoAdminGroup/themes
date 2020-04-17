@@ -623,7 +623,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         {{range $key, $data := $content}}
                             {{if $data.Divider}}
                                 {{if $data.DividerTitle}}
-                                    <div class='form-group'>
+                                    <div class='form-group divider'>
                                         <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
                                     </div>
                                 {{end}}
@@ -657,7 +657,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{range $key, $data := $content}}
                     {{if $data.Divider}}
                         {{if $data.DividerTitle}}
-                            <div class='form-group'>
+                            <div class='form-group divider'>
                                 <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
                             </div>
                         {{end}}
@@ -692,7 +692,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{range $key, $data := .Content}}
             {{if $data.Divider}}
                 {{if $data.DividerTitle}}
-                    <div class='form-group'>
+                    <div class='form-group divider'>
                         <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
                     </div>
                 {{end}}
@@ -720,7 +720,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{range $key, $data := .Content}}
             {{if $data.Divider}}
                 {{if $data.DividerTitle}}
-                    <div class='form-group'>
+                    <div class='form-group divider'>
                         <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
                     </div>
                 {{end}}

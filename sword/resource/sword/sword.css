@@ -551,3 +551,8 @@ form .nav-tabs-custom > .tab-content {
 a.bg-primary:focus, a.bg-primary:hover {
     background-color: #198fff;
 }
+
+.form-horizontal .form-group.divider {
+    margin-bottom: 0px;
+    font-weight: bold;
+}
