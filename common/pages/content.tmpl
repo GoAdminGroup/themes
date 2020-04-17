@@ -5,6 +5,12 @@
         });
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
+    {{if ne .Panel.CSS ""}}
+        <script>
+            {{.Panel.CSS}}
+        </script>
+    {{end}}
+    {{.Panel.JS}}
     {{.AssetsList}}
     {{if ne .Panel.Title ""}}
         <section class="content-header">
@@ -23,4 +29,10 @@
     <section {{if ne .Panel.Title ""}}class="content"{{end}}>
         {{.Panel.Content}}
     </section>
+
+    {{if ne .Panel.JS ""}}
+        <script>
+            {{.Panel.JS}}
+        </script>
+    {{end}}
 {{end}}

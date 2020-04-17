@@ -5,7 +5,7 @@
 
     {{range $key, $data := .Content}}
         {{if eq $data.Field $.PrimaryKey}}
-            <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+            <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
         {{end}}
     {{end}}
 {{end}}

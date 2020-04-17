@@ -681,7 +681,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{end}}
                 {{range $key, $d := $content}}
                     {{if eq $d.Field $.PrimaryKey}}
-                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                        <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$d.Value}}'>
                     {{end}}
                 {{end}}
             </div>
@@ -753,7 +753,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
         {{range $key, $data := .Content}}
             {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
             {{end}}
         {{end}}
     </div>
@@ -767,7 +767,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
         {{range $key, $data := .Content}}
             {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
             {{end}}
         {{end}}
     </div>
@@ -806,7 +806,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
     {{range $key, $data := .Content}}
         {{if eq $data.Field $.PrimaryKey}}
-            <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+            <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
         {{end}}
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}

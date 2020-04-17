@@ -681,7 +681,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{end}}
                 {{range $key, $d := $content}}
                     {{if eq $d.Field $.PrimaryKey}}
-                        <input type="hidden" name="{{$.PrimaryKey}}" value='{{$d.Value}}'>
+                        <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$d.Value}}'>
                     {{end}}
                 {{end}}
             </div>
@@ -753,7 +753,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
         {{range $key, $data := .Content}}
             {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
             {{end}}
         {{end}}
     </div>
@@ -767,7 +767,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
         {{range $key, $data := .Content}}
             {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
             {{end}}
         {{end}}
     </div>
@@ -806,7 +806,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
 
     {{range $key, $data := .Content}}
         {{if eq $data.Field $.PrimaryKey}}
-            <input type="hidden" name="{{$.PrimaryKey}}" value='{{$data.Value}}'>
+            <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
         {{end}}
     {{end}}
 {{end}}`,"components/image":`{{define "image"}}
@@ -1750,6 +1750,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
+    {{if ne .Panel.CSS ""}}
+        <script>
+            {{.Panel.CSS}}
+        </script>
+    {{end}}
+    {{.Panel.JS}}
     {{.AssetsList}}
     {{if ne .Panel.Title ""}}
         <section class="content-header">
@@ -1768,6 +1774,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <section {{if ne .Panel.Title ""}}class="content"{{end}}>
         {{.Panel.Content}}
     </section>
+
+    {{if ne .Panel.JS ""}}
+        <script>
+            {{.Panel.JS}}
+        </script>
+    {{end}}
 {{end}}`,"control_panel":`{{define "control_panel"}}
     <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
     <aside class="control-sidebar control-sidebar-dark control-sidebar-open"
