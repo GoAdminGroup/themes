@@ -65,11 +65,6 @@
                         </div>
                     {{end}}
                 {{end}}
-                {{range $key, $d := $content}}
-                    {{if eq $d.Field $.PrimaryKey}}
-                        <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                    {{end}}
-                {{end}}
             </div>
         {{end}}
 

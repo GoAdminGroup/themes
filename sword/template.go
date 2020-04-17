@@ -679,11 +679,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         </div>
                     {{end}}
                 {{end}}
-                {{range $key, $d := $content}}
-                    {{if eq $d.Field $.PrimaryKey}}
-                        <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$d.Value}}'>
-                    {{end}}
-                {{end}}
             </div>
         {{end}}
 
@@ -750,12 +745,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <div class="fields-group">
             {{ template "form_components_layout" . }}
         </div>
-
-        {{range $key, $data := .Content}}
-            {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
-            {{end}}
-        {{end}}
     </div>
 
 {{end}}`,"components/form_layout_flow":`{{define "form_layout_flow"}}
@@ -764,12 +753,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         <div class="fields-group">
             {{ template "form_components_layout" . }}
         </div>
-
-        {{range $key, $data := .Content}}
-            {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
-            {{end}}
-        {{end}}
     </div>
 
 {{end}}`,"components/form_layout_tab":`{{define "form_layout_tab"}}
@@ -803,12 +786,6 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <div class="row">
         {{ template "form_components_layout" .}}
     </div>
-
-    {{range $key, $data := .Content}}
-        {{if eq $data.Field $.PrimaryKey}}
-            <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
-        {{end}}
-    {{end}}
 {{end}}`,"components/image":`{{define "image"}}
     {{if .HasModal}}
         <img src="{{.Src}}" width="{{.Width}}" height="{{.Height}}" data-toggle="modal" data-target="#img_{{.Uuid}}" style="cursor: zoom-in;">

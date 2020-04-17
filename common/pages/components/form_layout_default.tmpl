@@ -4,12 +4,6 @@
         <div class="fields-group">
             {{ template "form_components_layout" . }}
         </div>
-
-        {{range $key, $data := .Content}}
-            {{if eq $data.Field $.PrimaryKey}}
-                <input type="hidden" name="goadmin_pk_{{$.PrimaryKey}}" value='{{$data.Value}}'>
-            {{end}}
-        {{end}}
     </div>
 
 {{end}}
