@@ -553,7 +553,7 @@ a.bg-primary:focus, a.bg-primary:hover {
 }
 
 .form-horizontal .form-group.divider {
-    margin-bottom: 0px;
+    margin-bottom: 12px;
     font-weight: bold;
 }
 
