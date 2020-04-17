@@ -556,3 +556,7 @@ a.bg-primary:focus, a.bg-primary:hover {
     margin-bottom: 0px;
     font-weight: bold;
 }
+
+form .control-label.divider-title {
+    color: #212121;
+}
