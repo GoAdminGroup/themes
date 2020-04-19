@@ -1032,17 +1032,23 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </script>
 {{end}}`,"components/table":`{{define "table"}}
-    <table class="table table-hover" style="min-width: {{.MinWidth}}px;table-layout: {{.Layout}};">
+    <table class="table table-{{.Style}}" style="min-width: {{.MinWidth}};table-layout: {{.Layout}};">
         {{if eq .Type "table"}}
-            <thead>
-            <tr>
-                {{range $key, $head := .Thead}}
-                    <th>
+            {{if not .HideThead}}
+                <thead>
+                <tr>
+                    {{range $key, $head := .Thead}}
+                        {{if eq $head.Width ""}}
+                            <th>
+                        {{else}}
+                            <th style="width: {{$head.Width}}">
+                        {{end}}
                         {{$head.Head}}
-                    </th>
-                {{end}}
-            </tr>
-            </thead>
+                        </th>
+                    {{end}}
+                </tr>
+                </thead>
+            {{end}}
         {{end}}
         <tbody>
         {{if eq .Type "data-table"}}
@@ -1054,10 +1060,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 {{end}}
                 {{range $key, $head := .Thead}}
                     {{if eq $head.Hide false}}
-                        {{if eq $head.Width 0}}
+                        {{if eq $head.Width ""}}
                             <th>
                         {{else}}
-                            <th style="width: {{$head.Width}}px">
+                            <th style="width: {{$head.Width}}">
                         {{end}}
                         {{$head.Head}}
                         {{if $head.Sortable}}
@@ -1156,7 +1162,13 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     {{end}}
                 {{else}}
                     {{range $key2, $head2 := $Thead}}
-                        <td>{{(index $info $head2.Head).Content}}</td>
+                        {{if eq $head2.Width ""}}
+                            <td>
+                        {{else}}
+                            <td style="width: {{$head2.Width}}">
+                        {{end}}
+                            {{(index $info $head2.Head).Content}}
+                        </td>
                     {{end}}
                 {{end}}
             </tr>
