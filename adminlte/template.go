@@ -12,13 +12,13 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                 </a>
             </li>
 
-            <li title="{{lang "Enter fullscreen"}}">
-                <a href="javascript:void(0);" class="fullpage-btn">
+            <li title="{{lang "Enter fullscreen"}}" class="fullpage-btn">
+                <a href="javascript:void(0);">
                     <i class="fa fa-arrows-alt"></i>
                 </a>
             </li>
-            <li title="{{lang "Exit fullscreen"}}">
-                <a href="javascript:void(0);" class="exit-fullpage-btn" style="display: none;">
+            <li title="{{lang "Exit fullscreen"}}" class="exit-fullpage-btn" style="display: none;">
+                <a href="javascript:void(0);">
                     <i class="fa fa-compress"></i>
                 </a>
             </li>
@@ -56,7 +56,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                class="btn btn-default btn-flat">{{lang "setting"}}</a>
                         </div>
                         <div class="pull-right">
-                            <a href="{{.UrlPrefix}}/logout" class="no-pjax btn btn-default btn-flat">{{lang "sign out"}}</a>
+                            <a href="{{.UrlPrefix}}/logout"
+                               class="no-pjax btn btn-default btn-flat">{{lang "sign out"}}</a>
                         </div>
                     </li>
                 </ul>
