@@ -28,8 +28,31 @@
                     </a>
                     <ul class="treeview-menu">
                         {{range $key2, $item := $list.ChildrenList}}
-                            <li><a href="{{$UrlPrefix}}{{$item.Url}}"><i class="fa {{$item.Icon}}"></i> {{$item.Name}}
-                                </a></li>
+                            {{if eq (len $item.ChildrenList) 0}}
+                            <li>
+                                <a href="{{$UrlPrefix}}{{$item.Url}}">
+                                    <i class="fa {{$item.Icon}}"></i> {{$item.Name}}
+                                </a>
+                            </li>
+                            {{else}}
+                                <li class="treeview {{$item.Active}}">
+                                    <a href="#">
+                                        <i class="fa {{$item.Icon}}"></i><span> {{$item.Name}}</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        {{range $key3, $subItem := $item.ChildrenList}}
+                                            <li>
+                                                <a href="{{$UrlPrefix}}{{$subItem.Url}}">
+                                                    <i class="fa {{$subItem.Icon}}"></i> {{$subItem.Name}}
+                                                </a>
+                                            </li>
+                                        {{end}}
+                                    </ul>
+                                </li>
+                            {{end}}
                         {{end}}
                     </ul>
                 </li>
