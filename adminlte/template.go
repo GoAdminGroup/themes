@@ -138,7 +138,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{$field}}editor.setReadOnly({{if not .Editable}}true{{else}}false{{end}});
         {{$field}}editor.setOptions(options);
         {{$field}}editor.session.on('change', function(delta) {
-            $('#{{.Field}}_input').html({{$field}}editor.getValue());
+            $('#{{.Field}}_input').html(encodeURIComponent({{$field}}editor.getValue()));
         });
     </script>
 {{end}}`,"components/form/color":`{{define "form_color"}}
