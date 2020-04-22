@@ -1741,11 +1741,10 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
     {{if ne .Panel.CSS ""}}
-        <script>
+        <style>
             {{.Panel.CSS}}
-        </script>
+        </style>
     {{end}}
-    {{.Panel.JS}}
     {{.AssetsList}}
     {{if ne .Panel.Title ""}}
         <section class="content-header">

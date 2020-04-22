@@ -1735,6 +1735,11 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         });
     </script>
     <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
+    {{if ne .Panel.CSS ""}}
+        <style>
+            {{.Panel.CSS}}
+        </style>
+    {{end}}
     {{.AssetsList}}
     {{if ne .Panel.Title ""}}
         <section class="content-header">
@@ -1755,6 +1760,12 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <section class="content">
         {{.Panel.Content}}
     </section>
+
+    {{if ne .Panel.JS ""}}
+        <script>
+            {{.Panel.JS}}
+        </script>
+    {{end}}
 {{end}}`,"control_panel":`{{define "control_panel"}}
     <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
     <aside class="control-sidebar control-sidebar-dark control-sidebar-open"
