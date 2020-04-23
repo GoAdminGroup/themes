@@ -27,44 +27,42 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     <i class="fa fa-refresh"></i>
                 </a>
             </li>
-            <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    {{if eq .User.Avatar ""}}
-                        <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="user-image" alt="User Image">
-                    {{else}}
-                        <img src="{{.User.Avatar}}" class="user-image" alt="User Image">
-                    {{end}}
-                    <span class="hidden-xs">{{.User.Name}}</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <!-- User image -->
-                    <li class="user-header">
+            {{if not .User.HideUserCenterEntrance}}
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{if eq .User.Avatar ""}}
-                            <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="img-circle" alt="User Image">
+                            <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="user-image" alt="User Image">
                         {{else}}
-                            <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
+                            <img src="{{.User.Avatar}}" class="user-image" alt="User Image">
                         {{end}}
-                        <p>
-                            {{.User.Name}} -{{.User.LevelName}}
-                            <small>{{.User.CreatedAt}}</small>
-                        </p>
-                    </li>
-                    <li class="user-footer">
-                        <div class="pull-left">
-                            <a href="{{.UrlPrefix}}/info/normal_manager/edit?__goadmin_edit_pk={{.User.Id}}"
-                               class="btn btn-default btn-flat">{{lang "setting"}}</a>
-                        </div>
-                        <div class="pull-right">
-                            <a href="{{.UrlPrefix}}/logout"
-                               class="no-pjax btn btn-default btn-flat">{{lang "sign out"}}</a>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-            <!-- <li class="hidden-xs">
-                 <a href="javascript:;" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-             </li> -->
+                        <span class="hidden-xs">{{.User.Name}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            {{if eq .User.Avatar ""}}
+                                <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="img-circle"
+                                     alt="User Image">
+                            {{else}}
+                                <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
+                            {{end}}
+                            <p>
+                                {{.User.Name}} -{{.User.LevelName}}
+                                <small>{{.User.CreatedAt}}</small>
+                            </p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="{{.UrlPrefix}}/info/normal_manager/edit?__goadmin_edit_pk={{.User.Id}}"
+                                   class="btn btn-default btn-flat">{{lang "setting"}}</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{.UrlPrefix}}/logout"
+                                   class="no-pjax btn btn-default btn-flat">{{lang "sign out"}}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            {{end}}
         </ul>
     </div>
 {{end}}`,"components/alert":`{{define "alert"}}
@@ -2142,24 +2140,23 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
         {{end}}
     </ul>
 {{end}}`,"sidebar":`{{define "sidebar"}}
-    <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    {{if eq .User.Avatar ""}}
-                        <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="img-circle" alt="User Image">
-                    {{else}}
-                        <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
-                    {{end}}
+            {{if not .User.HideUserCenterEntrance}}
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        {{if eq .User.Avatar ""}}
+                            <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="img-circle" alt="User Image">
+                        {{else}}
+                            <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
+                        {{end}}
+                    </div>
+                    <div class="pull-left info">
+                        {{.User.Name}}
+                        <a href="#"><i class="fa fa-circle text-success"></i> {{lang "online"}}</a>
+                    </div>
                 </div>
-                <div class="pull-left info">
-                    {{.User.Name}}
-                    <a href="#"><i class="fa fa-circle text-success"></i> {{lang "online"}}</a>
-                </div>
-            </div>
+            {{end}}
             <!-- search form -->
             <!-- <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
@@ -2175,6 +2172,5 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{ template "menu" . }}
 
         </section>
-        <!-- /.sidebar -->
     </aside>
 {{end}}`,}

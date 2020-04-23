@@ -560,3 +560,11 @@ a.bg-primary:focus, a.bg-primary:hover {
 form .control-label.divider-title {
     color: #212121;
 }
+
+.treeview-menu.menu-open {
+    background: rgb(0, 4, 8) !important;
+}
+
+.skin-black ul.treeview-menu ul.treeview-menu li.active {
+    background: rgb(0, 4, 8) !important;
+}
