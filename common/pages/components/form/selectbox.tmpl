@@ -5,7 +5,6 @@
             <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
-    <input type="hidden" name="{{.Field}}[]"/>
     <script>
         $(".{{.Field}}").bootstrapDualListbox({
             "infoText": "Showing all {0}",
