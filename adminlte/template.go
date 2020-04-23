@@ -1668,7 +1668,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                     {{if gt (len $item.ChildrenList) 0}}
                                         <ol class="dd-list">
                                             {{range $key2, $subItem := $item.ChildrenList}}
-                                                <li class="dd-item" data-id='{{$item.ID}}'>
+                                                <li class="dd-item" data-id='{{$subItem.ID}}'>
                                                     <div class="dd-handle">
                                                         {{if eq $subItem.Url ""}}
                                                             <i class="fa {{$subItem.Icon}}"></i>&nbsp;<strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
