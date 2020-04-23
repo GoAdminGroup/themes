@@ -4,7 +4,7 @@
             {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
         {{range $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>

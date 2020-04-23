@@ -372,7 +372,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     {{range $key, $v := .Options }}
         <input type="radio" name="{{$field}}" value="{{$v.Value}}"
                class="minimal {{$field}}" {{$v.SelectedLabel}}
-               style="position: absolute; opacity: 0;">&nbsp;{{$v.Text}}&nbsp;&nbsp;
+               style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
     {{end}}
     <script>
         $(function () {
@@ -404,7 +404,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
         {{range $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>
@@ -414,7 +414,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
     <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
             data-placeholder="Input {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>
         {{range  $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <input type="hidden" name="{{.Field}}[]"/>
@@ -433,7 +433,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
         {{range $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{$v.Text}}</option>
+            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>
