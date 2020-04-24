@@ -1638,7 +1638,8 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                         {{end}}
                         <span class="pull-right dd-nodrag">
                             <a href="{{$EditUrl}}?id={{$list.ID}}"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0);" data-id="{{$list.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
+                            <a href="javascript:void(0);" data-id="{{$list.ID}}" class="tree_branch_delete"><i
+                                        class="fa fa-trash"></i></a>
                         </span>
                     </div>
                     {{if gt (len $list.ChildrenList) 0}}
@@ -1647,21 +1648,27 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                 <li class="dd-item" data-id='{{$item.ID}}'>
                                     <div class="dd-handle">
                                         {{if eq $item.Url ""}}
-                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;
+                                            <strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                                                     href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
                                         {{else if eq $item.Url "/"}}
-                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;
+                                            <strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                                                     href="{{$UrlPrefix}}" class="dd-nodrag">{{$UrlPrefix}}</a>
                                         {{else if (isLinkUrl $item.Url)}}
-                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;
+                                            <strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
                                                     href="{{$item.Url}}" class="dd-nodrag">{{$item.Url}}</a>
                                         {{else}}
-                                            <i class="fa {{$item.Icon}}"></i>&nbsp;<strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                                    href="{{$UrlPrefix}}{{$item.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$item.Url}}</a>
+                                            <i class="fa {{$item.Icon}}"></i>&nbsp;
+                                            <strong>{{$item.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                    href="{{$UrlPrefix}}{{$item.Url}}"
+                                                    class="dd-nodrag">{{$UrlPrefix}}{{$item.Url}}</a>
                                         {{end}}
                                         <span class="pull-right dd-nodrag">
                                             <a href="{{$EditUrl}}?id={{$item.ID}}"><i class="fa fa-edit"></i></a>
-                                            <a href="javascript:void(0);" data-id="{{$item.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
+                                            <a href="javascript:void(0);" data-id="{{$item.ID}}"
+                                               class="tree_branch_delete"><i class="fa fa-trash"></i></a>
                                         </span>
                                     </div>
                                     {{if gt (len $item.ChildrenList) 0}}
@@ -1670,21 +1677,32 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                                                 <li class="dd-item" data-id='{{$subItem.ID}}'>
                                                     <div class="dd-handle">
                                                         {{if eq $subItem.Url ""}}
-                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;<strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                                                    href="{{$subItem.Url}}" class="dd-nodrag">{{$subItem.Url}}</a>
+                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;
+                                                            <strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                                    href="{{$subItem.Url}}"
+                                                                    class="dd-nodrag">{{$subItem.Url}}</a>
                                                         {{else if eq $subItem.Url "/"}}
-                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;<strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                                                    href="{{$UrlPrefix}}" class="dd-nodrag">{{$UrlPrefix}}</a>
+                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;
+                                                            <strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                                    href="{{$UrlPrefix}}"
+                                                                    class="dd-nodrag">{{$UrlPrefix}}</a>
                                                         {{else if (isLinkUrl $subItem.Url)}}
-                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;<strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                                                    href="{{$subItem.Url}}" class="dd-nodrag">{{$subItem.Url}}</a>
+                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;
+                                                            <strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                                    href="{{$subItem.Url}}"
+                                                                    class="dd-nodrag">{{$subItem.Url}}</a>
                                                         {{else}}
-                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;<strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
-                                                                    href="{{$UrlPrefix}}{{$subItem.Url}}" class="dd-nodrag">{{$UrlPrefix}}{{$subItem.Url}}</a>
+                                                            <i class="fa {{$subItem.Icon}}"></i>&nbsp;
+                                                            <strong>{{$subItem.Name}}</strong>&nbsp;&nbsp;&nbsp;<a
+                                                                    href="{{$UrlPrefix}}{{$subItem.Url}}"
+                                                                    class="dd-nodrag">{{$UrlPrefix}}{{$subItem.Url}}</a>
                                                         {{end}}
                                                         <span class="pull-right dd-nodrag">
-                                                            <a href="{{$EditUrl}}?id={{$subItem.ID}}"><i class="fa fa-edit"></i></a>
-                                                            <a href="javascript:void(0);" data-id="{{$subItem.ID}}" class="tree_branch_delete"><i class="fa fa-trash"></i></a>
+                                                            <a href="{{$EditUrl}}?id={{$subItem.ID}}"><i
+                                                                        class="fa fa-edit"></i></a>
+                                                            <a href="javascript:void(0);" data-id="{{$subItem.ID}}"
+                                                               class="tree_branch_delete"><i
+                                                                        class="fa fa-trash"></i></a>
                                                         </span>
                                                     </div>
                                                 </li>
@@ -1705,7 +1723,7 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
             $('.tree_branch_delete').click(function () {
                 let id = $(this).data('id');
                 swal({
-                        title: {{lang "are you sure to delete"}} + "?",
+                        title: {{lang "are you sure to delete"}} +"?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
@@ -1716,14 +1734,14 @@ var TemplateList = map[string]string{"admin_panel":`{{define "admin_panel"}}
                     function () {
                         $.ajax({
                             method: 'post',
-                            url: {{.DeleteUrl}} + '?id=' + id,
+                            url: {{.DeleteUrl}} +'?id=' + id,
                             data: {},
                             success: function (data) {
                                 $.pjax.reload('#pjax-container');
                                 if (data.code === 200) {
-                                    swal(data.msg, '', {{lang "success"}});
+                                    swal(data.msg, '', "success");
                                 } else {
-                                    swal(data.msg, '', {{lang "error"}});
+                                    swal(data.msg, '', "error");
                                 }
                             }
                         });
