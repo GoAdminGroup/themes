@@ -20,7 +20,7 @@ func (BaseTheme) GetRequirements() []string {
 var requireAssetHTML = map[string]string{
 	"datatable": "/assets/dist/js/datatable.min.js",
 	"form":      "/assets/dist/js/form.min.js",
-	"tree":      "/assets/dist/js/tree.min.js"
+	"tree":      "/assets/dist/js/tree.min.js",
 }
 
 func (BaseTheme) GetAssetImportHTML(exclude ...string) template.HTML {
