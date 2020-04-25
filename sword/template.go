@@ -525,8 +525,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                class="form-control json"
                placeholder="{{.Placeholder}}">
     </div>
-{{end}}`, "components/form": `{{define "form"}}
-    <script src={{link .CdnUrl .Prefix "/assets/dist/js/form.min.js"}}></script>
+{{end}}`, "components/form": `{{define "form"}}    
     {{.Header}}
     <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container
           style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
@@ -1777,7 +1776,6 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>
-    <script src={{link .CdnUrl .UrlPrefix "/assets/dist/js/datatable.min.js"}}></script>
     {{if ne .Panel.CSS ""}}
         <style>
             {{.Panel.CSS}}
