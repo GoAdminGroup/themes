@@ -4,7 +4,7 @@
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>
-    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/content.min.js"}}"></script>
+    <script src={{link .CdnUrl .UrlPrefix "/assets/dist/js/datatable.min.js"}}></script>
     {{if ne .Panel.CSS ""}}
         <style>
             {{.Panel.CSS}}

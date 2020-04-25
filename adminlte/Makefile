@@ -22,21 +22,26 @@ assets:
 	cp -R $(ASSETS_PATH)/src/fonts $(ASSETS_PATH)/dist/
 	make combine
 	$(CLI) compile asset
+	packr2 clean
+	packr2
 	make build-tmpl
 
 	rm -rf $(ASSETS_PATH)/src/*
 	rm -rf $(RESOURCE_PATH)/pages/*
 
-combine:
+	GO111MODULE=off go fmt ./...
+
+combine: remove combine-js combine-css
+
+remove:
 	find ./ -name ".DS_Store" -depth -exec rm {} \;
-	make combine-js
-	make combine-css
 
 combine-js:
 	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/all/ --dist=$(ASSETS_PATH)/dist/js/all.min.js
 	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/all_2/ --dist=$(ASSETS_PATH)/dist/js/all_2.min.js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/form/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
-	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/content/ --dist=$(ASSETS_PATH)/dist/js/content.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/components/form/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/components/tree/ --dist=$(ASSETS_PATH)/dist/js/tree.min.js
+	$(CLI) combine js --src=$(ASSETS_PATH)/src/js/components/datatable/ --dist=$(ASSETS_PATH)/dist/js/datatable.min.js
 
 combine-css:
 	$(CLI) combine css

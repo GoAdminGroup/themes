@@ -6,7 +6,9 @@ import (
 	"github.com/GoAdminGroup/go-admin/template/types"
 	"github.com/GoAdminGroup/themes/common"
 	"github.com/GoAdminGroup/themes/sword/resource"
+	"github.com/gobuffalo/packr/v2"
 	"html/template"
+	"strings"
 )
 
 type Theme struct {
@@ -64,8 +66,9 @@ func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 }
 
 func (*Theme) GetAsset(path string) ([]byte, error) {
-	path = "resource" + path
-	return resource.Asset(path)
+	path = strings.Replace(path, "/assets/dist", "", -1)
+	box := packr.New("sword", "./resource/assets/dist")
+	return box.Find(path)
 }
 
 func (*Theme) GetAssetList() []string {
