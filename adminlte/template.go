@@ -1168,7 +1168,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                         {{else}}
                             <td style="width: {{$head2.Width}}">
                         {{end}}
-                            {{(index $info $head2.Head).Content}}
+                        {{(index $info $head2.Head).Content}}
                         </td>
                     {{end}}
                 {{end}}
@@ -1419,7 +1419,14 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                                 } else {
                                     swal(data.msg, '', 'error');
                                 }
-                            }
+                            },
+                            error: function (data) {
+                                if (data.responseText !== "") {
+                                    swal(data.responseJSON.msg, '', 'error');
+                                } else {
+                                    swal("{{lang "error"}}", '', 'error');
+                                }
+                            },
                         });
                     });
             }
@@ -1742,7 +1749,14 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                                 } else {
                                     swal(data.msg, '', "error");
                                 }
-                            }
+                            },
+                            error: function (data) {
+                                if (data.responseText !== "") {
+                                    swal(data.responseJSON.msg, '', 'error');
+                                } else {
+                                    swal("{{lang "error"}}", '', 'error');
+                                }
+                            },
                         });
                     });
             });

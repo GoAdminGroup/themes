@@ -126,7 +126,14 @@
                                 } else {
                                     swal(data.msg, '', "error");
                                 }
-                            }
+                            },
+                            error: function (data) {
+                                if (data.responseText !== "") {
+                                    swal(data.responseJSON.msg, '', 'error');
+                                } else {
+                                    swal("{{lang "error"}}", '', 'error');
+                                }
+                            },
                         });
                     });
             });
