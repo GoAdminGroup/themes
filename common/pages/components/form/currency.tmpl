@@ -1,18 +1,25 @@
 {{define "form_currency"}}
-    <div class="input-group">
-        <span class="input-group-addon">$</span>
-        <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
-               name="{{.Field}}"
-               value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
-    </div>
-    <script>
-        $(function () {
-            $('.{{.Field}}').inputmask({
-                "alias": "currency",
-                "radixPoint": ".",
-                "prefix": "",
-                "removeMaskOnSubmit": true
+    {{if .Editable}}
+        <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
+                   name="{{.Field}}"
+                   value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
+        </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}').inputmask({
+                    "alias": "currency",
+                    "radixPoint": ".",
+                    "prefix": "",
+                    "removeMaskOnSubmit": true
+                });
             });
-        });
-    </script>
+        </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
 {{end}}

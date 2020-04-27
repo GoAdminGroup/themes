@@ -1,8 +1,15 @@
 {{define "form_email"}}
-    <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-        <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-               class="form-control json"
-               placeholder="{{.Placeholder}}">
-    </div>
+    {{if .Editable}}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+            <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control json"
+                   placeholder="{{.Placeholder}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
 {{end}}

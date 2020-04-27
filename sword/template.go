@@ -140,31 +140,45 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         });
     </script>
 {{end}}`, "components/form/color": `{{define "form_color"}}
-    <div class="input-group colorpicker-element">
-        <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
-        <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}"
-               value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
-    </div>
+    {{if .Editable}}
+        <div class="input-group colorpicker-element">
+            <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
+            <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}"
+                   value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
     <script>
         $('.{{.Field}}').parent().colorpicker([]);
     </script>
 {{end}}`, "components/form/currency": `{{define "form_currency"}}
-    <div class="input-group">
-        <span class="input-group-addon">$</span>
-        <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
-               name="{{.Field}}"
-               value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
-    </div>
-    <script>
-        $(function () {
-            $('.{{.Field}}').inputmask({
-                "alias": "currency",
-                "radixPoint": ".",
-                "prefix": "",
-                "removeMaskOnSubmit": true
+    {{if .Editable}}
+        <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
+                   name="{{.Field}}"
+                   value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
+        </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}').inputmask({
+                    "alias": "currency",
+                    "radixPoint": ".",
+                    "prefix": "",
+                    "removeMaskOnSubmit": true
+                });
             });
-        });
-    </script>
+        </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
 {{end}}`, "components/form/custom": `{{define "form_custom"}}
     <div class="input-group">
         {{.CustomContent}}
@@ -209,33 +223,40 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </script>
     {{end}}
 {{end}}`, "components/form/datetime_range": `{{define "form_datetime_range"}}
-    <div class="input-group">
-        {{if ne .Label ""}}
-            <span class="input-group-addon">{{.Label}}</span>
-        {{end}}
-        <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-        <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
-               class="form-control {{.Field}}_start__goadmin" placeholder="{{.Placeholder}}">
-        <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
-        <input type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin" value="{{.Value2}}"
-               class="form-control {{.Field}}_end__goadmin" placeholder="{{.Placeholder}}">
-    </div>
-    <script>
-        $(function () {
-            $('.{{.Field}}_start__goadmin').datetimepicker({"format": "YYYY-MM-DD HH:mm:ss", "locale": "zh-CN"});
-            $('.{{.Field}}_end__goadmin').datetimepicker({
-                "format": "YYYY-MM-DD HH:mm:ss",
-                "locale": "zh-CN",
-                "useCurrent": false
+    {{if .Editable}}
+        <div class="input-group">
+            {{if ne .Label ""}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
+            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
+                   class="form-control {{.Field}}_start__goadmin" placeholder="{{.Placeholder}}">
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin" value="{{.Value2}}"
+                   class="form-control {{.Field}}_end__goadmin" placeholder="{{.Placeholder}}">
+        </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}_start__goadmin').datetimepicker({"format": "YYYY-MM-DD HH:mm:ss", "locale": "zh-CN"});
+                $('.{{.Field}}_end__goadmin').datetimepicker({
+                    "format": "YYYY-MM-DD HH:mm:ss",
+                    "locale": "zh-CN",
+                    "useCurrent": false
+                });
+                $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
+                    $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
+                });
+                $('.{{.Field}}_end__goadmin').on("dp.change", function (e) {
+                    $('.{{.Field}}_start__goadmin').data("DateTimePicker").maxDate(e.date);
+                });
             });
-            $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
-                $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
-            });
-            $('.{{.Field}}_end__goadmin').on("dp.change", function (e) {
-                $('.{{.Field}}_start__goadmin').data("DateTimePicker").maxDate(e.date);
-            });
-        });
-    </script>
+        </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
 {{end}}`, "components/form/default": `{{define "form_default"}}
     <div class="box box-solid box-default no-margin">
         <div class="box-body" style="min-height: 40px;">
@@ -244,12 +265,19 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     </div>
     <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
 {{end}}`, "components/form/email": `{{define "form_email"}}
-    <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-        <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-               class="form-control json"
-               placeholder="{{.Placeholder}}">
-    </div>
+    {{if .Editable}}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+            <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control json"
+                   placeholder="{{.Placeholder}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
 {{end}}`, "components/form/file": `{{define "form_file"}}
     <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
            data-initial-caption="{{.Value}}">
@@ -283,12 +311,19 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         $('.{{.Field}}').iconpicker({placement: 'bottomLeft'});
     </script>
 {{end}}`, "components/form/ip": `{{define "form_ip"}}
-    <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
-        <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
-               value='{{.Value}}' class="form-control json"
-               placeholder="{{.Placeholder}}">
-    </div>
+    {{if .Editable}}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+            <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
+                   value='{{.Value}}' class="form-control json"
+                   placeholder="{{.Placeholder}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
 {{end}}`, "components/form/multi_file": `{{define "form_multi_file"}}
     <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{lang "Input"}} {{.Field}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
@@ -303,12 +338,19 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         });
     </script>
 {{end}}`, "components/form/number": `{{define "form_number"}}
-    <div class="input-group">
-        <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
-               name="{{.Field}}"
-               value="{{.Value}}" class="form-control {{.Field}}"
-               placeholder="{{.Head}}">
-    </div>
+    {{if .Editable}}
+        <div class="input-group">
+            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
+                   name="{{.Field}}"
+                   value="{{.Value}}" class="form-control {{.Field}}"
+                   placeholder="{{.Head}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
     <script>
         $(function () {
             $('.{{.Field}}:not(.initialized)')
@@ -321,16 +363,23 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         })
     </script>
 {{end}}`, "components/form/number_range": `{{define "form_number_range"}}
-    <div class="input-group number-range">
-        <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
-               name="{{.Field}}_start__goadmin"
-               value="{{.Value}}" class="form-control {{.Field}}_start__goadmin"
-               placeholder="{{.Head}}">
-        <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
-        <input style="text-align: center;" type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin"
-               value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
-               placeholder="{{.Head}}">
-    </div>
+    {{if .Editable}}
+        <div class="input-group number-range">
+            <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
+                   name="{{.Field}}_start__goadmin"
+                   value="{{.Value}}" class="form-control {{.Field}}_start__goadmin"
+                   placeholder="{{.Head}}">
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input style="text-align: center;" type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin"
+                   value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
+                   placeholder="{{.Head}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
     <script>
         $(function () {
             $('.{{.Field}}_start__goadmin:not(.initialized)')
@@ -368,17 +417,24 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </div>
     {{end}}
 {{end}}`, "components/form/radio": `{{define "form_radio"}}
-    {{$field := .Field}}
-    {{range $key, $v := .Options }}
-        <input type="radio" name="{{$field}}" value="{{$v.Value}}"
-               class="minimal {{$field}}" {{$v.SelectedLabel}}
-               style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
+    {{if .Editable}}
+        {{$field := .Field}}
+        {{range $key, $v := .Options }}
+            <input type="radio" name="{{$field}}" value="{{$v.Value}}"
+                   class="minimal {{$field}}" {{$v.SelectedLabel}}
+                   style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
+        {{end}}
+        <script>
+            $(function () {
+                $('.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});
+            });
+        </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
-    <script>
-        $(function () {
-            $('.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});
-        });
-    </script>
 {{end}}`, "components/form/richtext": `{{define "form_rich_text"}}
     <div id="{{.Field}}-editor">
     </div>
