@@ -714,10 +714,15 @@ form .control-label.divider-title {
 }
 
 .user-header, .user-footer {
-    min-width: 0px;
+    min-width: 0;
 }
 
 form .row {
-     margin-right: 0px;
-     margin-left: 0px;
+     margin-right: 0;
+     margin-left: 0;
+}
+
+form .row .nav-tabs-custom {
+    margin-right: -15px;
+    margin-left: -15px;
 }
