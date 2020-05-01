@@ -716,3 +716,8 @@ form .control-label.divider-title {
 .user-header, .user-footer {
     min-width: 0px;
 }
+
+form .row {
+     margin-right: 0px;
+     margin-left: 0px;
+}

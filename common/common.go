@@ -33,7 +33,11 @@ func (BaseTheme) GetAssetImportHTML(exclude ...string) template.HTML {
 			}
 		}
 		if !exist {
-			res += template.HTML(`<script src="` + config.GetAssetUrl() + config.Url(html) + `"></script>`)
+			if config.GetAssetUrl() != "" {
+				res += template.HTML(`<script src="` + config.GetAssetUrl() + html + `"></script>`)
+			} else {
+				res += template.HTML(`<script src="` + config.Url(html) + `"></script>`)
+			}
 		}
 	}
 	return res
