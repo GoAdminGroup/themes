@@ -7,14 +7,14 @@ import (
 
 type BaseTheme struct{}
 
-const Version = "v0.0.31"
+const Version = "v0.0.32"
 
 func (BaseTheme) GetVersion() string {
 	return Version
 }
 
 func (BaseTheme) GetRequirements() []string {
-	return []string{"v1.2.9"}
+	return []string{"v1.2.10"}
 }
 
 var requireAssetHTML = map[string]string{
