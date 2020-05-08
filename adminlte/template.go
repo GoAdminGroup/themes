@@ -1095,7 +1095,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 <thead>
                 <tr>
                     {{range $key, $head := .Thead}}
-                        {{if eq $head.Width ""}}
+                        {{if eq $head.Width "0px"}}
+                            <th>
+                        {{else if eq $head.Width ""}}
                             <th>
                         {{else}}
                             <th style="width: {{$head.Width}}">
@@ -1117,7 +1119,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 {{end}}
                 {{range $key, $head := .Thead}}
                     {{if eq $head.Hide false}}
-                        {{if eq $head.Width ""}}
+                        {{if eq $head.Width "0px"}}
+                            <th>
+                        {{else if eq $head.Width ""}}
                             <th>
                         {{else}}
                             <th style="width: {{$head.Width}}">
