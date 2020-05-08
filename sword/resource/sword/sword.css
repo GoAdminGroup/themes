@@ -561,7 +561,7 @@ form .control-label.divider-title {
     color: #212121;
 }
 
-.treeview-menu.menu-open {
+ul.treeview-menu ul.treeview-menu.menu-open {
     background: rgb(0, 4, 8) !important;
 }
 
