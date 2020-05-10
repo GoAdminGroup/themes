@@ -458,7 +458,6 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
             multiple="" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
             {{if not .Editable}}disabled="disabled"{{end}}>
-        <option></option>
         {{range $key, $v := .Options }}
             <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
