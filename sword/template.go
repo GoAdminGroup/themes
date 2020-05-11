@@ -1106,6 +1106,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{end}}
         <tbody>
         {{if eq .Type "data-table"}}
+            {{$SortUrlParam := .SortUrl}}
             <tr>
                 {{if eq .IsTab false}}
                     <th style="text-align: center;">
@@ -1124,7 +1125,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                         {{$head.Head}}
                         {{if $head.Sortable}}
                             <a class="fa fa-fw fa-sort" id="sort-{{$head.Field}}"
-                               href="?__sort={{$head.Field}}&__sort_type=desc"></a>
+                               href="?__sort={{$head.Field}}&__sort_type=desc{{$SortUrlParam}}"></a>
                         {{end}}
                         </th>
                     {{end}}
@@ -1330,9 +1331,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 if (sort !== -1 && sort_type !== -1) {
                     let sortFa = $('#sort-' + sort);
                     if (sort_type === 'asc') {
-                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=desc")
+                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=desc{{.SortUrl}}")
                     } else {
-                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=asc")
+                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=asc{{.SortUrl}}")
                     }
                     sortFa.removeClass('fa-sort');
                     sortFa.addClass('fa-sort-amount-' + sort_type);
