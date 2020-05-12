@@ -120,7 +120,64 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     </div>
 {{end}}`, "components/col": `{{define "col"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
-{{end}}`, "components/form/code": `{{define "form_code"}}
+{{end}}`, "components/form/array": `{{define "form_array"}}
+<table class="table table-hover">
+  <tbody class="list-{{.Field}}-table">
+    <tr>
+      <td>
+        <div class="form-group" style="margin-bottom: 0px;">
+          <div class="col-sm-12">
+            <input name="{{.Field}}[values][]" value="" class="form-control" />
+          </div>
+        </div>
+      </td>
+
+      <td style="width: 75px;">
+        <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+          <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td>
+        <div class="{{.Field}}-add btn btn-success btn-sm pull-right">
+          <i class="fa fa-save"></i>&nbsp;{{lang "new"}}
+        </div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<template class="{{.Field}}-tpl">
+  <tr>
+    <td>
+      <div class="form-group" style="margin-bottom: 0px;">
+        <div class="col-sm-12">
+          <input name="{{.Field}}[values][]" class="form-control" />
+        </div>
+      </div>
+    </td>
+    <td style="width: 75px;">
+      <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+        <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+      </div>
+    </td>
+  </tr>
+</template>
+<script>
+  $(".{{.Field}}-add").on("click", function() {
+    var tpl = $("template.{{.Field}}-tpl").html();
+    $("tbody.list-{{.Field}}-table").append(tpl);
+  });
+
+  $("tbody").on("click", ".{{.Field}}-remove", function() {
+    $(this).closest("tr").remove();
+  });
+</script>
+{{ end }}
+`, "components/form/code": `{{define "form_code"}}
     <pre id="{{.Field}}" class="ace_editor" style="min-height:200px">
         <textarea {{if .Must}}required="1"{{end}} class="ace_text-input {{.Field}}"
                 {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
@@ -638,6 +695,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{ template "form_rich_text" .  }}
     {{else if eq .FormType.String "code"}}
         {{ template "form_code" .  }}
+    {{else if eq .FormType.String "array"}}
+        {{ template "form_array" .  }}        
     {{else if eq .FormType.String "datetime"}}
         {{ template "form_datetime" .  }}
     {{else if eq .FormType.String "datetime_range"}}

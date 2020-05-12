@@ -23,6 +23,8 @@
         {{ template "form_rich_text" .  }}
     {{else if eq .FormType.String "code"}}
         {{ template "form_code" .  }}
+    {{else if eq .FormType.String "array"}}
+        {{ template "form_array" .  }}        
     {{else if eq .FormType.String "datetime"}}
         {{ template "form_datetime" .  }}
     {{else if eq .FormType.String "datetime_range"}}
