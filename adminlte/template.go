@@ -938,7 +938,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     </script>
 {{end}}`, "components/popup": `{{define "popup"}}
 <div class="modal fade {{if .Draggable}}draggable{{end}}" id="{{.ID}}" tabindex="-1" role="dialog" aria-labelledby="{{.ID}}" aria-hidden="true">
-    <div class="modal-dialog modal-{{.Size}}" role="document">
+    <div class="modal-dialog modal-{{.Size}}" role="document" style="{{if ne .Width ""}}width:{{.Width}};{{end}}">
         <div class="modal-content" style="{{if ne .Width ""}}width:{{.Width}};{{end}}">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{.ID}}Title">{{langHtml .Title}}</h5>
