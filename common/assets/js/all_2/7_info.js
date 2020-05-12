@@ -179,7 +179,6 @@ function moveToRight() {
     let marginLeft = parseInt(nav.css("margin-left"));
     let ulWidth = getNavULwidth();
     let padding = ulWidth - maxNavWrapperWidth;
-    console.log('moveToRight','ulWidth', ulWidth, 'maxNavWrapperWidth', maxNavWrapperWidth, 'padding', padding)
     if (padding > 0 && marginLeft + padding != 0) {
         if (padding + marginLeft < 100) {
             nav.css("margin-left", -padding + "px");
@@ -192,7 +191,6 @@ function moveToRight() {
 let showNav = true;
 
 function addOrRemoveLeftRightNavBtn(add) {
-    console.log("addOrRemoveLeftRightNavBtn", "add", add, "showNav", showNav)
     if (add) {
         if (!showNav) {
             $('.navbar-nav-btn-right').show();
@@ -321,7 +319,6 @@ let maxNavWrapperWidth = 0;
 function initMaxNavWrapperWidth() {
     let navWidth = $('#firstnav').width();
     let menuWidth = $('.navbar-custom-menu').width();
-    console.log('initMaxNavWrapperWidth','navWidth', navWidth, 'menuWidth', menuWidth)
     maxNavWrapperWidth = (navWidth - menuWidth) * 0.7
     $('.nav-tabs-content').css("max-width", maxNavWrapperWidth + "px");
     $('.nav.nav-tabs.nav-addtabs').css("width", maxNavWrapperWidth + 800 + "px");
@@ -330,7 +327,6 @@ function initMaxNavWrapperWidth() {
 
 function checkNavLength() {
     let ulWidth = getNavULwidth();
-    console.log('checkNavLength', "wrapperWidth", maxNavWrapperWidth, "ulWidth", ulWidth);
     return ulWidth + 50 < maxNavWrapperWidth;
 }
 
