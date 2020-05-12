@@ -8,9 +8,13 @@
     <body class="hold-transition {{.ColorScheme}} sidebar-mini">
     <div class="wrapper">
 
+        {{if not .Iframe}}
+
         {{ template "header" . }}
 
         {{ template "sidebar" . }}
+
+        {{end}}
 
         <div class="content-wrapper" id="pjax-container">
 
@@ -18,14 +22,20 @@
 
         </div>
 
+        {{if not .Iframe}}
+
         {{ template "footer" . }}
+
+        {{end}}
 
     </div>
 
     {{ template "js" . }}
 
     </body>
-    {{.CustomFootHtml}}
+    {{if not .Iframe}}
+        {{.CustomFootHtml}}
+    {{end}}
     </html>
 
 {{end}}

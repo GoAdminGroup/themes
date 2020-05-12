@@ -35,4 +35,16 @@
             {{.Panel.JS}}
         </script>
     {{end}}
+
+    {{if .Iframe}}
+        <style>
+            .content-wrapper, .main-footer {
+                -webkit-transition: none;
+                -moz-transition: none;
+                -o-transition: none;
+                transition: none;
+                margin-left: 0px;
+            }
+        </style>
+    {{end}}
 {{end}}

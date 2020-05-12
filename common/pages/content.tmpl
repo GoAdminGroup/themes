@@ -33,4 +33,22 @@
             {{.Panel.JS}}
         </script>
     {{end}}
+
+    {{if .Iframe}}
+        <style>
+            .content-wrapper, .main-footer {
+                -webkit-transition: none;
+                -moz-transition: none;
+                -o-transition: none;
+                transition: none;
+                margin-left: 0px;
+            }
+            .skin-black .wrapper {
+                background-color: #ffffff !important;
+            }
+            .skin-black .wrapper .content-wrapper {
+                background-color: #ffffff !important;
+            }
+        </style>
+    {{end}}
 {{end}}

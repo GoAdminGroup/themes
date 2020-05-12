@@ -72,7 +72,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{langHtml .Content}}
 </div>
 {{end}}`, "components/box": `{{define "box"}}
-<div class="box box-{{.Theme}}">
+<div class="box box-{{.Theme}}" {{.Attr}}>
     {{if eq .HeadColor ""}}
         <div class="box-header {{.HeadBorder}}">
     {{else}}
@@ -875,9 +875,11 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 {{end}}`, "components/link": `{{define "link"}}
     <a class="{{.Class}}" {{.Attributes}} data-title="{{.Title}}" href="{{.URL}}">{{.Content}}</a>
 {{end}}`, "components/paginator": `{{define "paginator"}}
-    <div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}}
-        <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
-    </div>
+    {{if not .HideEntriesInfo}}
+        <div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}}
+            <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
+        </div>
+    {{end}}
     <ul class="pagination pagination-sm no-margin pull-right">
         <!-- Previous Page Link -->
         <li class="page-item {{.PreviousClass}}">
@@ -935,16 +937,16 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         });
     </script>
 {{end}}`, "components/popup": `{{define "popup"}}
-<div class="modal fade" id="{{.ID}}" tabindex="-1" role="dialog" aria-labelledby="{{.ID}}" aria-hidden="true">
+<div class="modal fade {{if .Draggable}}draggable{{end}}" id="{{.ID}}" tabindex="-1" role="dialog" aria-labelledby="{{.ID}}" aria-hidden="true">
     <div class="modal-dialog modal-{{.Size}}" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="{{if ne .Width ""}}width:{{.Width}};{{end}}">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{.ID}}Title">{{langHtml .Title}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="{{if ne .Height ""}}height:{{.Height}};{{end}}">
                 {{langHtml .Body}}
             </div>
             <div class="modal-footer">
@@ -956,6 +958,24 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </div>
     </div>
 </div>
+    {{if .Draggable}}
+        <script>
+            $('#{{.ID}}>.modal-dialog').draggable({
+                cursor: 'move',
+                handle: '.modal-header'
+            });
+            $('#{{.ID}}>.modal-dialog>.modal-content').resizable({
+                minHeight: 300,
+                minWidth: 300
+            });
+            $('#{{.ID}}>.modal-dialog>.modal-content>.modal-header').css('cursor', 'move');
+            $('#{{.ID}}').on('show.bs.modal', function () {
+                $(this).find('.modal-body').css({
+                    'max-height':'100%'
+                });
+            });
+        </script>
+    {{end}}
 {{end}}`, "components/row": `{{define "row"}}
 <div class="row">{{langHtml .Content}}</div>
 {{end}}`, "components/table/box-header": `{{define "box-header"}}
@@ -1923,6 +1943,24 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             {{.Panel.JS}}
         </script>
     {{end}}
+
+    {{if .Iframe}}
+        <style>
+            .content-wrapper, .main-footer {
+                -webkit-transition: none;
+                -moz-transition: none;
+                -o-transition: none;
+                transition: none;
+                margin-left: 0px;
+            }
+            .skin-black .wrapper {
+                background-color: #ffffff !important;
+            }
+            .skin-black .wrapper .content-wrapper {
+                background-color: #ffffff !important;
+            }
+        </style>
+    {{end}}
 {{end}}`, "control_panel": `{{define "control_panel"}}
     <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
     <aside class="control-sidebar control-sidebar-dark control-sidebar-open"
@@ -2206,9 +2244,13 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     <body class="hold-transition {{.ColorScheme}} sidebar-mini">
     <div class="wrapper">
 
+        {{if not .Iframe}}
+
         {{ template "header" . }}
 
         {{ template "sidebar" . }}
+
+        {{end}}
 
         <div class="content-wrapper" id="pjax-container">
 
@@ -2216,14 +2258,20 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 
         </div>
 
+        {{if not .Iframe}}
+
         {{ template "footer" . }}
+
+        {{end}}
 
     </div>
 
     {{ template "js" . }}
 
     </body>
-    {{.CustomFootHtml}}
+    {{if not .Iframe}}
+        {{.CustomFootHtml}}
+    {{end}}
     </html>
 
 {{end}}
