@@ -128,6 +128,15 @@ $(function () {
     });
 
     $('[data-toggle="popover"]').popover();
+
+    addOrRemoveLeftRightNavBtn(false);
+
+    initMaxNavWrapperWidth();
+});
+
+$(window).resize(function() {
+    initMaxNavWrapperWidth();
+    addOrRemoveLeftRightNavBtn(!checkNavLength());
 });
 
 sidebarMenuA.on('click', function () {
@@ -135,13 +144,13 @@ sidebarMenuA.on('click', function () {
     let link = $(this).attr('href');
     if (link !== '#' && link.indexOf('http') === -1 && !checkNavExist(link)) {
 
-        if (!checkNavLength()) {
-            removeFirst();
-        }
+        addOrRemoveLeftRightNavBtn(!checkNavLength());
 
         removeActive();
 
         addNavTab(link, $(this).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>'))
+
+        moveToRight();
     }
 });
 
@@ -149,12 +158,69 @@ $('a.new-tab-link').on('click', function () {
     listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
 });
 
+$('.navbar-nav-btn-left').on('click', function () {
+    let nav = $(".nav.nav-tabs.nav-addtabs");
+    let marginLeft = parseInt(nav.css("marginLeft"));
+    if (marginLeft < 0) {
+        if (marginLeft < -50 && marginLeft > -100) {
+            nav.css("marginLeft", "0px");
+        } else {
+            nav.css("marginLeft", (marginLeft + 50) + "px");
+        }
+    }
+});
+
+$('.navbar-nav-btn-right').on('click', function () {
+    moveToRight();
+});
+
+function moveToRight() {
+    let nav = $(".nav.nav-tabs.nav-addtabs");
+    let marginLeft = parseInt(nav.css("margin-left"));
+    let ulWidth = getNavULwidth();
+    let padding = ulWidth - maxNavWrapperWidth;
+    console.log('moveToRight','ulWidth', ulWidth, 'maxNavWrapperWidth', maxNavWrapperWidth, 'padding', padding)
+    if (padding > 0 && marginLeft + padding != 0) {
+        if (padding + marginLeft < 100) {
+            nav.css("margin-left", -padding + "px");
+        } else {
+            nav.css("margin-left", (marginLeft - 50) + "px");
+        }
+    }
+}
+
+let showNav = true;
+
+function addOrRemoveLeftRightNavBtn(add) {
+    console.log("addOrRemoveLeftRightNavBtn", "add", add, "showNav", showNav)
+    if (add) {
+        if (!showNav) {
+            $('.navbar-nav-btn-right').show();
+            $('.navbar-nav-btn-left').show();
+            showNav = true;  
+        }
+    } else {
+        if (showNav) {
+            $('.navbar-nav-btn-right').hide();
+            $('.navbar-nav-btn-left').hide();
+            showNav = false;
+        }        
+    }
+}
+
+function getNavULwidth() {
+    let lis = $(".nav.nav-tabs.nav-addtabs li");
+    let width = 0;
+    for (let i = 0; i < lis.length; i++) {
+        width += $(lis[i]).width()
+    }
+    return width
+}
+
 function listenerForAddNavTab(link, content) {
     if (link !== '#' && link.indexOf('http') === -1 && !checkNavExist(link)) {
 
-        if (!checkNavLength()) {
-            removeFirst();
-        }
+        addOrRemoveLeftRightNavBtn(!checkNavLength());
 
         removeActive();
 
@@ -173,6 +239,7 @@ function listenerForAddNavTab(link, content) {
 
         if (content !== "") {
             addNavTab(link, content)
+            moveToRight();
         }
     }
 }
@@ -196,6 +263,7 @@ function addNavTab(link, content) {
             }
         }
         li.remove();
+        addOrRemoveLeftRightNavBtn(!checkNavLength())
     });
     addElement.on('mouseover', function () {
         if ($(this).children('i')) {
@@ -241,11 +309,6 @@ function updateNavURL() {
     }
 }
 
-function removeFirst() {
-    let navs = $('.nav-addtabs li');
-    $(navs[0]).remove();
-}
-
 function removeActive() {
     let lis = $('.nav-addtabs li');
     for (let i = 0; i < lis.length; i++) {
@@ -253,8 +316,22 @@ function removeActive() {
     }
 }
 
+let maxNavWrapperWidth = 0;
+
+function initMaxNavWrapperWidth() {
+    let navWidth = $('#firstnav').width();
+    let menuWidth = $('.navbar-custom-menu').width();
+    console.log('initMaxNavWrapperWidth','navWidth', navWidth, 'menuWidth', menuWidth)
+    maxNavWrapperWidth = (navWidth - menuWidth) * 0.7
+    $('.nav-tabs-content').css("max-width", maxNavWrapperWidth + "px");
+    $('.nav.nav-tabs.nav-addtabs').css("width", maxNavWrapperWidth + 800 + "px");
+    return maxNavWrapperWidth
+}
+
 function checkNavLength() {
-    return $('#firstnav').width() * 0.6 - $('.nav-addtabs').width() >= 120;
+    let ulWidth = getNavULwidth();
+    console.log('checkNavLength', "wrapperWidth", maxNavWrapperWidth, "ulWidth", ulWidth);
+    return ulWidth + 50 < maxNavWrapperWidth;
 }
 
 const fixedKey = "go_admin__sidebar_fixed";

@@ -12,8 +12,6 @@ body {
 }
 
 #firstnav .nav-addtabs {
-    position: absolute;
-    left: 45px;
     z-index: 98;
     height: 100%;
     border: none;

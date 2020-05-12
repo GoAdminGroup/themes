@@ -726,3 +726,10 @@ form .row .nav-tabs-custom {
     margin-right: -15px;
     margin-left: -15px;
 }
+
+#firstnav .nav-tabs-content {
+    overflow: hidden;
+    max-width: 40%;
+    height: 100%;
+    float: left;
+}
