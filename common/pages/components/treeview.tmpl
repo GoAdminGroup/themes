@@ -1,0 +1,31 @@
+{{define "treeview"}}
+    <div id="{{.ID}}"></div>
+    <script>
+        $('#{{.ID}}').treeview({{.TreeJSON}});
+    </script>
+    <style>
+        .treeview .list-group-item {
+            cursor: pointer;
+        }
+
+        .treeview span.indent {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .treeview span.icon {
+            width: 12px;
+            margin-right: 5px;
+        }
+
+        .treeview .node-disabled {
+            color: silver;
+            cursor: not-allowed;
+        }
+
+        .list-group li {
+            border: none;
+            border-radius: 0px !important;
+        }
+    </style>
+{{end}}

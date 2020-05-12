@@ -4,14 +4,18 @@
           style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
         <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
 
-            {{if ne (len .TabHeaders) 0}}
-                {{ template "form_layout_tab" . }}
-            {{else if ne (len .ContentList) 0}}
-                {{ template "form_layout_two_col" . }}
-            {{else if .Layout.Flow}}
-                {{ template "form_layout_flow" . }}
+            {{if eq .FieldsHTML ""}}
+                {{if ne (len .TabHeaders) 0}}
+                    {{ template "form_layout_tab" . }}
+                {{else if ne (len .ContentList) 0}}
+                    {{ template "form_layout_two_col" . }}
+                {{else if .Layout.Flow}}
+                    {{ template "form_layout_flow" . }}
+                {{else}}
+                    {{ template "form_layout_default" . }}
+                {{end}}
             {{else}}
-                {{ template "form_layout_default" . }}
+                {{.FieldsHTML}}
             {{end}}
 
         </div>

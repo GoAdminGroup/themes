@@ -586,14 +586,18 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
           style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
         <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
 
-            {{if ne (len .TabHeaders) 0}}
-                {{ template "form_layout_tab" . }}
-            {{else if ne (len .ContentList) 0}}
-                {{ template "form_layout_two_col" . }}
-            {{else if .Layout.Flow}}
-                {{ template "form_layout_flow" . }}
+            {{if eq .FieldsHTML ""}}
+                {{if ne (len .TabHeaders) 0}}
+                    {{ template "form_layout_tab" . }}
+                {{else if ne (len .ContentList) 0}}
+                    {{ template "form_layout_two_col" . }}
+                {{else if .Layout.Flow}}
+                    {{ template "form_layout_flow" . }}
+                {{else}}
+                    {{ template "form_layout_default" . }}
+                {{end}}
             {{else}}
-                {{ template "form_layout_default" . }}
+                {{.FieldsHTML}}
             {{end}}
 
         </div>
@@ -1854,6 +1858,36 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             $(".roles").select2({"allowClear": true, "placeholder": "Roles"});
         });
     </script>
+{{end}}`, "components/treeview": `{{define "treeview"}}
+    <div id="{{.ID}}"></div>
+    <script>
+        $('#{{.ID}}').treeview({{.TreeJSON}});
+    </script>
+    <style>
+        .treeview .list-group-item {
+            cursor: pointer;
+        }
+
+        .treeview span.indent {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .treeview span.icon {
+            width: 12px;
+            margin-right: 5px;
+        }
+
+        .treeview .node-disabled {
+            color: silver;
+            cursor: not-allowed;
+        }
+
+        .list-group li {
+            border: none;
+            border-radius: 0px !important;
+        }
+    </style>
 {{end}}`, "content": `{{define "content"}}
     <script>
         $('a.new-tab-link').on('click', function () {

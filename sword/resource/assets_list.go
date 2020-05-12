@@ -34,4 +34,5 @@ var AssetsList = []string{
 	"/dist/js/html5shiv.min.js",
 	"/dist/js/respond.min.js",
 	"/dist/js/tree.min.js",
+	"/dist/js/treeview.min.js",
 }
