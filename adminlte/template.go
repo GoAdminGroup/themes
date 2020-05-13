@@ -123,21 +123,23 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 {{end}}`, "components/form/array": `{{define "form_array"}}
 <table class="table table-hover">
   <tbody class="{{.Field}}-table">
-    <tr>
-      <td>
-        <div class="form-group" style="margin-bottom: 0px;">
-          <div class="col-sm-12">
-            <input name="{{.Field}}[values][]" value="" class="form-control" />
-          </div>
-        </div>
-      </td>
+        {{range $k, $value := .ValueArr}}
+            <tr>
+                <td>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-12">
+                        <input name="{{$.Field}}[values][]" value="{{$value}}" class="form-control" />
+                    </div>
+                    </div>
+                </td>
 
-      <td style="width: 75px;">
-        <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
-          <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
-        </div>
-      </td>
-    </tr>
+                <td style="width: 75px;">
+                    <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                    <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+                    </div>
+                </td>
+            </tr>
+        {{end}}
   </tbody>
   <tfoot>
     <tr>
@@ -589,30 +591,32 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     </tr>
   </thead>
   <tbody class="{{.Field}}-table">
-    <tr>
-        {{range $key, $item := .TableFields }}
-            <td>
-                <div class="form-group" style="margin-bottom: 0px;">
-                  <div class="col-sm-12">
-                    <input
-                      name="{{$item.Field}}[keys][]"
-                      value=""
-                      class="form-control"
-                      required=""
-                    />
+    {{range $k, $v := (index .TableFields 0 ).ValueArr}}
+      <tr>
+          {{range $key, $item := $.TableFields }}
+              <td>
+                  <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-12">
+                      <input
+                        name="{{$item.Field}}[keys][]"
+                        value="{{(index $item.ValueArr $k)}}"
+                        class="form-control"
+                        required=""
+                      />
+                    </div>
                   </div>
-                </div>
-            </td>
-        {{end}}
+              </td>
+          {{end}}
 
-        <td class="form-group">
-            <div>
-            <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
-                <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
-            </div>
-            </div>
-        </td>
-    </tr>
+          <td class="form-group">
+              <div>
+              <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                  <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+              </div>
+              </div>
+          </td>
+      </tr>
+    {{end}}
   </tbody>
   <tfoot>
     <tr>
@@ -825,7 +829,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             <div class="col-md-{{divide 12 (len $.ContentList)}}">
                 <div class="box-body">
                     <div class="fields-group">
-                        {{range $key, $data := $content}}
+                        {{range $key, $data := $content}}                            
                             {{if $data.Divider}}
                                 {{if $data.DividerTitle}}
                                     <div class='form-group divider'>

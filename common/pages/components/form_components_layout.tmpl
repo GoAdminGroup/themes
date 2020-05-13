@@ -6,7 +6,7 @@
             <div class="col-md-{{divide 12 (len $.ContentList)}}">
                 <div class="box-body">
                     <div class="fields-group">
-                        {{range $key, $data := $content}}
+                        {{range $key, $data := $content}}                            
                             {{if $data.Divider}}
                                 {{if $data.DividerTitle}}
                                     <div class='form-group divider'>

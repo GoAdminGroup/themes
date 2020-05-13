@@ -1,21 +1,23 @@
 {{define "form_array"}}
 <table class="table table-hover">
   <tbody class="{{.Field}}-table">
-    <tr>
-      <td>
-        <div class="form-group" style="margin-bottom: 0px;">
-          <div class="col-sm-12">
-            <input name="{{.Field}}[values][]" value="" class="form-control" />
-          </div>
-        </div>
-      </td>
+        {{range $k, $value := .ValueArr}}
+            <tr>
+                <td>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-12">
+                        <input name="{{$.Field}}[values][]" value="{{$value}}" class="form-control" />
+                    </div>
+                    </div>
+                </td>
 
-      <td style="width: 75px;">
-        <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
-          <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
-        </div>
-      </td>
-    </tr>
+                <td style="width: 75px;">
+                    <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                    <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+                    </div>
+                </td>
+            </tr>
+        {{end}}
   </tbody>
   <tfoot>
     <tr>
