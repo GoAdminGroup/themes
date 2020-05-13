@@ -591,7 +591,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     </tr>
   </thead>
   <tbody class="{{.Field}}-table">
-    {{range $k, $v := (index .TableFields 0 ).ValueArr}}
+    {{range $k, $v := (index .TableFields 0).ValueArr}}
       <tr>
           {{range $key, $item := $.TableFields }}
               <td>
