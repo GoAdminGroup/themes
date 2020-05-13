@@ -1,6 +1,6 @@
 {{define "form_array"}}
 <table class="table table-hover">
-  <tbody class="list-{{.Field}}-table">
+  <tbody class="{{.Field}}-table">
     <tr>
       <td>
         <div class="form-group" style="margin-bottom: 0px;">
@@ -47,7 +47,7 @@
 <script>
   $(".{{.Field}}-add").on("click", function() {
     var tpl = $("template.{{.Field}}-tpl").html();
-    $("tbody.list-{{.Field}}-table").append(tpl);
+    $("tbody.{{.Field}}-table").append(tpl);
   });
 
   $("tbody").on("click", ".{{.Field}}-remove", function() {

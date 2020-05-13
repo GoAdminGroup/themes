@@ -122,7 +122,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 <div class="{{.Size}}">{{langHtml .Content}}</div>
 {{end}}`, "components/form/array": `{{define "form_array"}}
 <table class="table table-hover">
-  <tbody class="list-{{.Field}}-table">
+  <tbody class="{{.Field}}-table">
     <tr>
       <td>
         <div class="form-group" style="margin-bottom: 0px;">
@@ -169,7 +169,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 <script>
   $(".{{.Field}}-add").on("click", function() {
     var tpl = $("template.{{.Field}}-tpl").html();
-    $("tbody.list-{{.Field}}-table").append(tpl);
+    $("tbody.{{.Field}}-table").append(tpl);
   });
 
   $("tbody").on("click", ".{{.Field}}-remove", function() {
@@ -578,7 +578,95 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             }
         })
     </script>
-{{end}}`, "components/form/text": `{{define "form_text"}}
+{{end}}`, "components/form/table": `{{define "form_table"}}
+<table class="table table-hover">
+  <thead>
+    <tr>
+        {{range $key, $item := .TableFields }}
+            <th>{{$item.Head}}</th>
+        {{end}}
+        <th style="width: 75px;"></th>
+    </tr>
+  </thead>
+  <tbody class="{{.Field}}-table">
+    <tr>
+        {{range $key, $item := .TableFields }}
+            <td>
+                <div class="form-group" style="margin-bottom: 0px;">
+                  <div class="col-sm-12">
+                    <input
+                      name="{{$item.Field}}[keys][]"
+                      value=""
+                      class="form-control"
+                      required=""
+                    />
+                  </div>
+                </div>
+            </td>
+        {{end}}
+
+        <td class="form-group">
+            <div>
+            <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+                <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+            </div>
+            </div>
+        </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+        {{range $key, $item := .TableFields }}
+            <td></td>
+        {{end}}
+        <td>
+            <div class="{{.Field}}-add btn btn-success btn-sm pull-right">
+            <i class="fa fa-save"></i>&nbsp;{{lang "new"}}
+            </div>
+        </td>
+    </tr>
+  </tfoot>
+</table>
+<template class="{{.Field}}-tpl">
+  <tr>
+        {{range $key, $item := .TableFields }}
+            <td>
+                <div class="form-group" style="margin-bottom: 0px;">
+                  <div class="col-sm-12">
+                    <input
+                      name="{{$item.Field}}[keys][]"
+                      value=""
+                      class="form-control"
+                      required=""
+                    />
+                  </div>
+                </div>
+            </td>
+        {{end}}
+
+        <td class="form-group">
+        <div>
+            <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+            <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+            </div>
+        </div>
+        </td>
+  </tr>
+</template>
+<script>
+  $(".{{.Field}}-add").on("click", function() {
+    var tpl = $("template.{{.Field}}-tpl").html();
+    $("tbody.{{.Field}}-table").append(tpl);
+  });
+
+  $("tbody").on("click", ".{{.Field}}-remove", function() {
+    $(this)
+      .closest("tr")
+      .remove();
+  });
+</script>
+{{ end }}
+`, "components/form/text": `{{define "form_text"}}
     {{if .Editable}}
         <div class="input-group">
             {{if eq .Label ""}}
@@ -695,6 +783,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{ template "form_rich_text" .  }}
     {{else if eq .FormType.String "code"}}
         {{ template "form_code" .  }}
+    {{else if eq .FormType.String "table"}}
+        {{ template "form_table" .  }}        
     {{else if eq .FormType.String "array"}}
         {{ template "form_array" .  }}        
     {{else if eq .FormType.String "datetime"}}
