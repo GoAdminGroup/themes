@@ -2356,9 +2356,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                     <span class="sr-only">Toggle navigation</span>
                 </a>
 
-                <div style="float: left;display: none;">
+                <div style="float: left;">
                     <ul class="nav navbar-nav">
-                        <li class="navbar-nav-btn-left">
+                        <li class="navbar-nav-btn-left" style="display: none;">
                             <a href="javascript:;" style="border-left: none;border-right: solid 1px #dedede;">
                                 <i class="fa fa-angle-double-left"></i>
                             </a>
@@ -2369,9 +2369,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                     <ul class="nav nav-tabs nav-addtabs">
                     </ul>
                 </div>
-                <div style="float: left;display: none;">
+                <div style="float: left;">
                     <ul class="nav navbar-nav">
-                        <li class="navbar-nav-btn-right">
+                        <li class="navbar-nav-btn-right" style="display: none;">
                             <a href="javascript:;" style="border-left: solid 1px #dedede;border-right: none;">
                                 <i class="fa fa-angle-double-right"></i>
                             </a>

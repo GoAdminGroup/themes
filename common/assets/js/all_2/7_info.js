@@ -192,7 +192,7 @@ function moveToRight() {
     }
 }
 
-let showNav = true;
+let showNav = false;
 
 function addOrRemoveLeftRightNavBtn(add) {
     if (add) {
