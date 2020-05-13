@@ -29,7 +29,7 @@ const (
 type Theme struct {
 	ThemeName string
 	components.Base
-	common.BaseTheme
+	*common.BaseTheme
 }
 
 var Adminlte = Theme{
@@ -38,6 +38,9 @@ var Adminlte = Theme{
 		Attribute: types.Attribute{
 			TemplateList: TemplateList,
 		},
+	},
+	BaseTheme: &common.BaseTheme{
+		AssetPaths: resource.AssetPaths,
 	},
 }
 

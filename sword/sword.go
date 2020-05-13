@@ -14,7 +14,7 @@ import (
 type Theme struct {
 	ThemeName string
 	components.Base
-	common.BaseTheme
+	*common.BaseTheme
 }
 
 var Sword = Theme{
@@ -23,6 +23,9 @@ var Sword = Theme{
 		Attribute: types.Attribute{
 			TemplateList: TemplateList,
 		},
+	},
+	BaseTheme: &common.BaseTheme{
+		AssetPaths: resource.AssetPaths,
 	},
 }
 

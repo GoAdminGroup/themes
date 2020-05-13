@@ -2331,14 +2331,12 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-        <link rel="stylesheet" href="{{link .CdnUrl .UrlPrefix "/assets/dist/css/all.min.css"}}">
-
         <!--[if lt IE 9]>
         <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/html5shiv.min.js"}}"></script>
         <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/respond.min.js"}}"></script>
         <![endif]-->
 
-        <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/all.min.js"}}"></script>
+        {{.TmplHeadHTML}}
 
         {{.CustomHeadHtml}}
     </head>
@@ -2386,7 +2384,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </nav>
     </header>
 {{end}}`, "js": `{{define "js"}}
-    <script src="{{link .CdnUrl .UrlPrefix "/assets/dist/js/all_2.min.js"}}"></script>
+    {{.TmplFootJS}}
 {{end}}`, "layout": `{{define "layout"}}
 
     <!DOCTYPE html>
