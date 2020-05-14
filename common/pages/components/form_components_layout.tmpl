@@ -10,7 +10,7 @@
                             {{if $data.Divider}}
                                 {{if $data.DividerTitle}}
                                     <div class='form-group divider'>
-                                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                                     </div>
                                 {{end}}
                                 <div class='col-sm-12 pb-3'>
@@ -23,9 +23,9 @@
                                 <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
                                     {{if ne $data.Head ""}}
                                         <label for="{{$data.Field}}"
-                                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                                     {{end}}
-                                    <div class="col-sm-{{$.InputWidth}}">
+                                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                                         {{template "form_components" $data}}
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                     {{if $data.Divider}}
                         {{if $data.DividerTitle}}
                             <div class='form-group divider'>
-                                <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                                <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                             </div>
                         {{end}}
                         <div class='col-sm-12 pb-3'>
@@ -57,9 +57,9 @@
                         <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
                             {{if ne $data.Head ""}}
                                 <label for="{{$data.Field}}"
-                                       class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                       class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                             {{end}}
-                            <div class="col-sm-{{$.InputWidth}}">
+                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                                 {{template "form_components" $data}}
                             </div>
                         </div>
@@ -74,7 +74,7 @@
             {{if $data.Divider}}
                 {{if $data.DividerTitle}}
                     <div class='form-group divider'>
-                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                     </div>
                 {{end}}
                 <div class='col-sm-12 pb-3'>
@@ -87,9 +87,9 @@
                 <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{end}}">
                     {{if ne $data.Head ""}}
                         <label for="{{$data.Field}}"
-                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                     {{end}}
-                    <div class="col-sm-{{$.InputWidth}}">
+                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                         {{template "form_components" $data}}
                     </div>
                 </div>
@@ -102,7 +102,7 @@
             {{if $data.Divider}}
                 {{if $data.DividerTitle}}
                     <div class='form-group divider'>
-                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                     </div>
                 {{end}}
                 <div class='col-sm-12 pb-3'>
@@ -115,9 +115,9 @@
                 <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
                     {{if ne $data.Head ""}}
                         <label for="{{$data.Field}}"
-                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                     {{end}}
-                    <div class="col-sm-{{$.InputWidth}}">
+                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                         {{template "form_components" $data}}
                     </div>
                 </div>

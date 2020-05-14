@@ -522,7 +522,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{end}}
     </select>
     <script>
-        $(".{{.Field}}").select2({{.OptionExt}});
+        $("select.{{.Field}}").select2({{.OptionExt}});
     </script>
 {{end}}`, "components/form/selectbox": `{{define "form_selectbox"}}
     <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
@@ -532,7 +532,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{end}}
     </select>
     <script>
-        $(".{{.Field}}").bootstrapDualListbox({
+        $("select.{{.Field}}").bootstrapDualListbox({
             "infoText": "Showing all {0}",
             "infoTextEmpty": "Empty list",
             "infoTextFiltered": "{0} \/ {1}",
@@ -550,7 +550,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{end}}
     </select>
     <script>
-        $(".{{.Field}}").select2({{.OptionExt}});
+        $("select.{{.Field}}").select2({{.OptionExt}});
     </script>
 {{end}}`, "components/form/switch": `{{define "form_switch"}}
     <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
@@ -597,12 +597,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
               <td>
                   <div class="form-group" style="margin-bottom: 0px;">
                     <div class="col-sm-12">
-                      <input
-                        name="{{$item.Field}}[keys][]"
-                        value="{{(index $item.ValueArr $k)}}"
-                        class="form-control"
-                        required=""
-                      />
+                        {{template "form_components" (changeValue $item $k)}}
                     </div>
                   </div>
               </td>
@@ -610,9 +605,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 
           <td class="form-group">
               <div>
-              <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
-                  <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
-              </div>
+                    <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                        <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+                    </div>
               </div>
           </td>
       </tr>
@@ -637,12 +632,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             <td>
                 <div class="form-group" style="margin-bottom: 0px;">
                   <div class="col-sm-12">
-                    <input
-                      name="{{$item.Field}}[keys][]"
-                      value=""
-                      class="form-control"
-                      required=""
-                    />
+                    {{template "form_components" $item}}
                   </div>
                 </div>
             </td>
@@ -673,34 +663,36 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 `, "components/form/text": `{{define "form_text"}}
     {{if .Editable}}
         <div class="input-group">
-            {{if eq .Label ""}}
-                <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-            {{else if eq .Label "free"}}
-                <div class="input-group-btn">
-                    <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            style="min-width: 32px;" aria-expanded="false">
-                        {{if eq .Value2 ""}}
-                        <span class="{{.Field}}-label"> {{lang ">"}} </span>
-                    {{else}}
-                        <span class="{{.Field}}-label"> {{.Value2}} </span>
-                    {{end}}&nbsp;&nbsp;
-                        <span class="fa fa-caret-down"></span>
-                    </button>
-                    <ul class="dropdown-menu {{.Field}}_ul">
-                        <li><a href="#" data-index="gr"> {{lang ">"}} </a></li>
-                        <li><a href="#" data-index="le"> {{lang "<"}} </a></li>
-                        <li><a href="#" data-index="gq"> {{lang ">="}} </a></li>
-                        <li><a href="#" data-index="lq"> {{lang "<="}} </a></li>
-                        <li><a href="#" data-index="eq"> {{lang "="}} </a></li>
-                        <li><a href="#" data-index="ne"> {{lang "!="}} </a></li>
-                    </ul>
-                </div>
-            {{else}}
-                <span class="input-group-addon">{{.Label}}</span>
+            {{if not .HideLabel}}
+                {{if eq .Label ""}}
+                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                {{else if eq .Label "free"}}
+                    <div class="input-group-btn">
+                        <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                style="min-width: 32px;" aria-expanded="false">
+                            {{if eq .Value2 ""}}
+                            <span class="{{.Field}}-label"> {{lang ">"}} </span>
+                        {{else}}
+                            <span class="{{.Field}}-label"> {{.Value2}} </span>
+                        {{end}}&nbsp;&nbsp;
+                            <span class="fa fa-caret-down"></span>
+                        </button>
+                        <ul class="dropdown-menu {{.Field}}_ul">
+                            <li><a href="#" data-index="gr"> {{lang ">"}} </a></li>
+                            <li><a href="#" data-index="le"> {{lang "<"}} </a></li>
+                            <li><a href="#" data-index="gq"> {{lang ">="}} </a></li>
+                            <li><a href="#" data-index="lq"> {{lang "<="}} </a></li>
+                            <li><a href="#" data-index="eq"> {{lang "="}} </a></li>
+                            <li><a href="#" data-index="ne"> {{lang "!="}} </a></li>
+                        </ul>
+                    </div>
+                {{else}}
+                    <span class="input-group-addon">{{.Label}}</span>
+                {{end}}
             {{end}}
-            <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-                   class="form-control json" placeholder="{{.Placeholder}}">
+            <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control json {{.Field}}" placeholder="{{.Placeholder}}">
         </div>
     {{else}}
         <div class="box box-solid box-default no-margin">
@@ -833,7 +825,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                             {{if $data.Divider}}
                                 {{if $data.DividerTitle}}
                                     <div class='form-group divider'>
-                                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                                     </div>
                                 {{end}}
                                 <div class='col-sm-12 pb-3'>
@@ -846,9 +838,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                                 <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
                                     {{if ne $data.Head ""}}
                                         <label for="{{$data.Field}}"
-                                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                                     {{end}}
-                                    <div class="col-sm-{{$.InputWidth}}">
+                                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                                         {{template "form_components" $data}}
                                     </div>
                                 </div>
@@ -867,7 +859,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                     {{if $data.Divider}}
                         {{if $data.DividerTitle}}
                             <div class='form-group divider'>
-                                <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                                <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                             </div>
                         {{end}}
                         <div class='col-sm-12 pb-3'>
@@ -880,9 +872,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                         <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
                             {{if ne $data.Head ""}}
                                 <label for="{{$data.Field}}"
-                                       class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                       class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                             {{end}}
-                            <div class="col-sm-{{$.InputWidth}}">
+                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                                 {{template "form_components" $data}}
                             </div>
                         </div>
@@ -897,7 +889,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             {{if $data.Divider}}
                 {{if $data.DividerTitle}}
                     <div class='form-group divider'>
-                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                     </div>
                 {{end}}
                 <div class='col-sm-12 pb-3'>
@@ -910,9 +902,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{end}}">
                     {{if ne $data.Head ""}}
                         <label for="{{$data.Field}}"
-                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                     {{end}}
-                    <div class="col-sm-{{$.InputWidth}}">
+                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                         {{template "form_components" $data}}
                     </div>
                 </div>
@@ -925,7 +917,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             {{if $data.Divider}}
                 {{if $data.DividerTitle}}
                     <div class='form-group divider'>
-                        <div class="col-sm-{{$.HeadWidth}} control-label divider-title">{{$data.DividerTitle}}</div>
+                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
                     </div>
                 {{end}}
                 <div class='col-sm-12 pb-3'>
@@ -938,9 +930,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
                     {{if ne $data.Head ""}}
                         <label for="{{$data.Field}}"
-                               class="col-sm-{{$.HeadWidth}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
                     {{end}}
-                    <div class="col-sm-{{$.InputWidth}}">
+                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                         {{template "form_components" $data}}
                     </div>
                 </div>

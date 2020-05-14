@@ -15,12 +15,7 @@
               <td>
                   <div class="form-group" style="margin-bottom: 0px;">
                     <div class="col-sm-12">
-                      <input
-                        name="{{$item.Field}}[keys][]"
-                        value="{{(index $item.ValueArr $k)}}"
-                        class="form-control"
-                        required=""
-                      />
+                        {{template "form_components" (changeValue $item $k)}}
                     </div>
                   </div>
               </td>
@@ -28,9 +23,9 @@
 
           <td class="form-group">
               <div>
-              <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
-                  <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
-              </div>
+                    <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                        <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+                    </div>
               </div>
           </td>
       </tr>
@@ -55,12 +50,7 @@
             <td>
                 <div class="form-group" style="margin-bottom: 0px;">
                   <div class="col-sm-12">
-                    <input
-                      name="{{$item.Field}}[keys][]"
-                      value=""
-                      class="form-control"
-                      required=""
-                    />
+                    {{template "form_components" $item}}
                   </div>
                 </div>
             </td>
