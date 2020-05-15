@@ -1,5 +1,5 @@
 {{define "form_select_single"}}
-    <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
+    <select class="form-control {{.FieldClass}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
             data-multiple="false" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
             {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
@@ -8,6 +8,6 @@
         {{end}}
     </select>
     <script>
-        $("select.{{.Field}}").select2({{.OptionExt}});
+        $("select.{{.FieldClass}}").select2({{.OptionExt}});
     </script>
 {{end}}

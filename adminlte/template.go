@@ -202,7 +202,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{if .Editable}}
         <div class="input-group colorpicker-element">
             <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" id="{{.Field}}" name="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" name="{{.Field}}"
                    value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
         </div>
     {{else}}
@@ -218,7 +218,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{if .Editable}}
         <div class="input-group">
             <span class="input-group-addon">$</span>
-            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text" id="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text"
                    name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
         </div>
@@ -327,8 +327,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{if .Editable}}
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} type="email" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-                   class="form-control json"
+            <input {{if .Must}}required="1"{{end}} type="email" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control {{.Field}}"
                    placeholder="{{.Placeholder}}">
         </div>
     {{else}}
@@ -373,8 +373,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{if .Editable}}
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" id="{{.Field}}" name="{{.Field}}"
-                   value='{{.Value}}' class="form-control json"
+            <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" name="{{.Field}}"
+                   value='{{.Value}}' class="form-control {{.Field}}"
                    placeholder="{{.Placeholder}}">
         </div>
     {{else}}
@@ -399,7 +399,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 {{end}}`, "components/form/number": `{{define "form_number"}}
     {{if .Editable}}
         <div class="input-group">
-            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text" id="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text"
                    name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}"
                    placeholder="{{.Head}}">
@@ -466,9 +466,9 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{if .Editable}}
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
-            <input {{if .Must}}required="1"{{end}} type="password" id="{{.Field}}" name="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} type="password" name="{{.Field}}"
                    value="{{.Value}}"
-                   class="form-control password" placeholder="{{.Placeholder}}">
+                   class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
         </div>
     {{else}}
         <div class="box box-solid box-default no-margin">
@@ -514,7 +514,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         window.wangEditor.fullscreen.init('#{{.Field}}-editor');
     </script>
 {{end}}`, "components/form/select": `{{define "form_select"}}
-    <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
+    <select class="form-control {{.FieldClass}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
             multiple="" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
             {{if not .Editable}}disabled="disabled"{{end}}>
         {{range $key, $v := .Options }}
@@ -522,17 +522,17 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{end}}
     </select>
     <script>
-        $("select.{{.Field}}").select2({{.OptionExt}});
+        $("select.{{.FieldClass}}").select2({{.OptionExt}});
     </script>
 {{end}}`, "components/form/selectbox": `{{define "form_selectbox"}}
-    <select class="form-control {{.Field}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
+    <select class="form-control {{.FieldClass}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
             data-placeholder="Input {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>
         {{range  $key, $v := .Options }}
             <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>
-        $("select.{{.Field}}").bootstrapDualListbox({
+        $("select.{{.FieldClass}}").bootstrapDualListbox({
             "infoText": "Showing all {0}",
             "infoTextEmpty": "Empty list",
             "infoTextFiltered": "{0} \/ {1}",
@@ -541,7 +541,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         });
     </script>
 {{end}}`, "components/form/singleselect": `{{define "form_select_single"}}
-    <select class="form-control {{.Field}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
+    <select class="form-control {{.FieldClass}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}"
             data-multiple="false" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
             {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
@@ -550,7 +550,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{end}}
     </select>
     <script>
-        $("select.{{.Field}}").select2({{.OptionExt}});
+        $("select.{{.FieldClass}}").select2({{.OptionExt}});
     </script>
 {{end}}`, "components/form/switch": `{{define "form_switch"}}
     <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
@@ -692,7 +692,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 {{end}}
             {{end}}
             <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
-                   class="form-control json {{.Field}}" placeholder="{{.Placeholder}}">
+                   class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
         </div>
     {{else}}
         <div class="box box-solid box-default no-margin">
@@ -717,8 +717,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 {{end}}`, "components/form/url": `{{define "form_url"}}
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
-        <input {{if .Must}}required="1"{{end}} type="text" id="{{.Field}}" name="{{.Field}}" value='{{.Value}}'
-               class="form-control json"
+        <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
+               class="form-control {{.Field}}"
                placeholder="{{.Placeholder}}">
     </div>
 {{end}}`, "components/form": `{{define "form"}}    

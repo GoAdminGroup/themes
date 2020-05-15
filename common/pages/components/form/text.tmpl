@@ -30,7 +30,7 @@
                 {{end}}
             {{end}}
             <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
-                   class="form-control json {{.Field}}" placeholder="{{.Placeholder}}">
+                   class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
         </div>
     {{else}}
         <div class="box box-solid box-default no-margin">
