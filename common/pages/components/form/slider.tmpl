@@ -1,0 +1,13 @@
+{{define "form_slider"}}
+    {{if .Editable}}
+        <input type="text" class="{{.Field}}" name="{{.Field}}" data-from="" value="{{.Value}}" style="display: none;">
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+    <script>
+        $('.{{.Field}}').ionRangeSlider({{.OptionExt}})
+    </script>
+{{end}}

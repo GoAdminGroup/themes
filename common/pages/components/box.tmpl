@@ -1,12 +1,14 @@
 {{define "box"}}
 <div class="box box-{{.Theme}}" {{.Attr}}>
-    {{if eq .HeadColor ""}}
-        <div class="box-header {{.HeadBorder}}">
-    {{else}}
-        <div class="box-header {{.HeadBorder}}" style="background-color: {{.HeadColor}};">
+    {{if ne .Header ""}}
+        {{if eq .HeadColor ""}}
+            <div class="box-header {{.HeadBorder}}">
+        {{else}}
+            <div class="box-header {{.HeadBorder}}" style="background-color: {{.HeadColor}};">
+        {{end}}
+            {{langHtml .Header}}
+        </div>
     {{end}}
-        {{langHtml .Header}}
-    </div>
     {{if ne .SecondHeader ""}}
         {{if eq .SecondHeadColor ""}}
             <div class="box-header {{.SecondHeaderClass}} {{.SecondHeadBorder}}">

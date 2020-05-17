@@ -1,11 +1,12 @@
 {{define "form_radio"}}
     {{if .Editable}}
-        {{$field := .Field}}
+        <div class="radio">
         {{range $key, $v := .Options }}
-            <input type="radio" name="{{$field}}" value="{{$v.Value}}"
-                   class="minimal {{$field}}" {{$v.SelectedLabel}}
+            <input type="radio" name="{{$.Field}}" value="{{$v.Value}}"
+                   class="minimal {{$.Field}}" {{$v.SelectedLabel}}
                    style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
         {{end}}
+        </div>
         <script>
             $(function () {
                 $('.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});

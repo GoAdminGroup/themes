@@ -19,11 +19,7 @@
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}').parent().datetimepicker({
-                    "format": "YYYY-MM-DD HH:mm:ss",
-                    "locale": "zh-CN",
-                    "allowInputToggle": true
-                });
+                $('.{{.Field}}').parent().datetimepicker({{.OptionExt}});
             });
         </script>
     {{end}}

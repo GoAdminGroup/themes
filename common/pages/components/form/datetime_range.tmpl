@@ -13,12 +13,8 @@
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}_start__goadmin').datetimepicker({"format": "YYYY-MM-DD HH:mm:ss", "locale": "zh-CN"});
-                $('.{{.Field}}_end__goadmin').datetimepicker({
-                    "format": "YYYY-MM-DD HH:mm:ss",
-                    "locale": "zh-CN",
-                    "useCurrent": false
-                });
+                $('.{{.Field}}_start__goadmin').datetimepicker({{.OptionExt}});
+                $('.{{.Field}}_end__goadmin').datetimepicker({{.OptionExt2}});
                 $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
                     $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
                 });

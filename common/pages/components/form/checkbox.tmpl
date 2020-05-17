@@ -1,0 +1,13 @@
+{{define "form_checkbox"}}
+    {{range $key, $v := .Options }}
+        <span class="icheck">
+            <label class="checkbox-inline">
+                <input type="checkbox" class="{{$.Field}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}[]" class="grid-select-all" style="position: absolute; opacity: 0;">
+                &nbsp;{{$v.Text}}&nbsp;&nbsp;
+            </label>
+        </span>
+    {{end}}
+<script>
+    $('.{{.Field}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
+</script>
+{{end}}

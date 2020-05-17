@@ -11,12 +11,14 @@
             <div class="modal-body" style="{{if ne .Height ""}}height:{{.Height}};{{end}}">
                 {{langHtml .Body}}
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{lang "Close"}}</button>
-                {{if .Footer}}
-                <button type="button" class="btn btn-primary">{{langHtml .Footer}}</button>
-                {{end}}
-            </div>
+            {{if not .HideFooter}}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{lang "Close"}}</button>
+                    {{if .Footer}}
+                    <button type="button" class="btn btn-primary">{{langHtml .Footer}}</button>
+                    {{end}}
+                </div>
+            {{end}}
         </div>
     </div>
 </div>

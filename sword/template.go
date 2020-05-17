@@ -73,13 +73,15 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
 </div>
 {{end}}`, "components/box": `{{define "box"}}
 <div class="box box-{{.Theme}}" {{.Attr}}>
-    {{if eq .HeadColor ""}}
-        <div class="box-header {{.HeadBorder}}">
-    {{else}}
-        <div class="box-header {{.HeadBorder}}" style="background-color: {{.HeadColor}};">
+    {{if ne .Header ""}}
+        {{if eq .HeadColor ""}}
+            <div class="box-header {{.HeadBorder}}">
+        {{else}}
+            <div class="box-header {{.HeadBorder}}" style="background-color: {{.HeadColor}};">
+        {{end}}
+            {{langHtml .Header}}
+        </div>
     {{end}}
-        {{langHtml .Header}}
-    </div>
     {{if ne .SecondHeader ""}}
         {{if eq .SecondHeadColor ""}}
             <div class="box-header {{.SecondHeaderClass}} {{.SecondHeadBorder}}">
@@ -179,7 +181,33 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
   });
 </script>
 {{ end }}
-`, "components/form/code": `{{define "form_code"}}
+`, "components/form/checkbox": `{{define "form_checkbox"}}
+    {{range $key, $v := .Options }}
+        <span class="icheck">
+            <label class="checkbox-inline">
+                <input type="checkbox" class="{{$.Field}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}[]" class="grid-select-all" style="position: absolute; opacity: 0;">
+                &nbsp;{{$v.Text}}&nbsp;&nbsp;
+            </label>
+        </span>
+    {{end}}
+<script>
+    $('.{{.Field}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
+</script>
+{{end}}`, "components/form/checkbox_stacked": `{{define "form_checkbox_stacked"}}
+    <div class="checkbox_stacked" style="margin-top: -7px;">
+    {{range $key, $v := .Options }}
+        <div class="checkbox icheck">
+            <label class="checkbox-inline">
+                <input type="checkbox" class="{{$.Field}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}[]" class="grid-select-all" style="position: absolute; opacity: 0;">
+                &nbsp;{{$v.Text}}&nbsp;&nbsp;
+            </label>
+        </div>
+    {{end}}
+    </div>
+<script>
+    $('.{{.Field}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
+</script>
+{{end}}`, "components/form/code": `{{define "form_code"}}
     <pre id="{{.Field}}" class="ace_editor" style="min-height:200px">
         <textarea {{if .Must}}required="1"{{end}} class="ace_text-input {{.Field}}"
                 {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
@@ -273,11 +301,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}').parent().datetimepicker({
-                    "format": "YYYY-MM-DD HH:mm:ss",
-                    "locale": "zh-CN",
-                    "allowInputToggle": true
-                });
+                $('.{{.Field}}').parent().datetimepicker({{.OptionExt}});
             });
         </script>
     {{end}}
@@ -296,12 +320,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}_start__goadmin').datetimepicker({"format": "YYYY-MM-DD HH:mm:ss", "locale": "zh-CN"});
-                $('.{{.Field}}_end__goadmin').datetimepicker({
-                    "format": "YYYY-MM-DD HH:mm:ss",
-                    "locale": "zh-CN",
-                    "useCurrent": false
-                });
+                $('.{{.Field}}_start__goadmin').datetimepicker({{.OptionExt}});
+                $('.{{.Field}}_end__goadmin').datetimepicker({{.OptionExt2}});
                 $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
                     $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
                 });
@@ -384,7 +404,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/multi_file": `{{define "form_multi_file"}}
-    <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{lang "Input"}} {{.Field}}">
+    <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{.Placeholder}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
     <script>
         mutilfileoptions = {{.OptionExt}};
@@ -477,17 +497,30 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{end}}
 {{end}}`, "components/form/radio": `{{define "form_radio"}}
     {{if .Editable}}
-        {{$field := .Field}}
+        <div class="radio">
         {{range $key, $v := .Options }}
-            <input type="radio" name="{{$field}}" value="{{$v.Value}}"
-                   class="minimal {{$field}}" {{$v.SelectedLabel}}
+            <input type="radio" name="{{$.Field}}" value="{{$v.Value}}"
+                   class="minimal {{$.Field}}" {{$v.SelectedLabel}}
                    style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
         {{end}}
+        </div>
         <script>
             $(function () {
                 $('.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});
             });
         </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+{{end}}`, "components/form/rate": `{{define "form_rate"}}
+    {{if .Editable}}
+        <div class="input-group" style="width: 120px;">
+            <input style="text-align: right;width: 120px; " placeholder="0" type="text" name="{{.Field}}" value="{{.Value}}" class="form-control {{.Field}}" />
+            <span class="input-group-addon clearfix">%</span>
+        </div>
     {{else}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
@@ -551,6 +584,18 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     </select>
     <script>
         $("select.{{.FieldClass}}").select2({{.OptionExt}});
+    </script>
+{{end}}`, "components/form/slider": `{{define "form_slider"}}
+    {{if .Editable}}
+        <input type="text" class="{{.Field}}" name="{{.Field}}" data-from="" value="{{.Value}}" style="display: none;">
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+    <script>
+        $('.{{.Field}}').ionRangeSlider({{.OptionExt}})
     </script>
 {{end}}`, "components/form/switch": `{{define "form_switch"}}
     <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
@@ -773,12 +818,20 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{ template "form_select_single" .  }}
     {{else if eq .FormType.String "textarea"}}
         {{ template "form_textarea" .  }}
+    {{else if eq .FormType.String "slider"}}
+        {{ template "form_slider" .  }}                
+    {{else if eq .FormType.String "rate"}}
+        {{ template "form_rate" .  }}                
     {{else if eq .FormType.String "iconpicker"}}
         {{ template "form_iconpicker" .  }}
     {{else if eq .FormType.String "richtext"}}
         {{ template "form_rich_text" .  }}
     {{else if eq .FormType.String "code"}}
         {{ template "form_code" .  }}
+    {{else if eq .FormType.String "checkbox"}}
+        {{ template "form_checkbox" .  }}        
+    {{else if eq .FormType.String "checkbox_stacked"}}
+        {{ template "form_checkbox_stacked" .  }}         
     {{else if eq .FormType.String "table"}}
         {{ template "form_table" .  }}        
     {{else if eq .FormType.String "array"}}
@@ -835,15 +888,51 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                             {{if $data.Hide}}
                                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
                             {{else}}
-                                <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
-                                    {{if ne $data.Head ""}}
-                                        <label for="{{$data.Field}}"
-                                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
-                                    {{end}}
-                                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
-                                        {{template "form_components" $data}}
+                                {{if eq $data.RowFlag 1}}
+                                    <div class="form-group">
+                                        {{if ne $data.Head ""}}
+                                            <label for="{{$data.Field}}"
+                                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                        {{end}}
+                                        <div class="col-sm-{{$data.RowWidth}}">
+                                            {{template "form_components" $data}}
+                                            {{$data.Foot}} 
+                                        </div>                                                    
+                                {{else if eq $data.RowFlag 3}}
+                                    <div class="col-sm-{{$data.RowWidth}}" style="padding-left: 0px;">
+                                        {{if ne $data.Head ""}}
+                                            <label for="{{$data.Field}}"
+                                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label"  style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                        {{end}}
+                                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                            {{template "form_components" $data}}
+                                        </div>
+                                        {{$data.Foot}}
+                                    </div>                                            
+                                {{else if eq $data.RowFlag 2}}
+                                        <div class="col-sm-{{$data.RowWidth}}" style="padding-right:0px;padding-left: 0px;">
+                                            {{if ne $data.Head ""}}
+                                                <label for="{{$data.Field}}"
+                                                    class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label"  style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                            {{end}}
+                                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                                {{template "form_components" $data}}
+                                            </div>                                            
+                                        </div>
+                                        {{$data.Foot}}
                                     </div>
-                                </div>
+                                {{else}}
+                                    <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                                        {{if ne $data.Head ""}}
+                                            <label for="{{$data.Field}}"
+                                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                        {{end}}
+                                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                                            {{template "form_components" $data}}
+                                        </div>
+                                        {{$data.Foot}}
+                                    </div>
+                                {{end}}
                             {{end}}
                         {{end}}
                     </div>
@@ -869,15 +958,51 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                     {{if $data.Hide}}
                         <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
                     {{else}}
-                        <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
-                            {{if ne $data.Head ""}}
-                                <label for="{{$data.Field}}"
-                                       class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
-                            {{end}}
-                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
-                                {{template "form_components" $data}}
+                        {{if eq $data.RowFlag 1}}
+                            <div class="form-group">
+                                {{if ne $data.Head ""}}
+                                    <label for="{{$data.Field}}"
+                                        class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                {{end}}
+                                <div class="col-sm-{{$data.RowWidth}}">
+                                    {{template "form_components" $data}}
+                                    {{$data.Foot}} 
+                                </div>                                                    
+                        {{else if eq $data.RowFlag 3}}
+                            <div class="col-sm-{{$data.RowWidth}}" style="padding-left: 0px;">
+                                {{if ne $data.Head ""}}
+                                    <label for="{{$data.Field}}"
+                                        class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                {{end}}
+                                <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                    {{template "form_components" $data}}
+                                </div>
+                                {{$data.Foot}}
+                            </div>                                            
+                        {{else if eq $data.RowFlag 2}}
+                                <div class="col-sm-{{$data.RowWidth}}" style="padding-right:0px;padding-left: 0px;">
+                                    {{if ne $data.Head ""}}
+                                        <label for="{{$data.Field}}"
+                                            class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                    {{end}}
+                                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                        {{template "form_components" $data}}
+                                    </div>                                    
+                                </div>
+                                {{$data.Foot}}
                             </div>
-                        </div>
+                        {{else}}
+                            <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                                {{if ne $data.Head ""}}
+                                    <label for="{{$data.Field}}"
+                                        class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                {{end}}
+                                <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                                    {{template "form_components" $data}}
+                                </div>
+                                {{$data.Foot}}
+                            </div>
+                        {{end}}
                     {{end}}
                 {{end}}
             </div>
@@ -907,6 +1032,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                     <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
                         {{template "form_components" $data}}
                     </div>
+                    {{$data.Foot}}
                 </div>
             {{end}}
         {{end}}
@@ -927,15 +1053,51 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             {{if $data.Hide}}
                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
             {{else}}
-                <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
-                    {{if ne $data.Head ""}}
-                        <label for="{{$data.Field}}"
-                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
-                    {{end}}
-                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
-                        {{template "form_components" $data}}
+                {{if eq $data.RowFlag 1}}
+                    <div class="form-group">
+                        {{if ne $data.Head ""}}
+                            <label for="{{$data.Field}}"
+                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                        {{end}}
+                        <div class="col-sm-{{$data.RowWidth}}">
+                            {{template "form_components" $data}}
+                            {{$data.Foot}} 
+                        </div>                                                    
+                {{else if eq $data.RowFlag 3}}
+                    <div class="col-sm-{{$data.RowWidth}}" style="padding-left: 0px;">
+                        {{if ne $data.Head ""}}
+                            <label for="{{$data.Field}}"
+                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                        {{end}}
+                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                            {{template "form_components" $data}}
+                        </div>
+                        {{$data.Foot}}
+                    </div>                                            
+                {{else if eq $data.RowFlag 2}}
+                        <div class="col-sm-{{$data.RowWidth}}" style="padding-right:0px;padding-left: 0px;">
+                            {{if ne $data.Head ""}}
+                                <label for="{{$data.Field}}"
+                                    class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                            {{end}}
+                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                {{template "form_components" $data}}
+                            </div>                            
+                        </div>
+                        {{$data.Foot}}
                     </div>
-                </div>
+                {{else}}
+                    <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                        {{if ne $data.Head ""}}
+                            <label for="{{$data.Field}}"
+                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                        {{end}}
+                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                            {{template "form_components" $data}}
+                        </div>
+                        {{$data.Foot}}
+                    </div>
+                {{end}}              
             {{end}}
         {{end}}
 
@@ -1090,12 +1252,14 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
             <div class="modal-body" style="{{if ne .Height ""}}height:{{.Height}};{{end}}">
                 {{langHtml .Body}}
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{lang "Close"}}</button>
-                {{if .Footer}}
-                <button type="button" class="btn btn-primary">{{langHtml .Footer}}</button>
-                {{end}}
-            </div>
+            {{if not .HideFooter}}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{lang "Close"}}</button>
+                    {{if .Footer}}
+                    <button type="button" class="btn btn-primary">{{langHtml .Footer}}</button>
+                    {{end}}
+                </div>
+            {{end}}
         </div>
     </div>
 </div>
