@@ -185,27 +185,57 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
     {{range $key, $v := .Options }}
         <span class="icheck">
             <label class="checkbox-inline">
-                <input type="checkbox" class="{{$.Field}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}[]" class="grid-select-all" style="position: absolute; opacity: 0;">
-                &nbsp;{{$v.Text}}&nbsp;&nbsp;
+                <input type="checkbox" class="{{$.FieldClass}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
+                {{if ne $v.Text ""}}
+                    &nbsp;{{$v.Text}}&nbsp;&nbsp;
+                {{end}}
             </label>
         </span>
     {{end}}
 <script>
-    $('.{{.Field}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
+    $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
 </script>
-{{end}}`, "components/form/checkbox_stacked": `{{define "form_checkbox_stacked"}}
+{{end}}`, "components/form/checkbox_single": `{{define "form_checkbox_single"}}
+    <span class="icheck">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="{{.FieldClass}}" {{(index .Options 0).SelectedLabel}} value='{{(index .Options 0).Value}}' name="{{.Field}}" style="position: absolute; opacity: 0;">
+            {{if ne (index .Options 0).Text ""}}
+                &nbsp;{{(index .Options 0).Text}}&nbsp;&nbsp;
+            {{end}}
+            {{if ne (index .Options 0).SelectedLabel "checked"}}
+                <input type="hidden" value="{{(index .Options 1).Value}}" name="{{.Field}}">
+            {{end}}
+        </label>
+    </span>
+<script>
+    $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function () {
+        if (this.checked) {
+            let next = $(this).parent().next();
+            if (next) {
+                next.remove();
+            }
+        } else {
+            $(this).parent().parent().append('<input type="hidden" value="{{(index .Options 1).Value}}" name="{{.Field}}">')
+        }
+    });
+</script>
+{{end}}
+
+`, "components/form/checkbox_stacked": `{{define "form_checkbox_stacked"}}
     <div class="checkbox_stacked" style="margin-top: -7px;">
     {{range $key, $v := .Options }}
         <div class="checkbox icheck">
             <label class="checkbox-inline">
-                <input type="checkbox" class="{{$.Field}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}[]" class="grid-select-all" style="position: absolute; opacity: 0;">
-                &nbsp;{{$v.Text}}&nbsp;&nbsp;
+                <input type="checkbox" class="{{$.FieldClass}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
+                {{if ne $v.Text ""}}
+                    &nbsp;{{$v.Text}}&nbsp;&nbsp;
+                {{end}}
             </label>
         </div>
     {{end}}
     </div>
 <script>
-    $('.{{.Field}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
+    $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
 </script>
 {{end}}`, "components/form/code": `{{define "form_code"}}
     <pre id="{{.Field}}" class="ace_editor" style="min-height:200px">
@@ -506,7 +536,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});
+                $('input.{{.Field}}').iCheck({radioClass: 'iradio_minimal-blue'});
             });
         </script>
     {{else}}
@@ -828,6 +858,8 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
         {{ template "form_rich_text" .  }}
     {{else if eq .FormType.String "code"}}
         {{ template "form_code" .  }}
+    {{else if eq .FormType.String "checkbox_single"}}
+        {{ template "form_checkbox_single" .  }}          
     {{else if eq .FormType.String "checkbox"}}
         {{ template "form_checkbox" .  }}        
     {{else if eq .FormType.String "checkbox_stacked"}}

@@ -27,6 +27,8 @@
         {{ template "form_rich_text" .  }}
     {{else if eq .FormType.String "code"}}
         {{ template "form_code" .  }}
+    {{else if eq .FormType.String "checkbox_single"}}
+        {{ template "form_checkbox_single" .  }}          
     {{else if eq .FormType.String "checkbox"}}
         {{ template "form_checkbox" .  }}        
     {{else if eq .FormType.String "checkbox_stacked"}}
