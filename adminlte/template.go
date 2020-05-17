@@ -294,7 +294,7 @@ var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
                 <span class="input-group-addon">{{.Label}}</span>
             {{end}}
             <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 160px" type="text" id="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 170px" type="text" id="{{.Field}}"
                    name="{{.Field}}"
                    value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
