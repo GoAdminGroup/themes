@@ -53,6 +53,9 @@ func (b *BaseTheme) GetFootJS() template.HTML {
 	return GetImportJSTag("/assets" + b.AssetPaths["all_2.min.js"])
 }
 
+func (b *BaseTheme) Get404Page() template.HTML   { return "" }
+func (b *BaseTheme) GetErrorPage() template.HTML { return "" }
+
 func GetImportJSTag(src string) template.HTML {
 	if config.GetAssetUrl() != "" {
 		return template.HTML(`<script src="` + config.GetAssetUrl() + src + `"></script>`)
