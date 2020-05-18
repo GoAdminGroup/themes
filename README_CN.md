@@ -1,14 +1,12 @@
-# GoAdmin Official Themes
+# GoAdmin 官方主题
 
 - [adminlte](https://github.com/GoAdminGroup/themes/tree/master/adminlte)
 - [sword](https://github.com/GoAdminGroup/themes/tree/master/sword)
 
-[中文介绍](./README_CN.md)
+## 如何使用
 
-## How to use
-
-- Import the theme
-- Set in the global configuration of GoAdmin
+- 导入主题
+- 在全局配置中设置
 
 ```go
 
@@ -38,6 +36,6 @@ func main()  {
 
 ```
 
-## How to modify and make it work
+## 如何修改，自定义
 
-Use the Makefile under each theme directory.
+使用每个主题下面的 Makefile 命令
