@@ -1,6 +1,112 @@
 package adminlte
 
-var TemplateList = map[string]string{"admin_panel": `{{define "admin_panel"}}
+var TemplateList = map[string]string{"404": `{{define "content"}}
+    <script>
+        $('a.new-tab-link').on('click', function () {
+            listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
+        });
+    </script>
+    {{if ne .Panel.CSS ""}}
+        <style>
+            {{.Panel.CSS}}
+        </style>
+    {{end}}
+    {{.AssetsList}}
+    {{if ne .Panel.Title ""}}
+        <section class="content-header">
+            <h1>
+                {{langHtml .Panel.Title}}
+                <small>{{langHtml .Panel.Description}}</small>
+            </h1>
+            <ol class="breadcrumb" style="margin-right: 30px;">
+                <li><a href="{{.IndexUrl}}"><i class="fa fa-dashboard"></i> {{lang "home"}}</a></li>
+                {{.Menu.FormatPath}}
+            </ol>
+        </section>
+    {{end}}
+
+    <!-- Main content -->
+    <section {{if ne .Panel.Title ""}}class="content"{{end}}>
+        {{.Panel.Content}}
+    </section>
+
+    {{if ne .Panel.JS ""}}
+        <script>
+            {{.Panel.JS}}
+        </script>
+    {{end}}
+
+    {{if .Iframe}}
+        <style>
+            .content-wrapper, .main-footer {
+                -webkit-transition: none;
+                -moz-transition: none;
+                -o-transition: none;
+                transition: none;
+                margin-left: 0px;
+            }
+            .skin-black .wrapper {
+                background-color: #ffffff !important;
+            }
+            .skin-black .wrapper .content-wrapper {
+                background-color: #ffffff !important;
+            }
+        </style>
+    {{end}}
+{{end}}`, "500": `{{define "content"}}
+    <script>
+        $('a.new-tab-link').on('click', function () {
+            listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
+        });
+    </script>
+    {{if ne .Panel.CSS ""}}
+        <style>
+            {{.Panel.CSS}}
+        </style>
+    {{end}}
+    {{.AssetsList}}
+    {{if ne .Panel.Title ""}}
+        <section class="content-header">
+            <h1>
+                {{langHtml .Panel.Title}}
+                <small>{{langHtml .Panel.Description}}</small>
+            </h1>
+            <ol class="breadcrumb" style="margin-right: 30px;">
+                <li><a href="{{.IndexUrl}}"><i class="fa fa-dashboard"></i> {{lang "home"}}</a></li>
+                {{.Menu.FormatPath}}
+            </ol>
+        </section>
+    {{end}}
+
+    <!-- Main content -->
+    <section {{if ne .Panel.Title ""}}class="content"{{end}}>
+        {{.Panel.Content}}
+    </section>
+
+    {{if ne .Panel.JS ""}}
+        <script>
+            {{.Panel.JS}}
+        </script>
+    {{end}}
+
+    {{if .Iframe}}
+        <style>
+            .content-wrapper, .main-footer {
+                -webkit-transition: none;
+                -moz-transition: none;
+                -o-transition: none;
+                transition: none;
+                margin-left: 0px;
+            }
+            .skin-black .wrapper {
+                background-color: #ffffff !important;
+            }
+            .skin-black .wrapper .content-wrapper {
+                background-color: #ffffff !important;
+            }
+        </style>
+    {{end}}
+{{end}}`, "admin_panel": `{{define "admin_panel"}}
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 

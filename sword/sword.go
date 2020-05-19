@@ -7,7 +7,6 @@ import (
 	"github.com/GoAdminGroup/themes/common"
 	"github.com/GoAdminGroup/themes/sword/resource"
 	"github.com/gobuffalo/packr/v2"
-	"html/template"
 	"strings"
 )
 
@@ -25,7 +24,8 @@ var Sword = Theme{
 		},
 	},
 	BaseTheme: &common.BaseTheme{
-		AssetPaths: resource.AssetPaths,
+		AssetPaths:   resource.AssetPaths,
+		TemplateList: TemplateList,
 	},
 }
 
@@ -41,39 +41,16 @@ func (t *Theme) Name() string {
 	return t.ThemeName
 }
 
-func (*Theme) GetTmplList() map[string]string {
+func (t *Theme) GetTmplList() map[string]string {
 	return TemplateList
 }
 
-func (*Theme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
-	var err error
-
-	if !isPjax {
-		name = "layout"
-		tmpl, err = template.New("layout").Funcs(adminTemplate.DefaultFuncMap).
-			Parse(TemplateList["layout"] +
-				TemplateList["head"] + TemplateList["header"] + TemplateList["sidebar"] +
-				TemplateList["footer"] + TemplateList["js"] + TemplateList["menu"] +
-				TemplateList["admin_panel"] + TemplateList["content"])
-	} else {
-		name = "content"
-		tmpl, err = template.New("content").Funcs(adminTemplate.DefaultFuncMap).
-			Parse(TemplateList["admin_panel"] + TemplateList["content"])
-	}
-
-	if err != nil {
-		panic(err)
-	}
-
-	return
-}
-
-func (*Theme) GetAsset(path string) ([]byte, error) {
+func (t *Theme) GetAsset(path string) ([]byte, error) {
 	path = strings.Replace(path, "/assets/dist", "", -1)
 	box := packr.New("sword", "./resource/assets/dist")
 	return box.Find(path)
 }
 
-func (*Theme) GetAssetList() []string {
+func (t *Theme) GetAssetList() []string {
 	return resource.AssetsList
 }

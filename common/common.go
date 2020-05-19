@@ -2,12 +2,14 @@ package common
 
 import (
 	"github.com/GoAdminGroup/go-admin/modules/config"
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 	"html/template"
 	"strings"
 )
 
 type BaseTheme struct {
-	AssetPaths map[string]string
+	AssetPaths   map[string]string
+	TemplateList map[string]string
 }
 
 const Version = "v0.0.33"
@@ -53,8 +55,40 @@ func (b *BaseTheme) GetFootJS() template.HTML {
 	return GetImportJSTag("/assets" + b.AssetPaths["all_2.min.js"])
 }
 
-func (b *BaseTheme) Get404Page() template.HTML   { return "" }
-func (b *BaseTheme) GetErrorPage() template.HTML { return "" }
+func (b *BaseTheme) GetPageName(pageType []adminTemplate.PageType) string {
+	if len(pageType) > 0 {
+		if pageType[0] == adminTemplate.Error500Page {
+			return "500"
+		}
+		if pageType[0] == adminTemplate.Missing404Page {
+			return "404"
+		}
+	}
+	return "content"
+}
+
+func (b *BaseTheme) GetTemplate(isPjax bool, pageType ...adminTemplate.PageType) (tmpl *template.Template, name string) {
+	var err error
+
+	if !isPjax {
+		name = "layout"
+		tmpl, err = template.New("layout").Funcs(adminTemplate.DefaultFuncMap).
+			Parse(b.TemplateList["layout"] +
+				b.TemplateList["head"] + b.TemplateList["header"] + b.TemplateList["sidebar"] +
+				b.TemplateList["footer"] + b.TemplateList["js"] + b.TemplateList["menu"] +
+				b.TemplateList["admin_panel"] + b.TemplateList[b.GetPageName(pageType)])
+	} else {
+		name = "content"
+		tmpl, err = template.New("content").Funcs(adminTemplate.DefaultFuncMap).
+			Parse(b.TemplateList["admin_panel"] + b.TemplateList[b.GetPageName(pageType)])
+	}
+
+	if err != nil {
+		panic(err)
+	}
+
+	return
+}
 
 func GetImportJSTag(src string) template.HTML {
 	if config.GetAssetUrl() != "" {
