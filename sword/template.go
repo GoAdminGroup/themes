@@ -914,7 +914,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
     </div>
 {{end}}`, "components/form": `{{define "form"}}    
     {{.Header}}
-    <form action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" pjax-container
+    <form id={{.Id}} {{if .Ajax}}οnsubmit="return false;" {{end}}action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" {{if not .Ajax}}pjax-container{{end}}
           style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
         <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
 
@@ -945,6 +945,30 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
         {{end}}
     </form>
     {{.Footer}}
+    {{if .Ajax}}
+        <script>
+            $("#{{.Id}}").submit(function(e){                
+                var form = $(this);
+                $.ajax({
+                    headers: {
+                        Accept: "application/json; charset=utf-8"
+                    },
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: new FormData($("#{{.Id}}")[0]),
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        {{.AjaxSuccessJS}}
+                    },
+                    error : function(data) {
+                        {{.AjaxErrorJS}}
+                    }
+                });
+                e.preventDefault();
+            });
+        </script>
+    {{end}}
 {{end}}`, "components/form_components": `{{define "form_components"}}
     {{if eq .FormType.String "default"}}
         {{ template "form_default" .  }}

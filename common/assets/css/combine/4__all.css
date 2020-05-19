@@ -733,3 +733,9 @@ form .row .nav-tabs-custom {
     height: 100%;
     float: left;
 }
+
+.modal-content .modal-body .box {
+    border-top: none;
+    box-shadow: none;
+    margin-bottom: 0px;
+}
