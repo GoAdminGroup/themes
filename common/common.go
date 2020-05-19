@@ -12,14 +12,14 @@ type BaseTheme struct {
 	TemplateList map[string]string
 }
 
-const Version = "v0.0.33"
+const Version = "v0.0.34"
 
 func (b *BaseTheme) GetVersion() string {
 	return Version
 }
 
 func (b *BaseTheme) GetRequirements() []string {
-	return []string{"v1.2.11"}
+	return []string{">=v1.2.12"}
 }
 
 var comps = []string{"datatable.min.js", "form.min.js", "tree.min.js", "treeview.min.js"}
