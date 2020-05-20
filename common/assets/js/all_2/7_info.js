@@ -73,13 +73,13 @@ $(document).on('pjax:complete', function (xhr) {
 let fullpageBtn = $('.fullpage-btn');
 let exitFullpageBtn = $('.exit-fullpage-btn');
 
-fullpageBtn.on('click', function () {
+fullpageBtn.unbind('click').on('click', function () {
     launchFullscreen(document.documentElement);
     fullpageBtn.hide();
     exitFullpageBtn.show();
 });
 
-exitFullpageBtn.on('click', function () {
+exitFullpageBtn.unbind('click').on('click', function () {
     exitFullscreen();
     exitFullpageBtn.hide();
     fullpageBtn.show();
@@ -109,7 +109,7 @@ function exitFullscreen() {
     }
 }
 
-$('.container-refresh').on('click', function () {
+$('.container-refresh').unbind('click').on('click', function () {
     $.pjax.reload('#pjax-container');
     toastr.success(toastMsg);
 });
@@ -121,7 +121,7 @@ $('.container-refresh').on('click', function () {
 let sidebarMenuA = $('.sidebar-menu a');
 
 $(function () {
-    $('.sidebar-menu li:not(.treeview) > a').on('click', function () {
+    $('.sidebar-menu li:not(.treeview) > a').unbind('click').on('click', function () {
         let parent = $(this).parent().addClass('active');
         parent.siblings('.treeview.active').find('> a').trigger('click');
         parent.siblings().removeClass('active').find('li').removeClass('active');
@@ -139,7 +139,7 @@ $(window).resize(function() {
     addOrRemoveLeftRightNavBtn(!checkNavLength());
 });
 
-sidebarMenuA.on('click', function () {
+sidebarMenuA.unbind('click').unbind('click').on('click', function () {
 
     let link = $(this).attr('href');
     if (link !== '#' && link.indexOf('http') === -1 && !checkNavExist(link)) {
@@ -154,11 +154,11 @@ sidebarMenuA.on('click', function () {
     }
 });
 
-$('a.new-tab-link').on('click', function () {
+$('a.new-tab-link').unbind('click').on('click', function () {
     listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
 });
 
-$('.navbar-nav-btn-left').on('click', function () {
+$('.navbar-nav-btn-left').unbind('click').on('click', function () {
     moveToLeft();
 });
 
@@ -174,7 +174,7 @@ function moveToLeft() {
     }
 }
 
-$('.navbar-nav-btn-right').on('click', function () {
+$('.navbar-nav-btn-right').unbind('click').on('click', function () {
     moveToRight();
 });
 
@@ -348,7 +348,7 @@ $(function () {
 });
 
 
-$('.fixed-btn').on('click', function () {
+$('.fixed-btn').unbind('click').on('click', function () {
     let clicked = $(this).attr('data-click');
     if (clicked === "false") {
         $('.main-sidebar').css('position', 'fixed');

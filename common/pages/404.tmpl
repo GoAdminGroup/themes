@@ -1,6 +1,6 @@
 {{define "content"}}
     <script>
-        $('a.new-tab-link').on('click', function () {
+        $('a.new-tab-link').unbind('click').on('click', function () {
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>

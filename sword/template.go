@@ -2,7 +2,7 @@ package sword
 
 var TemplateList = map[string]string{"404": `{{define "content"}}
     <script>
-        $('a.new-tab-link').on('click', function () {
+        $('a.new-tab-link').unbind('click').on('click', function () {
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>
@@ -60,7 +60,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
     {{end}}
 {{end}}`, "500": `{{define "content"}}
     <script>
-        $('a.new-tab-link').on('click', function () {
+        $('a.new-tab-link').unbind('click').on('click', function () {
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>
@@ -1551,7 +1551,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
     </span>
     <script>
         let toastMsg = '{{lang "Refresh succeeded"}} !';
-        $('.grid-refresh').on('click', function () {
+        $('.grid-refresh').unbind('click').on('click', function () {
             $.pjax.reload('#pjax-container');
             toastr.success(toastMsg);
         });
@@ -1857,7 +1857,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
 
             {{if ne .IsHideRowSelector true}}
 
-            $('.column-select-all').on('click', function () {
+            $('.column-select-all').unbind('click').on('click', function () {
                 if ($(this).data('check') === '') {
                     $('.column-select-item').iCheck('check');
                     $(this).data('check', 'true')
@@ -1867,7 +1867,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
                 }
             });
 
-            $('.column-select-submit').on('click', function () {
+            $('.column-select-submit').unbind('click').on('click', function () {
 
                 let param = new Map();
                 param.set('__columns', selectedAllFieldsRows().join(','));
@@ -1893,7 +1893,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
 
             {{if .ExportUrl}}
 
-            $('.grid-batch-1').on('click', function () {
+            $('.grid-batch-1').unbind('click').on('click', function () {
                 let rows = selectedRows();
                 if (rows.length > 0) {
                     ExportAll(rows.join())
@@ -1932,7 +1932,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
                 DeletePost($(this).data('id'))
             });
 
-            $('.grid-batch-0').on('click', function () {
+            $('.grid-batch-0').unbind('click').on('click', function () {
                 let rows = selectedRows();
                 if (rows.length > 0) {
                     DeletePost(rows.join())
@@ -2341,7 +2341,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
                 $.pjax.reload('#pjax-container');
                 toastr.success(toastMsg);
             });
-            $('.tree-model-tree-tools').on('click', function (e) {
+            $('.tree-model-tree-tools').unbind('click').on('click', function (e) {
                 let target = $(e.target),
                     action = target.data('action');
                 if (action === 'expand') {
@@ -2387,7 +2387,7 @@ var TemplateList = map[string]string{"404": `{{define "content"}}
     </style>
 {{end}}`, "content": `{{define "content"}}
     <script>
-        $('a.new-tab-link').on('click', function () {
+        $('a.new-tab-link').unbind('click').on('click', function () {
             listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
         });
     </script>
