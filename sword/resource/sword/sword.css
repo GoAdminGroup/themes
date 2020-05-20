@@ -568,5 +568,6 @@ ul.treeview-menu ul.treeview-menu.menu-open {
 }
 
 .sa-confirm-button-container button {
-    background-color: #198fff !important;
+    background-color: #399efd !important;
+    box-shadow: none !important;
 }
