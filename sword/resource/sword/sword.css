@@ -566,3 +566,7 @@ ul.treeview-menu ul.treeview-menu.menu-open {
 .skin-black ul.treeview-menu ul.treeview-menu li.active {
     background: rgb(0, 4, 8) !important;
 }
+
+.sa-confirm-button-container button {
+    background-color: #198fff !important;
+}
