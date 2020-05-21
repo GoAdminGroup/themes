@@ -1,6 +1,27 @@
 package sword
 
-var TemplateList = map[string]string{"404": `<div class="missing-content">
+var TemplateList = map[string]string{"403": `<div class="missing-content">
+    <div class="missing-content-title">403</div>
+    <div class="missing-content-title-subtitle">Sorry, you don't have access to this page.</div>
+</div>
+
+<style>
+.missing-content {
+    padding: 48px 32px;
+}
+.missing-content-title {
+    color: rgba(0,0,0,.85);
+    font-size: 54px;
+    line-height: 1.8;
+    text-align: center;
+}
+.missing-content-title-subtitle {
+    color: rgba(0,0,0,.45);
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+}
+</style>`, "404": `<div class="missing-content">
     <div class="missing-content-title">404</div>
     <div class="missing-content-title-subtitle">Sorry, the page you visited does not exist.</div>
 </div>
@@ -22,7 +43,7 @@ var TemplateList = map[string]string{"404": `<div class="missing-content">
     text-align: center;
 }
 </style>`, "500": `<div class="error-content">
-    <div class="error-content-title">Opps Error</div>
+    <div class="error-content-title">500</div>
     <div class="error-content-title-subtitle">Sorry, the server is reporting an error.</div>
 </div>
 

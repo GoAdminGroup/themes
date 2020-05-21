@@ -63,6 +63,10 @@ func (b *BaseTheme) Get404HTML() template.HTML {
 	return template.HTML(b.TemplateList["404"])
 }
 
+func (b *BaseTheme) Get403HTML() template.HTML {
+	return template.HTML(b.TemplateList["403"])
+}
+
 func (b *BaseTheme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 	var err error
 
