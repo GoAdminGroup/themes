@@ -55,19 +55,15 @@ func (b *BaseTheme) GetFootJS() template.HTML {
 	return GetImportJSTag("/assets" + b.AssetPaths["all_2.min.js"])
 }
 
-func (b *BaseTheme) GetPageName(pageType []adminTemplate.PageType) string {
-	if len(pageType) > 0 {
-		if pageType[0] == adminTemplate.Error500Page {
-			return "500"
-		}
-		if pageType[0] == adminTemplate.Missing404Page {
-			return "404"
-		}
-	}
-	return "content"
+func (b *BaseTheme) Get500HTML() template.HTML {
+	return template.HTML(b.TemplateList["500"])
 }
 
-func (b *BaseTheme) GetTemplate(isPjax bool, pageType ...adminTemplate.PageType) (tmpl *template.Template, name string) {
+func (b *BaseTheme) Get404HTML() template.HTML {
+	return template.HTML(b.TemplateList["404"])
+}
+
+func (b *BaseTheme) GetTemplate(isPjax bool) (tmpl *template.Template, name string) {
 	var err error
 
 	if !isPjax {
@@ -76,11 +72,11 @@ func (b *BaseTheme) GetTemplate(isPjax bool, pageType ...adminTemplate.PageType)
 			Parse(b.TemplateList["layout"] +
 				b.TemplateList["head"] + b.TemplateList["header"] + b.TemplateList["sidebar"] +
 				b.TemplateList["footer"] + b.TemplateList["js"] + b.TemplateList["menu"] +
-				b.TemplateList["admin_panel"] + b.TemplateList[b.GetPageName(pageType)])
+				b.TemplateList["admin_panel"] + b.TemplateList["content"])
 	} else {
 		name = "content"
 		tmpl, err = template.New("content").Funcs(adminTemplate.DefaultFuncMap).
-			Parse(b.TemplateList["admin_panel"] + b.TemplateList[b.GetPageName(pageType)])
+			Parse(b.TemplateList["admin_panel"] + b.TemplateList["content"])
 	}
 
 	if err != nil {
