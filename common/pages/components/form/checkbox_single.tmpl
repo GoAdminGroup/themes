@@ -1,7 +1,7 @@
 {{define "form_checkbox_single"}}
     <span class="icheck">
         <label class="checkbox-inline">
-            <input type="checkbox" class="{{.FieldClass}}" {{(index .Options 0).SelectedLabel}} value='{{(index .Options 0).Value}}' name="{{.Field}}" style="position: absolute; opacity: 0;">
+            <input type="checkbox" class="{{.FieldClass}}" {{attr (index .Options 0).SelectedLabel}} value='{{(index .Options 0).Value}}' name="{{.Field}}" style="position: absolute; opacity: 0;">
             {{if ne (index .Options 0).Text ""}}
                 &nbsp;{{(index .Options 0).Text}}&nbsp;&nbsp;
             {{end}}

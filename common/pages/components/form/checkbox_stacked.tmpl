@@ -3,7 +3,7 @@
     {{range $key, $v := .Options }}
         <div class="checkbox icheck">
             <label class="checkbox-inline">
-                <input type="checkbox" class="{{$.FieldClass}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
+                <input type="checkbox" class="{{$.FieldClass}}" {{attr $v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
                 {{if ne $v.Text ""}}
                     &nbsp;{{$v.Text}}&nbsp;&nbsp;
                 {{end}}

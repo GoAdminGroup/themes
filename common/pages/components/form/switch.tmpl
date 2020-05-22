@@ -1,5 +1,5 @@
 {{define "form_switch"}}
-    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
+    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{attr (index .Options 0).SelectedLabel}} type="checkbox"
            name="__checkbox__{{.Field}}">
     {{$index := 0}}
     {{if eq (index .Options 0).SelectedLabel ""}}

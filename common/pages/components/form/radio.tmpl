@@ -3,7 +3,7 @@
         <div class="radio">
         {{range $key, $v := .Options }}
             <input type="radio" name="{{$.Field}}" value="{{$v.Value}}"
-                   class="minimal {{$.Field}}" {{$v.SelectedLabel}}
+                   class="minimal {{$.Field}}" {{attr $v.SelectedLabel}}
                    style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
         {{end}}
         </div>

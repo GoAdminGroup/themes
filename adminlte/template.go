@@ -248,7 +248,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     {{range $key, $v := .Options }}
         <span class="icheck">
             <label class="checkbox-inline">
-                <input type="checkbox" class="{{$.FieldClass}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
+                <input type="checkbox" class="{{$.FieldClass}}" {{attr $v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
                 {{if ne $v.Text ""}}
                     &nbsp;{{$v.Text}}&nbsp;&nbsp;
                 {{end}}
@@ -261,7 +261,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/checkbox_single": `{{define "form_checkbox_single"}}
     <span class="icheck">
         <label class="checkbox-inline">
-            <input type="checkbox" class="{{.FieldClass}}" {{(index .Options 0).SelectedLabel}} value='{{(index .Options 0).Value}}' name="{{.Field}}" style="position: absolute; opacity: 0;">
+            <input type="checkbox" class="{{.FieldClass}}" {{attr (index .Options 0).SelectedLabel}} value='{{(index .Options 0).Value}}' name="{{.Field}}" style="position: absolute; opacity: 0;">
             {{if ne (index .Options 0).Text ""}}
                 &nbsp;{{(index .Options 0).Text}}&nbsp;&nbsp;
             {{end}}
@@ -289,7 +289,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     {{range $key, $v := .Options }}
         <div class="checkbox icheck">
             <label class="checkbox-inline">
-                <input type="checkbox" class="{{$.FieldClass}}" {{$v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
+                <input type="checkbox" class="{{$.FieldClass}}" {{attr $v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
                 {{if ne $v.Text ""}}
                     &nbsp;{{$v.Text}}&nbsp;&nbsp;
                 {{end}}
@@ -593,7 +593,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="radio">
         {{range $key, $v := .Options }}
             <input type="radio" name="{{$.Field}}" value="{{$v.Value}}"
-                   class="minimal {{$.Field}}" {{$v.SelectedLabel}}
+                   class="minimal {{$.Field}}" {{attr $v.SelectedLabel}}
                    style="position: absolute; opacity: 0;">&nbsp;{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}&nbsp;&nbsp;
         {{end}}
         </div>
@@ -644,7 +644,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             multiple="" data-placeholder="{{.Placeholder}}" tabindex="-1" aria-hidden="true"
             {{if not .Editable}}disabled="disabled"{{end}}>
         {{range $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
+            <option value='{{$v.Value}}' {{attr $v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>
@@ -654,7 +654,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     <select class="form-control {{.FieldClass}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
             data-placeholder="Input {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>
         {{range  $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
+            <option value='{{$v.Value}}' {{attr $v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>
@@ -672,7 +672,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             {{if not .Editable}}disabled="disabled"{{end}}>
         <option></option>
         {{range $key, $v := .Options }}
-            <option value='{{$v.Value}}' {{$v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
+            <option value='{{$v.Value}}' {{attr $v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
         {{end}}
     </select>
     <script>
@@ -691,7 +691,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         $('.{{.Field}}').ionRangeSlider({{.OptionExt}})
     </script>
 {{end}}`, "components/form/switch": `{{define "form_switch"}}
-    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{(index .Options 0).SelectedLabel}} type="checkbox"
+    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{attr (index .Options 0).SelectedLabel}} type="checkbox"
            name="__checkbox__{{.Field}}">
     {{$index := 0}}
     {{if eq (index .Options 0).SelectedLabel ""}}
