@@ -140,6 +140,10 @@ body {
     background: #000408 !important;
 }
 
+.skin-black li.treeview.active li.treeview.active ul.treeview-menu {
+    background: #000408 !important;
+}
+
 .skin-black .sidebar-menu > li:hover > a, .skin-black .sidebar-menu > li.active > a, .skin-black .sidebar-menu > li.menu-open > a {
     background: #04142a !important;
 }

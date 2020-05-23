@@ -2711,11 +2711,11 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 {{end}}
                 <li class='{{$list.Active}}'>
                     {{if eq $list.Url "/"}}
-                    <a href='{{$UrlPrefix}}'>
+                        <a href='{{$UrlPrefix}}'>
                     {{else if isLinkUrl $list.Url}}
-                    <a href='{{$list.Url}}'>
+                        <a href='{{$list.Url}}'>
                     {{else}}
-                    <a href='{{$UrlPrefix}}{{$list.Url}}'>
+                        <a href='{{$UrlPrefix}}{{$list.Url}}'>
                     {{end}}
                         <i class="fa {{$list.Icon}}"></i><span> {{$list.Name}}</span>
                         <span class="pull-right-container"><!-- <small class="label pull-right bg-green">new</small> --></span>
@@ -2733,7 +2733,13 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                         {{range $key2, $item := $list.ChildrenList}}
                             {{if eq (len $item.ChildrenList) 0}}
                             <li>
-                                <a href="{{$UrlPrefix}}{{$item.Url}}">
+                                {{if eq $item.Url "/"}}
+                                    <a href='{{$UrlPrefix}}'>
+                                {{else if isLinkUrl $item.Url}}
+                                    <a href='{{$item.Url}}'>
+                                {{else}}
+                                    <a href='{{$UrlPrefix}}{{$item.Url}}'>
+                                {{end}}                            
                                     <i class="fa {{$item.Icon}}"></i> {{$item.Name}}
                                 </a>
                             </li>
@@ -2748,7 +2754,13 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                                     <ul class="treeview-menu">
                                         {{range $key3, $subItem := $item.ChildrenList}}
                                             <li>
-                                                <a href="{{$UrlPrefix}}{{$subItem.Url}}">
+                                                {{if eq $subItem.Url "/"}}
+                                                    <a href='{{$UrlPrefix}}'>
+                                                {{else if isLinkUrl $subItem.Url}}
+                                                    <a href='{{$subItem.Url}}'>
+                                                {{else}}
+                                                    <a href='{{$UrlPrefix}}{{$subItem.Url}}'>
+                                                {{end}}                                             
                                                     <i class="fa {{$subItem.Icon}}"></i> {{$subItem.Name}}
                                                 </a>
                                             </li>
