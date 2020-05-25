@@ -2337,11 +2337,6 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         }
     </style>
 {{end}}`, "content": `{{define "content"}}
-    <script>
-        $('a.new-tab-link').unbind('click').on('click', function () {
-            listenerForAddNavTab($(this).attr('href'), $(this).attr('data-title'))
-        });
-    </script>
     {{if ne .Panel.CSS ""}}
         <style>
             {{.Panel.CSS}}
