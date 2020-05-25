@@ -267,7 +267,7 @@
 
             {{if ne .IsHideRowSelector true}}
 
-            $('.column-select-all').unbind('click').on('click', function () {
+            $('.column-select-all').on('click', function () {
                 if ($(this).data('check') === '') {
                     $('.column-select-item').iCheck('check');
                     $(this).data('check', 'true')
@@ -277,7 +277,7 @@
                 }
             });
 
-            $('.column-select-submit').unbind('click').on('click', function () {
+            $('.column-select-submit').on('click', function () {
 
                 let param = new Map();
                 param.set('__columns', selectedAllFieldsRows().join(','));
@@ -303,7 +303,7 @@
 
             {{if .ExportUrl}}
 
-            $('.grid-batch-1').unbind('click').on('click', function () {
+            $('.grid-batch-1').on('click', function () {
                 let rows = selectedRows();
                 if (rows.length > 0) {
                     ExportAll(rows.join())
@@ -338,11 +338,11 @@
 
             {{if .DeleteUrl}}
 
-            $('.grid-row-delete').unbind('click').click(function () {
+            $('.grid-row-delete').click(function () {
                 DeletePost($(this).data('id'))
             });
 
-            $('.grid-batch-0').unbind('click').on('click', function () {
+            $('.grid-batch-0').on('click', function () {
                 let rows = selectedRows();
                 if (rows.length > 0) {
                     DeletePost(rows.join())

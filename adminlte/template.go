@@ -1808,7 +1808,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 
             {{if ne .IsHideRowSelector true}}
 
-            $('.column-select-all').unbind('click').on('click', function () {
+            $('.column-select-all').on('click', function () {
                 if ($(this).data('check') === '') {
                     $('.column-select-item').iCheck('check');
                     $(this).data('check', 'true')
@@ -1818,7 +1818,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 }
             });
 
-            $('.column-select-submit').unbind('click').on('click', function () {
+            $('.column-select-submit').on('click', function () {
 
                 let param = new Map();
                 param.set('__columns', selectedAllFieldsRows().join(','));
@@ -1844,7 +1844,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 
             {{if .ExportUrl}}
 
-            $('.grid-batch-1').unbind('click').on('click', function () {
+            $('.grid-batch-1').on('click', function () {
                 let rows = selectedRows();
                 if (rows.length > 0) {
                     ExportAll(rows.join())
@@ -1879,11 +1879,11 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 
             {{if .DeleteUrl}}
 
-            $('.grid-row-delete').unbind('click').click(function () {
+            $('.grid-row-delete').click(function () {
                 DeletePost($(this).data('id'))
             });
 
-            $('.grid-batch-0').unbind('click').on('click', function () {
+            $('.grid-batch-0').on('click', function () {
                 let rows = selectedRows();
                 if (rows.length > 0) {
                     DeletePost(rows.join())
@@ -2292,7 +2292,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 $.pjax.reload('#pjax-container');
                 toastr.success(toastMsg);
             });
-            $('.tree-model-tree-tools').unbind('click').on('click', function (e) {
+            $('.tree-model-tree-tools').on('click', function (e) {
                 let target = $(e.target),
                     action = target.data('action');
                 if (action === 'expand') {

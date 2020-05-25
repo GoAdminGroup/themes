@@ -94,7 +94,7 @@
     </span>
     <script>
         let toastMsg = '{{lang "Refresh succeeded"}} !';
-        $('.grid-refresh').unbind('click').on('click', function () {
+        $('.grid-refresh').on('click', function () {
             $.pjax.reload('#pjax-container');
             toastr.success(toastMsg);
         });

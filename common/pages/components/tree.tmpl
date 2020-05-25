@@ -151,7 +151,7 @@
                 $.pjax.reload('#pjax-container');
                 toastr.success(toastMsg);
             });
-            $('.tree-model-tree-tools').unbind('click').on('click', function (e) {
+            $('.tree-model-tree-tools').on('click', function (e) {
                 let target = $(e.target),
                     action = target.data('action');
                 if (action === 'expand') {
