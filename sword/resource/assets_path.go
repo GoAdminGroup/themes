@@ -1,7 +1,7 @@
 package resource
 
 var AssetPaths = map[string]string{
-	"all.min.css":      "/dist/css/all.min.ac5f07dc59.css",
+	"all.min.css":      "/dist/css/all.min.d04a2d803c.css",
 	"all.min.js":       "/dist/js/all.min.8425540791.js",
 	"all_2.min.js":     "/dist/js/all_2.min.38a2a946b0.js",
 	"datatable.min.js": "/dist/js/datatable.min.581cdc109b.js",

@@ -739,3 +739,7 @@ form .row .nav-tabs-custom {
     box-shadow: none;
     margin-bottom: 0px;
 }
+
+.select2-dropdown.select2-dropdown--below {
+    z-index: 10005;
+}

@@ -1,7 +1,7 @@
 package resource
 
 var AssetsList = []string{
-	"/dist/css/all.min.ac5f07dc59.css",
+	"/dist/css/all.min.d04a2d803c.css",
 	"/dist/css/blue.png",
 	"/dist/css/blue@2x.png",
 	"/dist/css/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf",
