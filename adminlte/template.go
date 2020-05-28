@@ -387,14 +387,14 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 <span class="input-group-addon">{{.Label}}</span>
             {{end}}
             <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-            <input {{if .Must}}required="1"{{end}} style="width: 170px" type="text" id="{{.Field}}"
+            <input {{if .Must}}required="1"{{end}} style="width: 170px" type="text"
                    name="{{.Field}}"
                    value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}').parent().datetimepicker({{.OptionExt}});
+                $('input.{{.Field}}').parent().datetimepicker({{.OptionExt}});
             });
         </script>
     {{end}}
@@ -413,13 +413,13 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         </div>
         <script>
             $(function () {
-                $('.{{.Field}}_start__goadmin').datetimepicker({{.OptionExt}});
-                $('.{{.Field}}_end__goadmin').datetimepicker({{.OptionExt2}});
-                $('.{{.Field}}_start__goadmin').on("dp.change", function (e) {
-                    $('.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
+                $('input.{{.Field}}_start__goadmin').datetimepicker({{.OptionExt}});
+                $('input.{{.Field}}_end__goadmin').datetimepicker({{.OptionExt2}});
+                $('input.{{.Field}}_start__goadmin').on("dp.change", function (e) {
+                    $('input.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
                 });
-                $('.{{.Field}}_end__goadmin').on("dp.change", function (e) {
-                    $('.{{.Field}}_start__goadmin').data("DateTimePicker").maxDate(e.date);
+                $('input.{{.Field}}_end__goadmin').on("dp.change", function (e) {
+                    $('input.{{.Field}}_start__goadmin').data("DateTimePicker").maxDate(e.date);
                 });
             });
         </script>
