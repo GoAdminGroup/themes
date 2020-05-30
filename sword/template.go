@@ -330,7 +330,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     <script>
         $('.{{.Field}}').parent().colorpicker([]);
@@ -357,7 +357,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/custom": `{{define "form_custom"}}
     <div class="input-group">
@@ -379,7 +379,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             <div class="box-body" style="min-height: 40px;">
                 {{.Value}}
             </div>
-            <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+            <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
         </div>
     {{else}}
         <div class="input-group">
@@ -427,7 +427,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/default": `{{define "form_default"}}
     <div class="box box-solid box-default no-margin">
@@ -435,7 +435,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             {{.Value}}
         </div>
     </div>
-    <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+    <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
 {{end}}`, "components/form/email": `{{define "form_email"}}
     {{if .Editable}}
         <div class="input-group">
@@ -448,7 +448,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/file": `{{define "form_file"}}
     <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
@@ -494,7 +494,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/multi_file": `{{define "form_multi_file"}}
     <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{.Placeholder}}">
@@ -521,7 +521,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     <script>
         $(function () {
@@ -550,7 +550,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     <script>
         $(function () {
@@ -606,7 +606,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/rate": `{{define "form_rate"}}
     {{if .Editable}}
@@ -618,7 +618,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
 {{end}}`, "components/form/richtext": `{{define "form_rich_text"}}
     <div id="{{.Field}}-editor">
@@ -685,7 +685,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     <script>
         $('.{{.Field}}').ionRangeSlider({{.OptionExt}})
@@ -836,7 +836,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
-        <input type="hidden" name="{{.Field}}" value='{{.Value}}'>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
     {{if eq .Label "free"}}
         <script>
