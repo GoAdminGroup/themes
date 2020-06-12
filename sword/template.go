@@ -1665,7 +1665,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                                     </a>
                                 {{end}}
                             {{else}}
-                                {{renderRowDataHTML (index $info $PrimaryKey).Content $Action}}
+                                {{renderRowDataHTML (index $info $PrimaryKey).Content $Action $info}}
                             {{end}}
                         </td>
                     {{end}}
