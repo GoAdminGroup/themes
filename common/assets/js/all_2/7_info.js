@@ -364,3 +364,10 @@ $('.fixed-btn').on('click', function () {
         $(this).css('background-color', 'white');
     }
 });
+
+function updateMenu(menuData) {
+    let curMenuPlug = $(".main-sidebar section.sidebar ul.sidebar-menu").attr("data-plug");
+    if (curMenuPlug !== menuData.pluginName || menuData.forceUpdate) {
+        $(".main-sidebar section.sidebar").html(template('sidebar-menu-tmpl', menuData))
+    }
+}

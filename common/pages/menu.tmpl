@@ -1,5 +1,5 @@
 {{define "menu"}}
-    <ul class="sidebar-menu" data-widget="tree">
+    <ul class="sidebar-menu" data-widget="tree" data-plug="{{.Menu.PluginName}}">
         {{$UrlPrefix := .UrlPrefix}}
         {{range $key, $list := .Menu.List }}
             {{if eq (len $list.ChildrenList) 0}}
@@ -71,4 +71,77 @@
             {{end}}
         {{end}}
     </ul>
+    <script id="sidebar-menu-tmpl" type="text/html">
+        <ul class="sidebar-menu" data-widget="tree"  data-plug="<%= pluginName %>">
+            <% for(var i = 0; i < list.length; i++){  %>
+                <% if (list[i].childrenList.length === 0) { %>
+                    <% if (list[i].header !== "") { %>
+                        <li class="header" data-rel="external"><%= list[i].header %></li>
+                    <% } %>
+                    <li class='<%= list[i].active %>'>
+                        <% if (list[i].url === "/") { %>
+                            <a href='<%= urlPrefix %>'>
+                        <% } else if (list[i].isLinkUrl) { %>
+                            <a href='<%= list[i].url %>'>
+                        <% } else { %>
+                            <a href='<%= urlPrefix %><%= list[i].url %>'>
+                        <% } %>
+                            <i class="fa <%= list[i].icon %>"></i><span> <%= list[i].name %></span>
+                            <span class="pull-right-container">
+                        </a>
+                    </li>
+                <% } else { %>
+                    <li class="treeview <%= list[i].active %>">
+                        <a href="#">
+                            <i class="fa <%= list[i].icon %>"></i><span> <%= list[i].name %></span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <% for(var i = 0; i < list[i].childrenList.length; i++){  %>
+                                <% if (list[i].childrenList[i].childrenList.length === 0) { %>
+                                    <li>
+                                        <% if (list[i].childrenList[i].url === "/") { %>
+                                            <a href='<%= urlPrefix %>'>
+                                        <% } else if (list[i].childrenList[i].isLinkUrl) { %>
+                                            <a href='<%= list[i].childrenList[i].url %>'>
+                                        <% } else { %>
+                                            <a href='<%= urlPrefix %><%= list[i].childrenList[i].url %>'>
+                                        <% } %>                            
+                                            <i class="fa <%= list[i].childrenList[i].icon %>"></i> <%= list[i].childrenList[i].name %>
+                                        </a>
+                                    </li>
+                                <% } else { %>
+                                    <li class="treeview <%= list[i].childrenList[i].active %>">
+                                        <a href="#">
+                                            <i class="fa <%= list[i].childrenList[i].icon %>"></i><span> <%= list[i].childrenList[i].name %></span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <% for(var i = 0; i < list[i].childrenList[i].childrenList.length; i++){  %>
+                                                <li>
+                                                    <% if (list[i].childrenList[i].childrenList[i].url === "/") { %>
+                                                        <a href='<%= urlPrefix %>'>
+                                                    <% } else if (list[i].childrenList[i].childrenList[i].isLinkUrl) { %>
+                                                        <a href='<%= list[i].childrenList[i].childrenList[i].url %>'>
+                                                    <% } else { %>
+                                                        <a href='<%= urlPrefix %><%= list[i].childrenList[i].childrenList[i].url %>'>
+                                                    <% } %>                                             
+                                                        <i class="fa <%= list[i].childrenList[i].childrenList[i].icon %>"></i> <%= list[i].ChildrenList[i].ChildrenList[i].name %>
+                                                    </a>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                    </li>
+                                <% } %>
+                            <% } %>
+                        </ul>
+                    </li>
+                <% } %>
+            <% } %>
+        </ul>
+    </script>
 {{end}}
