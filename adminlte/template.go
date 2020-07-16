@@ -326,15 +326,15 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" name="{{.Field}}"
                    value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
         </div>
+        <script>
+            $('.{{.Field}}').parent().colorpicker([]);
+        </script>
     {{else}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
         <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
-    <script>
-        $('.{{.Field}}').parent().colorpicker([]);
-    </script>
 {{end}}`, "components/form/currency": `{{define "form_currency"}}
     {{if .Editable}}
         <div class="input-group">
@@ -517,23 +517,23 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                    value="{{.Value}}" class="form-control {{.Field}}"
                    placeholder="{{.Head}}">
         </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}:not(.initialized)')
+                    .addClass('initialized')
+                    .bootstrapNumber({
+                        upClass: 'success',
+                        downClass: 'primary',
+                        center: true
+                    });
+            })
+        </script>
     {{else}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
         <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
-    <script>
-        $(function () {
-            $('.{{.Field}}:not(.initialized)')
-                .addClass('initialized')
-                .bootstrapNumber({
-                    upClass: 'success',
-                    downClass: 'primary',
-                    center: true
-                });
-        })
-    </script>
 {{end}}`, "components/form/number_range": `{{define "form_number_range"}}
     {{if .Editable}}
         <div class="input-group number-range">
@@ -546,35 +546,35 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                    value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
                    placeholder="{{.Head}}">
         </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}_start__goadmin:not(.initialized)')
+                    .addClass('initialized')
+                    .bootstrapNumber({
+                        upClass: 'success',
+                        downClass: 'primary',
+                        center: true
+                    });
+                $('.{{.Field}}_end__goadmin:not(.initialized)')
+                    .addClass('initialized')
+                    .bootstrapNumber({
+                        upClass: 'success',
+                        downClass: 'primary',
+                        center: true
+                    });
+            })
+        </script>
+        <style>
+            .number-range .input-group {
+                width: 100%;
+            }
+        </style>
     {{else}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
         <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
-    <script>
-        $(function () {
-            $('.{{.Field}}_start__goadmin:not(.initialized)')
-                .addClass('initialized')
-                .bootstrapNumber({
-                    upClass: 'success',
-                    downClass: 'primary',
-                    center: true
-                });
-            $('.{{.Field}}_end__goadmin:not(.initialized)')
-                .addClass('initialized')
-                .bootstrapNumber({
-                    upClass: 'success',
-                    downClass: 'primary',
-                    center: true
-                });
-        })
-    </script>
-    <style>
-        .number-range .input-group {
-            width: 100%;
-        }
-    </style>
 {{end}}`, "components/form/password": `{{define "form_password"}}
     {{if .Editable}}
         <div class="input-group">
@@ -681,15 +681,15 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/slider": `{{define "form_slider"}}
     {{if .Editable}}
         <input type="text" class="{{.Field}}" name="{{.Field}}" data-from="" value="{{.Value}}" style="display: none;">
+        <script>
+            $('.{{.Field}}').ionRangeSlider({{.OptionExt}})
+        </script>
     {{else}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
         <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
-    <script>
-        $('.{{.Field}}').ionRangeSlider({{.OptionExt}})
-    </script>
 {{end}}`, "components/form/switch": `{{define "form_switch"}}
     <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{attr (index .Options 0).SelectedLabel}} type="checkbox"
            name="__checkbox__{{.Field}}">

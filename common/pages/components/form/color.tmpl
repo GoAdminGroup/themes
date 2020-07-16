@@ -5,13 +5,13 @@
             <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" name="{{.Field}}"
                    value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
         </div>
+        <script>
+            $('.{{.Field}}').parent().colorpicker([]);
+        </script>
     {{else}}
         <div class="box box-solid box-default no-margin">
             <div class="box-body">{{.Value}}</div>
         </div>
         <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
     {{end}}
-    <script>
-        $('.{{.Field}}').parent().colorpicker([]);
-    </script>
 {{end}}
