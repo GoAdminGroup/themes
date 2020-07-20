@@ -12,7 +12,7 @@ type BaseTheme struct {
 	TemplateList map[string]string
 }
 
-const Version = "v0.0.37"
+const Version = "v0.0.38"
 
 func (b *BaseTheme) GetVersion() string {
 	return Version
