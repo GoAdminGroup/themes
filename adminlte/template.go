@@ -2362,6 +2362,83 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         {{.Panel.Content}}
     </section>
 
+    {{if .UpdateMenu}}
+        <div id="sidebar-menu-tmpl" style="display:none">
+            <ul class="sidebar-menu" data-widget="tree" data-plug="{{.Menu.PluginName}}">
+                {{$UrlPrefix := .UrlPrefix}}
+                {{range $key, $list := .Menu.List }}
+                    {{if eq (len $list.ChildrenList) 0}}
+                        {{if $list.Header}}
+                            <li class="header" data-rel="external">{{$list.Header}}</li>
+                        {{end}}
+                        <li class='{{$list.Active}}'>
+                            {{if eq $list.Url "/"}}
+                                <a href='{{$UrlPrefix}}'>
+                            {{else if isLinkUrl $list.Url}}
+                                <a href='{{$list.Url}}'>
+                            {{else}}
+                                <a href='{{$UrlPrefix}}{{$list.Url}}'>
+                            {{end}}
+                                <i class="fa {{$list.Icon}}"></i><span> {{$list.Name}}</span>
+                                <span class="pull-right-container"><!-- <small class="label pull-right bg-green">new</small> --></span>
+                            </a>
+                        </li>
+                    {{else}}
+                        <li class="treeview {{$list.Active}}">
+                            <a href="#">
+                                <i class="fa {{$list.Icon}}"></i><span> {{$list.Name}}</span>
+                                <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                {{range $key2, $item := $list.ChildrenList}}
+                                    {{if eq (len $item.ChildrenList) 0}}
+                                    <li>
+                                        {{if eq $item.Url "/"}}
+                                            <a href='{{$UrlPrefix}}'>
+                                        {{else if isLinkUrl $item.Url}}
+                                            <a href='{{$item.Url}}'>
+                                        {{else}}
+                                            <a href='{{$UrlPrefix}}{{$item.Url}}'>
+                                        {{end}}                            
+                                            <i class="fa {{$item.Icon}}"></i> {{$item.Name}}
+                                        </a>
+                                    </li>
+                                    {{else}}
+                                        <li class="treeview {{$item.Active}}">
+                                            <a href="#">
+                                                <i class="fa {{$item.Icon}}"></i><span> {{$item.Name}}</span>
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                {{range $key3, $subItem := $item.ChildrenList}}
+                                                    <li>
+                                                        {{if eq $subItem.Url "/"}}
+                                                            <a href='{{$UrlPrefix}}'>
+                                                        {{else if isLinkUrl $subItem.Url}}
+                                                            <a href='{{$subItem.Url}}'>
+                                                        {{else}}
+                                                            <a href='{{$UrlPrefix}}{{$subItem.Url}}'>
+                                                        {{end}}                                             
+                                                            <i class="fa {{$subItem.Icon}}"></i> {{$subItem.Name}}
+                                                        </a>
+                                                    </li>
+                                                {{end}}
+                                            </ul>
+                                        </li>
+                                    {{end}}
+                                {{end}}
+                            </ul>
+                        </li>
+                    {{end}}
+                {{end}}
+            </ul>    
+        </div>
+    {{end}}
+
     {{if ne .Panel.JS ""}}
         <script>
             {{.Panel.JS}}
@@ -2770,79 +2847,6 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             {{end}}
         {{end}}
     </ul>
-    <script id="sidebar-menu-tmpl" type="text/html">
-        <ul class="sidebar-menu" data-widget="tree"  data-plug="<%= pluginName %>">
-            <% for(var i = 0; i < list.length; i++){  %>
-                <% if (list[i].childrenList.length === 0) { %>
-                    <% if (list[i].header !== "") { %>
-                        <li class="header" data-rel="external"><%= list[i].header %></li>
-                    <% } %>
-                    <li class='<%= list[i].active %>'>
-                        <% if (list[i].url === "/") { %>
-                            <a href='<%= urlPrefix %>'>
-                        <% } else if (list[i].isLinkUrl) { %>
-                            <a href='<%= list[i].url %>'>
-                        <% } else { %>
-                            <a href='<%= urlPrefix %><%= list[i].url %>'>
-                        <% } %>
-                            <i class="fa <%= list[i].icon %>"></i><span> <%= list[i].name %></span>
-                            <span class="pull-right-container">
-                        </a>
-                    </li>
-                <% } else { %>
-                    <li class="treeview <%= list[i].active %>">
-                        <a href="#">
-                            <i class="fa <%= list[i].icon %>"></i><span> <%= list[i].name %></span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <% for(var i = 0; i < list[i].childrenList.length; i++){  %>
-                                <% if (list[i].childrenList[i].childrenList.length === 0) { %>
-                                    <li>
-                                        <% if (list[i].childrenList[i].url === "/") { %>
-                                            <a href='<%= urlPrefix %>'>
-                                        <% } else if (list[i].childrenList[i].isLinkUrl) { %>
-                                            <a href='<%= list[i].childrenList[i].url %>'>
-                                        <% } else { %>
-                                            <a href='<%= urlPrefix %><%= list[i].childrenList[i].url %>'>
-                                        <% } %>                            
-                                            <i class="fa <%= list[i].childrenList[i].icon %>"></i> <%= list[i].childrenList[i].name %>
-                                        </a>
-                                    </li>
-                                <% } else { %>
-                                    <li class="treeview <%= list[i].childrenList[i].active %>">
-                                        <a href="#">
-                                            <i class="fa <%= list[i].childrenList[i].icon %>"></i><span> <%= list[i].childrenList[i].name %></span>
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <% for(var i = 0; i < list[i].childrenList[i].childrenList.length; i++){  %>
-                                                <li>
-                                                    <% if (list[i].childrenList[i].childrenList[i].url === "/") { %>
-                                                        <a href='<%= urlPrefix %>'>
-                                                    <% } else if (list[i].childrenList[i].childrenList[i].isLinkUrl) { %>
-                                                        <a href='<%= list[i].childrenList[i].childrenList[i].url %>'>
-                                                    <% } else { %>
-                                                        <a href='<%= urlPrefix %><%= list[i].childrenList[i].childrenList[i].url %>'>
-                                                    <% } %>                                             
-                                                        <i class="fa <%= list[i].childrenList[i].childrenList[i].icon %>"></i> <%= list[i].ChildrenList[i].ChildrenList[i].name %>
-                                                    </a>
-                                                </li>
-                                            <% } %>
-                                        </ul>
-                                    </li>
-                                <% } %>
-                            <% } %>
-                        </ul>
-                    </li>
-                <% } %>
-            <% } %>
-        </ul>
-    </script>
 {{end}}`, "sidebar": `{{define "sidebar"}}
     <aside class="main-sidebar">
         <section class="sidebar">
