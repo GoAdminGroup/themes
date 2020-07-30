@@ -2363,6 +2363,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     </section>
 
     {{if .UpdateMenu}}
+        <div id="navbar-nav-custom" style="display:none">
+            {{.NavButtonsHTML}}
+        </div>
         <div id="sidebar-menu-tmpl" style="display:none">
             <ul class="sidebar-menu" data-widget="tree" data-plug="{{.Menu.PluginName}}">
                 {{$UrlPrefix := .UrlPrefix}}
