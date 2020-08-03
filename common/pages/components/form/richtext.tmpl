@@ -16,5 +16,8 @@
         {{$field}}editor.$textElem.attr('contenteditable', false);
         {{end}}
         window.wangEditor.fullscreen.init('#{{.Field}}-editor');
+        $("form .btn.btn-primary").on("click", function(){
+            $("#{{.Field}}").val({{$field}}editor.txt.html())
+        });
     </script>
 {{end}}

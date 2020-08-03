@@ -638,6 +638,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         {{$field}}editor.$textElem.attr('contenteditable', false);
         {{end}}
         window.wangEditor.fullscreen.init('#{{.Field}}-editor');
+        $("form .btn.btn-primary").on("click", function(){
+            $("#{{.Field}}").val({{$field}}editor.txt.html())
+        });
     </script>
 {{end}}`, "components/form/select": `{{define "form_select"}}
     <select class="form-control {{.FieldClass}} select2-hidden-accessible" style="width: 100%;" name="{{.Field}}[]"
