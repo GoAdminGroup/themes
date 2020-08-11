@@ -1,17 +1,15 @@
 package smallbox
 
 import (
-	"bytes"
-	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/logger"
-	adminTemplate "github.com/GoAdminGroup/go-admin/template"
-	"github.com/GoAdminGroup/themes/adminlte/components"
 	"html/template"
 	"strings"
+
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 )
 
 type SmallBox struct {
-	components.Base
+	*adminTemplate.BaseComponent
+
 	Title      template.HTML
 	Value      template.HTML
 	Url        string
@@ -22,7 +20,12 @@ type SmallBox struct {
 }
 
 func New() SmallBox {
-	return SmallBox{}
+	return SmallBox{
+		BaseComponent: &adminTemplate.BaseComponent{
+			Name:     "smallbox",
+			HTMLData: List["smallbox"],
+		},
+	}
 }
 
 func (s SmallBox) SetTitle(value template.HTML) SmallBox {
@@ -56,24 +59,4 @@ func (s SmallBox) SetUrl(value string) SmallBox {
 	return s
 }
 
-func (s SmallBox) GetTemplate() (*template.Template, string) {
-	tmpl, err := template.New("smallbox").
-		Funcs(adminTemplate.DefaultFuncMap).
-		Parse(List["smallbox"])
-
-	if err != nil {
-		logger.Error("SmallBox GetTemplate Error: ", err)
-	}
-
-	return tmpl, "smallbox"
-}
-
-func (s SmallBox) GetContent() template.HTML {
-	buffer := new(bytes.Buffer)
-	tmpl, defineName := s.GetTemplate()
-	err := tmpl.ExecuteTemplate(buffer, defineName, s)
-	if err != nil {
-		fmt.Println("ComposeHtml Error:", err)
-	}
-	return template.HTML(buffer.String())
-}
+func (s SmallBox) GetContent() template.HTML { return s.GetContentWithData(s) }

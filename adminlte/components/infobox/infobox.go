@@ -1,17 +1,15 @@
 package infobox
 
 import (
-	"bytes"
-	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/logger"
-	adminTemplate "github.com/GoAdminGroup/go-admin/template"
-	"github.com/GoAdminGroup/themes/adminlte/components"
 	"html/template"
 	"strings"
+
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 )
 
 type InfoBox struct {
-	components.Base
+	*adminTemplate.BaseComponent
+
 	Icon       template.HTML
 	Text       template.HTML
 	Number     template.HTML
@@ -22,7 +20,12 @@ type InfoBox struct {
 }
 
 func New() InfoBox {
-	return InfoBox{}
+	return InfoBox{
+		BaseComponent: &adminTemplate.BaseComponent{
+			Name:     "infobox",
+			HTMLData: List["infobox"],
+		},
+	}
 }
 
 func (i InfoBox) SetIcon(value template.HTML) InfoBox {
@@ -56,24 +59,4 @@ func (i InfoBox) SetColor(value template.HTML) InfoBox {
 	return i
 }
 
-func (i InfoBox) GetTemplate() (*template.Template, string) {
-	tmpl, err := template.New("infobox").
-		Funcs(adminTemplate.DefaultFuncMap).
-		Parse(List["infobox"])
-
-	if err != nil {
-		logger.Error("InfoBox GetTemplate Error: ", err)
-	}
-
-	return tmpl, "infobox"
-}
-
-func (i InfoBox) GetContent() template.HTML {
-	buffer := new(bytes.Buffer)
-	tmpl, defineName := i.GetTemplate()
-	err := tmpl.ExecuteTemplate(buffer, defineName, i)
-	if err != nil {
-		fmt.Println("ComposeHtml Error:", err)
-	}
-	return template.HTML(buffer.String())
-}
+func (i InfoBox) GetContent() template.HTML { return i.GetContentWithData(i) }

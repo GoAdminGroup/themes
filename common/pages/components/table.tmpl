@@ -115,16 +115,16 @@
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
                                     <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}'><i
-                                                class="fa fa-edit"></i></a>
+                                                class="fa fa-edit" style="font-size: 16px;"></i></a>
                                 {{end}}
                                 {{if $DeleteUrl}}
                                     <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}'
-                                       class="grid-row-delete"><i class="fa fa-trash"></i></a>
+                                       class="grid-row-delete"><i class="fa fa-trash" style="font-size: 16px;"></i></a>
                                 {{end}}
                                 {{if $DetailUrl}}
                                     <a href="{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}"
                                        class="grid-row-view">
-                                        <i class="fa fa-eye"></i>
+                                        <i class="fa fa-eye" style="font-size: 16px;"></i>
                                     </a>
                                 {{end}}
                             {{else}}

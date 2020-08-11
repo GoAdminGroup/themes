@@ -1,13 +1,14 @@
 package main
 
 import (
+	"html/template"
+	"strings"
+
 	"github.com/GoAdminGroup/go-admin/modules/language"
 	"github.com/GoAdminGroup/go-admin/template/components"
 	"github.com/GoAdminGroup/go-admin/template/types"
 	"github.com/GoAdminGroup/themes/sword"
 	"github.com/GoAdminGroup/themes/sword/resource"
-	"html/template"
-	"strings"
 )
 
 type Theme struct {

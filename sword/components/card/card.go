@@ -1,16 +1,15 @@
 package card
 
 import (
-	"bytes"
-	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/logger"
-	adminTemplate "github.com/GoAdminGroup/go-admin/template"
-	"github.com/GoAdminGroup/themes/sword/components"
 	"html/template"
+
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
+	"github.com/GoAdminGroup/go-admin/template/types"
 )
 
 type Card struct {
-	components.Base
+	*adminTemplate.BaseComponent
+
 	Title    string
 	SubTitle string
 	Content  template.HTML
@@ -19,7 +18,12 @@ type Card struct {
 }
 
 func New() Card {
-	return Card{}
+	return Card{
+		BaseComponent: &adminTemplate.BaseComponent{
+			Name:     "card",
+			HTMLData: List["card"],
+		},
+	}
 }
 
 func (c Card) SetTitle(title string) Card {
@@ -42,29 +46,15 @@ func (c Card) SetAction(action template.HTML) Card {
 	return c
 }
 
+func (c Card) AddButton(button types.Button) Card {
+	c.Footer, c.JS = button.Content()
+	c.Callbacks = append(c.Callbacks, button.GetAction().GetCallbacks())
+	return c
+}
+
 func (c Card) SetFooter(footer template.HTML) Card {
 	c.Footer = footer
 	return c
 }
 
-func (c Card) GetTemplate() (*template.Template, string) {
-	tmpl, err := template.New("card").
-		Funcs(adminTemplate.DefaultFuncMap).
-		Parse(List["card"])
-
-	if err != nil {
-		logger.Error("Login GetTemplate Error: ", err)
-	}
-
-	return tmpl, "card"
-}
-
-func (c Card) GetContent() template.HTML {
-	buffer := new(bytes.Buffer)
-	tmpl, defineName := c.GetTemplate()
-	err := tmpl.ExecuteTemplate(buffer, defineName, c)
-	if err != nil {
-		fmt.Println("ComposeHtml Error:", err)
-	}
-	return template.HTML(buffer.String())
-}
+func (c Card) GetContent() template.HTML { return c.GetContentWithData(c) }

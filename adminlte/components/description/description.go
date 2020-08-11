@@ -1,17 +1,14 @@
 package description
 
 import (
-	"bytes"
-	"fmt"
-	"github.com/GoAdminGroup/go-admin/modules/logger"
-	adminTemplate "github.com/GoAdminGroup/go-admin/template"
-	"github.com/GoAdminGroup/themes/adminlte/components"
 	"html/template"
+
+	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 )
 
 type Description struct {
-	components.Base
-	Name    string
+	*adminTemplate.BaseComponent
+
 	Border  string
 	Number  template.HTML
 	Title   template.HTML
@@ -21,7 +18,12 @@ type Description struct {
 }
 
 func New() Description {
-	return Description{}
+	return Description{
+		BaseComponent: &adminTemplate.BaseComponent{
+			Name:     "description",
+			HTMLData: List["description"],
+		},
+	}
 }
 
 func (c Description) SetNumber(value template.HTML) Description {
@@ -54,24 +56,4 @@ func (c Description) SetBorder(value string) Description {
 	return c
 }
 
-func (c Description) GetTemplate() (*template.Template, string) {
-	tmpl, err := template.New("description").
-		Funcs(adminTemplate.DefaultFuncMap).
-		Parse(List["description"])
-
-	if err != nil {
-		logger.Error("Description GetTemplate Error: ", err)
-	}
-
-	return tmpl, "description"
-}
-
-func (c Description) GetContent() template.HTML {
-	buffer := new(bytes.Buffer)
-	tmpl, defineName := c.GetTemplate()
-	err := tmpl.ExecuteTemplate(buffer, defineName, c)
-	if err != nil {
-		fmt.Println("ComposeHtml Error:", err)
-	}
-	return template.HTML(buffer.String())
-}
+func (c Description) GetContent() template.HTML { return c.GetContentWithData(c) }

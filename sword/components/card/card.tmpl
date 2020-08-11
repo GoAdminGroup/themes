@@ -2,15 +2,19 @@
     <div class="card">
         <div class="card-body">
             <div class="card-index">
-                <div class="card-top">
+                <div class="card-top" {{if eq .SubTitle ""}}style="height: 43px;"{{end}}>
                     <div class="card-meta">
                         <div class="card-title">
                             <span>{{.Title}}</span>
-                            <span class="card-title-action">
-                                {{.Action}}
-                            </span>
+                            {{if ne .Action ""}}
+                                <span class="card-title-action">
+                                    {{.Action}}
+                                </span>
+                            {{end}}
                         </div>
-                        <div class="card-subtitle"><span>{{.SubTitle}}</span></div>
+                        {{if ne .SubTitle ""}}
+                            <div class="card-subtitle"><span>{{.SubTitle}}</span></div>
+                        {{end}}
                     </div>
                 </div>
                 <div class="card-content">
