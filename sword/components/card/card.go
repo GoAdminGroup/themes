@@ -71,27 +71,27 @@ func (c Card) SetFooter(footer template.HTML) Card {
 }
 
 func (c Card) BindAction(action types.Action) Card {
-	c.BindActionTo(action, c.ID)
+	c.BindActionTo(action, "#"+c.ID)
 	return c
 }
 
 func (c Card) BindActionToBody(action types.Action) Card {
-	c.BindActionTo(action, c.BodyID)
+	c.BindActionTo(action, "#"+c.BodyID)
 	return c
 }
 
 func (c Card) BindActionToTop(action types.Action) Card {
-	c.BindActionTo(action, c.TopID)
+	c.BindActionTo(action, "#"+c.TopID)
 	return c
 }
 
 func (c Card) BindActionToContent(action types.Action) Card {
-	c.BindActionTo(action, c.ContentID)
+	c.BindActionTo(action, "#"+c.ContentID)
 	return c
 }
 
 func (c Card) BindActionToFooter(action types.Action) Card {
-	c.BindActionTo(action, c.FooterID)
+	c.BindActionTo(action, "#"+c.FooterID)
 	return c
 }
 
