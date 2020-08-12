@@ -1,19 +1,11 @@
 {{define "button"}}
     <div class="btn-group {{.Orientation}}" {{.Style}}>
         {{if eq .Href ""}}
-            {{if ne .LoadingText ""}}
-                <button type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}" data-loading-text="{{.LoadingText}}">
-            {{else}}
-                <button type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}">
-            {{end}}
+            <button type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}{{.Class}}" id="{{.ID}}" {{if ne .LoadingText ""}}data-loading-text="{{.LoadingText}}"{{end}}>
                 {{langHtml .Content}}
             </button>
         {{else}}
-            {{if ne .LoadingText ""}}
-                <a href="{{.Href}}" type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}" data-loading-text="{{.LoadingText}}">
-            {{else}}
-                <a href="{{.Href}}" type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}">
-            {{end}}
+            <a href="{{.Href}}" type="{{.Type}}" class="btn {{.Size}} btn-{{.Theme}}{{.Class}}" id="{{.ID}}" {{if ne .LoadingText ""}}data-loading-text="{{.LoadingText}}"{{end}}>
                 {{langHtml .Content}}
             </a>
         {{end}}
