@@ -714,7 +714,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         })
     </script>
 {{end}}`, "components/form/table": `{{define "form_table"}}
-<table class="table table-hover">
+<table class="table table-hover" style="min-width: 800px;">
   <thead>
     <tr>
         {{range $key, $item := .TableFields }}
@@ -736,11 +736,17 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
               </td>
           {{end}}
 
-          <td class="form-group">
+          <td class="form-group" style="width: 174px;">
               <div>
+                    <div class="{{$.Field}}-up btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                        <i class="fa fa-arrow-up"></i>
+                    </div>
+                    <div class="{{$.Field}}-down btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                        <i class="fa fa-arrow-down"></i>
+                    </div> 
                     <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
                         <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
-                    </div>
+                    </div> 
               </div>
           </td>
       </tr>
@@ -771,11 +777,17 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             </td>
         {{end}}
 
-        <td class="form-group">
+        <td class="form-group" style="width: 174px;">
         <div>
-            <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
-            <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+            <div class="{{$.Field}}-up btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                <i class="fa fa-arrow-up"></i>
             </div>
+            <div class="{{$.Field}}-down btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                <i class="fa fa-arrow-down"></i>
+            </div> 
+            <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+                <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+            </div>         
         </div>
         </td>
   </tr>
@@ -790,6 +802,21 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     $(this)
       .closest("tr")
       .remove();
+  });
+
+  $("tbody").on("click", ".{{.Field}}-down", function() {    
+    let $tr = $(this).parents("tr");
+    let len = $(this).parents("tbody").find("tr").length;
+    if ($tr.index() !== len - 1) {
+        $tr.next().after($tr);
+    }
+  });
+
+  $("tbody").on("click", ".{{.Field}}-up", function() {    
+    let $tr = $(this).parents("tr");
+    if ($tr.index() !== 0){
+        $tr.prev().before($tr);
+    }
   });
 </script>
 {{ end }}
