@@ -1,0 +1,28 @@
+{{define "form_layout_tab"}}
+
+    <div class="col-md-12">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                {{range $key, $data := .TabHeaders}}
+                    {{if eq $key 0}}
+                        <li class="active">
+                            <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                            </a>
+                        </li>
+                    {{else}}
+                        <li class="">
+                            <a href="#tab-form-{{$key}}" data-toggle="tab" aria-expanded="true">
+                                {{$data}} <i class="fa fa-exclamation-circle text-red hide"></i>
+                            </a>
+                        </li>
+                    {{end}}
+                {{end}}
+            </ul>
+            <div class="tab-content fields-group">
+                {{ template "form_components_layout" .}}
+            </div>
+        </div>
+    </div>
+
+{{end}}

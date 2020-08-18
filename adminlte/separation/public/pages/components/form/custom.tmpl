@@ -1,0 +1,15 @@
+{{define "form_custom"}}
+    <div class="input-group">
+        {{.CustomContent}}
+    </div>
+    {{if .CustomJs}}
+        <script>
+            {{.CustomJs}}
+        </script>
+    {{end}}
+    {{if .CustomCss}}
+        <style>
+            {{.CustomCss}}
+        </style>
+    {{end}}
+{{end}}

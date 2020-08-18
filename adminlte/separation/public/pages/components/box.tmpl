@@ -1,0 +1,30 @@
+{{define "box"}}
+<div class="box box-{{.Theme}}" {{.Attr}}>
+    {{if ne .Header ""}}
+        {{if eq .HeadColor ""}}
+            <div class="box-header {{.HeadBorder}}">
+        {{else}}
+            <div class="box-header {{.HeadBorder}}" style="background-color: {{.HeadColor}};">
+        {{end}}
+            {{langHtml .Header}}
+        </div>
+    {{end}}
+    {{if ne .SecondHeader ""}}
+        {{if eq .SecondHeadColor ""}}
+            <div class="box-header {{.SecondHeaderClass}} {{.SecondHeadBorder}}">
+        {{else}}
+            <div class="box-header {{.SecondHeaderClass}} {{.SecondHeadBorder}}" style="background-color: {{.SecondHeadColor}};">
+        {{end}}
+            {{langHtml .SecondHeader}}
+        </div>
+    {{end}}
+    <div class="box-body" {{.Style}}>
+        {{langHtml .Body}}
+    </div>
+    {{if ne .Footer ""}}
+    <div class="box-footer clearfix">
+        {{langHtml .Footer}}
+    </div>
+    {{end}}
+</div>
+{{end}}

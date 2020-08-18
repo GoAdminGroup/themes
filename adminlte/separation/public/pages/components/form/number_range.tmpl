@@ -1,0 +1,42 @@
+{{define "form_number_range"}}
+    {{if .Editable}}
+        <div class="input-group number-range">
+            <input style="text-align: center;" type="text" id="{{.Field}}_start__goadmin"
+                   name="{{.Field}}_start__goadmin"
+                   value="{{.Value}}" class="form-control {{.Field}}_start__goadmin"
+                   placeholder="{{.Head}}">
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input style="text-align: center;" type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin"
+                   value="{{.Value2}}" class="form-control {{.Field}}_end__goadmin"
+                   placeholder="{{.Head}}">
+        </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}_start__goadmin:not(.initialized)')
+                    .addClass('initialized')
+                    .bootstrapNumber({
+                        upClass: 'success',
+                        downClass: 'primary',
+                        center: true
+                    });
+                $('.{{.Field}}_end__goadmin:not(.initialized)')
+                    .addClass('initialized')
+                    .bootstrapNumber({
+                        upClass: 'success',
+                        downClass: 'primary',
+                        center: true
+                    });
+            })
+        </script>
+        <style>
+            .number-range .input-group {
+                width: 100%;
+            }
+        </style>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+{{end}}

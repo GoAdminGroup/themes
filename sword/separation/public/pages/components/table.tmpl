@@ -1,0 +1,557 @@
+{{define "table"}}
+    <table class="table table-{{.Style}}" style="min-width: {{.MinWidth}};table-layout: {{.Layout}};">
+        {{if eq .Type "table"}}
+            {{if not .HideThead}}
+                <thead>
+                <tr>
+                    {{range $key, $head := .Thead}}
+                        {{if eq $head.Width "0px"}}
+                            <th>
+                        {{else if eq $head.Width ""}}
+                            <th>
+                        {{else}}
+                            <th style="width: {{$head.Width}}">
+                        {{end}}
+                        {{$head.Head}}
+                        </th>
+                    {{end}}
+                </tr>
+                </thead>
+            {{end}}
+        {{end}}
+        <tbody>
+        {{if eq .Type "data-table"}}
+            {{$SortUrlParam := .SortUrl}}
+            <tr>
+                {{if eq .IsTab false}}
+                    <th style="text-align: center;">
+                        <input type="checkbox" class="grid-select-all" style="position: absolute; opacity: 0;">
+                    </th>
+                {{end}}
+                {{range $key, $head := .Thead}}
+                    {{if eq $head.Hide false}}
+                        {{if eq $head.Width "0px"}}
+                            <th>
+                        {{else if eq $head.Width ""}}
+                            <th>
+                        {{else}}
+                            <th style="width: {{$head.Width}}">
+                        {{end}}
+                        {{$head.Head}}
+                        {{if $head.Sortable}}
+                            <a class="fa fa-fw fa-sort" id="sort-{{$head.Field}}"
+                               href="?__sort={{$head.Field}}&__sort_type=desc"></a>
+                        {{end}}
+                        </th>
+                    {{end}}
+                {{end}}
+                {{if eq .NoAction false}}
+                    <th style="text-align: center;">{{lang "operation"}}</th>
+                {{end}}
+            </tr>
+        {{end}}
+
+
+        {{$NoAction := .NoAction}}
+        {{$Action := .Action}}
+        {{$Thead := .Thead}}
+        {{$Type := .Type}}
+        {{$EditUrl := .EditUrl}}
+        {{$UpdateUrl := .UpdateUrl}}
+        {{$IsTab := .IsTab}}
+        {{$DeleteUrl := .DeleteUrl}}
+        {{$DetailUrl := .DetailUrl}}
+        {{$PrimaryKey := .PrimaryKey}}
+        {{range $key1, $info := .InfoList}}
+            <tr>
+                {{if eq $Type "data-table"}}
+                    {{if eq $IsTab false}}
+                        <td style="text-align: center;">
+                            <input type="checkbox" class="grid-row-checkbox"
+                                   data-id="{{(index $info $PrimaryKey).Content}}"
+                                   style="position: absolute; opacity: 0;">
+                        </td>
+                    {{end}}
+                {{end}}
+                {{if eq $Type "data-table"}}
+                    {{range $key2, $head2 := $Thead}}
+                        {{if eq $head2.Hide false}}
+                            {{if $head2.Editable}}
+                                <td>
+                                    {{if eq $head2.EditType "switch"}}
+                                        <input class="info_edit_switch ga_checkbox"
+                                               data-off-text="{{(index $head2.EditOption 1).Text}}"
+                                               data-on-text="{{js (index $head2.EditOption 0).Text}}"
+                                               data-size="{{index (index $head2.EditOption 0).Extra "size"}}"
+                                               data-on-color="{{js (index (index $head2.EditOption 0).Extra "onColor")}}"
+                                               data-off-color="{{index (index $head2.EditOption 0).Extra "offColor"}}"
+                                               data-field="{{$head2.Field}}"
+                                               data-updateurl="{{$UpdateUrl}}"
+                                               data-pk="{{(index $info $PrimaryKey).Content}}"
+                                               type="checkbox" name="__checkbox__edit_info"
+                                                {{if eq (index $head2.EditOption 0).Value (index $info $head2.Field).Value}}
+                                                    checked
+                                                {{end}}
+                                        >
+                                        <input type="hidden" value="{{(index $head2.EditOption 0).Value}}">
+                                        <input type="hidden" value="{{(index $head2.EditOption 1).Value}}">
+                                    {{else}}
+                                        <a href="#" class="editable-td-{{$head2.EditType}}"
+                                           data-pk="{{(index $info $PrimaryKey).Content}}"
+                                           data-source='{{$head2.EditOption.Marshal}}'
+                                           data-url="{{$UpdateUrl}}"
+                                           data-value="{{(index $info $head2.Field).Value}}"
+                                           data-name="{{$head2.Field}}"
+                                           data-title="Enter {{$head2.Head}}">{{(index $info $head2.Field).Content}}</a>
+                                    {{end}}
+                                </td>
+                            {{else}}
+                                <td>{{(index $info $head2.Field).Content}}</td>
+                            {{end}}
+                        {{end}}
+                    {{end}}
+                    {{if eq $NoAction false}}
+                        <td style="text-align: center;">
+                            {{if eq $Action ""}}
+                                {{if $EditUrl}}
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}'><i
+                                                class="fa fa-edit" style="font-size: 16px;"></i></a>
+                                {{end}}
+                                {{if $DeleteUrl}}
+                                    <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}'
+                                       class="grid-row-delete"><i class="fa fa-trash" style="font-size: 16px;"></i></a>
+                                {{end}}
+                                {{if $DetailUrl}}
+                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}"
+                                       class="grid-row-view">
+                                        <i class="fa fa-eye" style="font-size: 16px;"></i>
+                                    </a>
+                                {{end}}
+                            {{else}}
+                                {{renderRowDataHTML (index $info $PrimaryKey).Content $Action $info}}
+                            {{end}}
+                        </td>
+                    {{end}}
+                {{else}}
+                    {{range $key2, $head2 := $Thead}}
+                        {{if eq $head2.Width ""}}
+                            <td>
+                        {{else}}
+                            <td style="width: {{$head2.Width}}">
+                        {{end}}
+                        {{(index $info $head2.Head).Content}}
+                        </td>
+                    {{end}}
+                {{end}}
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{if eq $Type "data-table"}}
+        <script>
+            window.selectedRows = function () {
+                let selected = [];
+                $('.grid-row-checkbox:checked').each(function () {
+                    selected.push($(this).data('id'));
+                });
+                return selected;
+            };
+
+            const selectedAllFieldsRows = function () {
+                let selected = [];
+                $('.column-select-item:checked').each(function () {
+                    selected.push($(this).data('id'));
+                });
+                return selected;
+            };
+
+            const pjaxContainer = "#pjax-container";
+            const noAnimation = "__go_admin_no_animation_";
+
+            function iCheck(el) {
+                el.iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function () {
+                    if (this.checked) {
+                        $(this).closest('tr').css('background-color', "#ffffd5");
+                    } else {
+                        $(this).closest('tr').css('background-color', '');
+                    }
+                });
+            }
+
+            $(function () {
+
+                $('.grid-select-all').iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function (event) {
+                    if (this.checked) {
+                        $('.grid-row-checkbox').iCheck('check');
+                    } else {
+                        $('.grid-row-checkbox').iCheck('uncheck');
+                    }
+                });
+                let items = $('.column-select-item');
+                iCheck(items);
+                iCheck($('.grid-row-checkbox'));
+                let columns = getQueryVariable("__columns");
+                if (columns === -1) {
+                    items.iCheck('check');
+                } else {
+                    let columnsArr = columns.split(",");
+                    for (let i = 0; i < columnsArr.length; i++) {
+                        for (let j = 0; j < items.length; j++) {
+                            if (decodeURI(columnsArr[i]) === $(items[j]).attr("data-id")) {
+                                $(items[j]).iCheck('check');
+                            }
+                        }
+                    }
+                }
+
+                {{if .HasFilter}}{{if .IsHideFilterArea}}
+                $('.filter-area').hide();
+                {{end}}{{end}}
+
+                // Fix PopUp error of table row action
+
+                let lastTd = $("table tr:last td:last div");
+                if (lastTd.hasClass("dropdown")) {
+                    let popUpHeight = $("table tr:last td:last div ul").height();
+
+                    let trs = $("table tr");
+                    let totalHeight = 0;
+                    for (let i = 1; i < trs.length - 1; i++) {
+                        totalHeight += $(trs[i]).height();
+                    }
+                    if (popUpHeight > totalHeight) {
+                        let h = popUpHeight + 16;
+                        $("table tbody").append("<tr style='height:" + h + "px;'></tr>");
+                    }
+
+                    trs = $("table tr");
+                    for (let i = trs.length - 1; i > 1; i--) {
+                        let td = $(trs[i]).find("td:last-child div");
+                        let combineHeight = $(trs[i]).height() / 2 - 20;
+                        for (let j = i + 1; j < trs.length; j++) {
+                            combineHeight += $(trs[j]).height();
+                        }
+                        if (combineHeight < popUpHeight) {
+                            td.removeClass("dropdown");
+                            td.addClass("dropup");
+                        }
+                    }
+                }
+
+                // Initialize sort parameters
+
+                let sort = getQueryVariable("__sort");
+                let sort_type = getQueryVariable("__sort_type");
+
+                if (sort !== -1 && sort_type !== -1) {
+                    let sortFa = $('#sort-' + sort);
+                    if (sort_type === 'asc') {
+                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=desc" + decodeURIComponent("{{.SortUrl}}"))
+                    } else {
+                        sortFa.attr('href', '?__sort=' + sort + "&__sort_type=asc" + decodeURIComponent("{{.SortUrl}}"))
+                    }
+                    sortFa.removeClass('fa-sort');
+                    sortFa.addClass('fa-sort-amount-' + sort_type);
+                } else {
+                    let sortParam = decodeURIComponent("{{.SortUrl}}");
+                    let sortHeads = $(".fa.fa-fw.fa-sort");
+                    for (let i = 0; i < sortHeads.length; i++) {
+                        $(sortHeads[i]).attr('href', $(sortHeads[i]).attr('href') + sortParam)
+                    }
+                }
+            });
+
+            // ============================
+            // .IsHideRowSelector
+            // ============================
+
+            {{if ne .IsHideRowSelector true}}
+
+            $('.column-select-all').on('click', function () {
+                if ($(this).data('check') === '') {
+                    $('.column-select-item').iCheck('check');
+                    $(this).data('check', 'true')
+                } else {
+                    $('.column-select-item').iCheck('uncheck');
+                    $(this).data('check', '')
+                }
+            });
+
+            $('.column-select-submit').on('click', function () {
+
+                let param = new Map();
+                param.set('__columns', selectedAllFieldsRows().join(','));
+                param.set(noAnimation, 'true');
+
+                $.pjax({
+                    url: addParameterToURL(param),
+                    container: pjaxContainer
+                });
+
+                toastr.success('{{lang "reload succeeded"}} !');
+            });
+
+            {{end}}
+
+            // ============================
+            // end
+            // ============================
+
+            // ============================
+            // .ExportUrl
+            // ============================
+
+            {{if .ExportUrl}}
+
+            $('.grid-batch-1').on('click', function () {
+                let rows = selectedRows();
+                if (rows.length > 0) {
+                    ExportAll(rows.join())
+                }
+            });
+
+            function ExportAll(id) {
+                let form = $("<form>");
+                form.attr("style", "display:none");
+                form.attr("target", "");
+                form.attr("method", "post");
+                form.attr("action",{{.ExportUrl}});
+                let input1 = $("<input>");
+                input1.attr("type", "hidden");
+                input1.attr("name",{{.PrimaryKey}});
+                input1.attr("value", id);
+                $("body").append(form);
+                form.append(input1);
+                form.submit();
+                form.remove()
+            }
+
+            {{end}}
+
+            // ============================
+            // end
+            // ============================
+
+            // ============================
+            // .DeleteUrl
+            // ============================
+
+            {{if .DeleteUrl}}
+
+            $('.grid-row-delete').click(function () {
+                DeletePost($(this).data('id'))
+            });
+
+            $('.grid-batch-0').on('click', function () {
+                let rows = selectedRows();
+                if (rows.length > 0) {
+                    DeletePost(rows.join())
+                }
+            });
+
+            function DeletePost(id) {
+                swal({
+                        title: {{lang "are you sure to delete"}},
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: {{lang "yes"}},
+                        closeOnConfirm: false,
+                        cancelButtonText: {{lang "cancel"}},
+                    },
+                    function () {
+                        $.ajax({
+                            method: 'post',
+                            url: {{.DeleteUrl}},
+                            data: {
+                                id: id
+                            },
+                            success: function (data) {
+                                let param = new Map();
+                                param.set(noAnimation, "true");
+                                $.pjax({
+                                    url: addParameterToURL(param),
+                                    container: pjaxContainer
+                                });
+                                if (typeof (data) === "string") {
+                                    data = JSON.parse(data);
+                                }
+                                if (data.code === 200) {
+                                    $('#_TOKEN').val(data.data);
+                                    let lastTd = $("table tr:last td:last div");
+                                    if (lastTd.hasClass("dropdown")) {
+                                        let popUpHeight = $("table tr:last td:last div ul").height();
+
+                                        let trs = $("table tr");
+                                        let totalHeight = 0;
+                                        for (let i = 1; i < trs.length - 1; i++) {
+                                            totalHeight += $(trs[i]).height();
+                                        }
+                                        if (popUpHeight > totalHeight) {
+                                            let h = popUpHeight + 16;
+                                            $("table tbody").append("<tr style='height:" + h + "px;'></tr>");
+                                        }
+                                    }
+                                    swal(data.msg, '', 'success');
+                                } else {
+                                    swal(data.msg, '', 'error');
+                                }
+                            },
+                            error: function (data) {
+                                if (data.responseText !== "") {
+                                    swal(data.responseJSON.msg, '', 'error');
+                                } else {
+                                    swal("{{lang "error"}}", '', 'error');
+                                }
+                            },
+                        });
+                    });
+            }
+
+            {{end}}
+
+            // ============================
+            // end
+            // ============================
+
+            // ============================
+            // Helper functions
+            // ============================
+
+            function getQueryVariable(variable) {
+                let query = window.location.search.substring(1);
+                let vars = query.split("&");
+                for (let i = 0; i < vars.length; i++) {
+                    let pair = vars[i].split("=");
+                    if (pair[0] === variable) {
+                        return pair[1];
+                    }
+                }
+                return -1;
+            }
+
+            function addParameterToURL(params) {
+                let newUrl = location.href.replace("#", "");
+
+                for (let [field, value] of params) {
+                    if (getQueryVariable(field) !== -1) {
+                        newUrl = replaceParamVal(newUrl, field, value);
+                    } else {
+                        if (newUrl.indexOf("?") > 0) {
+                            newUrl = newUrl + "&" + field + "=" + value;
+                        } else {
+                            newUrl = newUrl + "?" + field + "=" + value;
+                        }
+                    }
+                }
+
+                return newUrl
+            }
+
+            function replaceParamVal(oUrl, paramName, replaceWith) {
+                let re = eval('/(' + paramName + '=)([^&]*)/gi');
+                return oUrl.replace(re, paramName + '=' + replaceWith);
+            }
+
+            $(function () {
+
+                $('.editable-td-select').editable({
+                    "type": "select",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>"
+                });
+                $('.editable-td-text').editable({
+                    emptytext: "<i class=\"fa fa-pencil\"><\/i>",
+                    type: "text"
+                });
+                $('.editable-td-datetime').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "YYYY-MM-DD HH:mm:ss",
+                    "viewformat": "YYYY-MM-DD HH:mm:ss",
+                    "template": "YYYY-MM-DD HH:mm:ss",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-date').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "YYYY-MM-DD",
+                    "viewformat": "YYYY-MM-DD",
+                    "template": "YYYY-MM-DD",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-year').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "YYYY",
+                    "viewformat": "YYYY",
+                    "template": "YYYY",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-month').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "MM",
+                    "viewformat": "MM",
+                    "template": "MM",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-day').editable({
+                    "type": "combodate",
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>",
+                    "format": "DD",
+                    "viewformat": "DD",
+                    "template": "DD",
+                    "combodate": {"maxYear": 2035}
+                });
+                $('.editable-td-textarea').editable({
+                    "type": "textarea",
+                    "rows": 10,
+                    "emptytext": "<i class=\"fa fa-pencil\"><\/i>"
+                });
+                $(".info_edit_switch").bootstrapSwitch({
+                    onSwitchChange: function (event, state) {
+                        let obejct = $(event.target);
+                        let val = "";
+                        if (state) {
+                            val = obejct.closest('.bootstrap-switch').next().val();
+                        } else {
+                            val = obejct.closest('.bootstrap-switch').next().next().val()
+                        }
+                        $.ajax({
+                            method: 'post',
+                            url: obejct.data("updateurl"),
+                            data: {
+                                name: obejct.data("field"),
+                                value: val,
+                                pk: obejct.data("pk")
+                            },
+                            success: function (data) {
+                                if (typeof (data) === "string") {
+                                    data = JSON.parse(data);
+                                }
+                                if (data.code !== 200) {
+                                    swal(data.msg, '', 'error');
+                                }
+                            },
+                            error: function (data) {
+                                if (data.responseText !== "") {
+                                    swal(data.responseJSON.msg, '', 'error');
+                                } else {
+                                    swal("{{lang "error"}}", '', 'error');
+                                }
+                            },
+                        });
+                    }
+                })
+            });
+
+            {{renderRowDataJS "" .ActionJs}}
+        </script>
+        <style>
+            table tbody tr td {
+                word-wrap: break-word;
+                word-break: break-all;
+            }
+        </style>
+    {{end}}
+{{end}}

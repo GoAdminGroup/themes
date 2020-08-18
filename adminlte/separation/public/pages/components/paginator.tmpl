@@ -1,0 +1,63 @@
+{{define "paginator"}}
+    {{if not .HideEntriesInfo}}
+        <div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}}
+            <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
+        </div>
+    {{end}}
+    <ul class="pagination pagination-sm no-margin pull-right">
+        <!-- Previous Page Link -->
+        <li class="page-item {{.PreviousClass}}">
+            {{if eq .PreviousClass "disabled"}}
+                <span class="page-link">«</span>
+            {{else}}
+                <a class="page-link" href='{{.PreviousUrl}}' rel="next">«</a>
+            {{end}}
+        </li>
+
+        <!-- Array Of Links -->
+        {{range $key, $page := .Pages}}
+            {{if eq (index $page "isSplit") "0"}}
+                {{if eq (index $page "active") "active"}}
+                    <li class="page-item active"><span class="page-link">{{index $page "page"}}</span></li>
+                {{else}}
+                    <li class="page-item"><a class="page-link" href='{{index $page "url"}}'>{{index $page "page"}}</a>
+                    </li>
+                {{end}}
+            {{else}}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {{end}}
+        {{end}}
+
+
+        <!-- Next Page Link -->
+        <li class='page-item {{.NextClass}}'>
+            {{if eq .NextClass "disabled"}}
+                <span class="page-link">»</span>
+            {{else}}
+                <a class="page-link" href='{{.NextUrl}}' rel="next">»</a>
+            {{end}}
+        </li>
+    </ul>
+
+    <label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
+
+        <small>{{lang "show"}}</small>&nbsp;
+        {{$option := .Option}}
+        {{$url := .Url}}
+        <select class="input-sm grid-per-pager" name="per-page">
+            {{range $key, $pageSize := .PageSizeList}}
+                <option value="{{$url}}&__pageSize={{$pageSize}}" {{index $option $pageSize}}>
+                    {{$pageSize}}
+                </option>
+            {{end}}
+        </select>
+        <small>{{lang "entries"}}</small>
+    </label>
+
+    <script>
+        let gridPerPaper = $('.grid-per-pager');
+        gridPerPaper.on('change', function () {
+            $.pjax({url: this.value, container: '#pjax-container'});
+        });
+    </script>
+{{end}}

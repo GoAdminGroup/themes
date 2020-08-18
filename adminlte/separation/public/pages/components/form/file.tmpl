@@ -1,0 +1,11 @@
+{{define "form_file"}}
+    <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
+           data-initial-caption="{{.Value}}">
+    <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
+    <script>
+        $("input.{{.Field}}").fileinput({{.OptionExt}});
+        $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
+            $(".{{.Field}}__delete_flag").val("1")
+        });
+    </script>
+{{end}}

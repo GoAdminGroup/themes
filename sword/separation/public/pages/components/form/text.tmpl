@@ -1,0 +1,51 @@
+{{define "form_text"}}
+    {{if .Editable}}
+        <div class="input-group">
+            {{if not .HideLabel}}
+                {{if eq .Label ""}}
+                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                {{else if eq .Label "free"}}
+                    <div class="input-group-btn">
+                        <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                style="min-width: 32px;" aria-expanded="false">
+                            {{if eq .Value2 ""}}
+                            <span class="{{.Field}}-label"> {{lang ">"}} </span>
+                        {{else}}
+                            <span class="{{.Field}}-label"> {{.Value2}} </span>
+                        {{end}}&nbsp;&nbsp;
+                            <span class="fa fa-caret-down"></span>
+                        </button>
+                        <ul class="dropdown-menu {{.Field}}_ul">
+                            <li><a href="#" data-index="gr"> {{lang ">"}} </a></li>
+                            <li><a href="#" data-index="le"> {{lang "<"}} </a></li>
+                            <li><a href="#" data-index="gq"> {{lang ">="}} </a></li>
+                            <li><a href="#" data-index="lq"> {{lang "<="}} </a></li>
+                            <li><a href="#" data-index="eq"> {{lang "="}} </a></li>
+                            <li><a href="#" data-index="ne"> {{lang "!="}} </a></li>
+                        </ul>
+                    </div>
+                {{else}}
+                    <span class="input-group-addon">{{.Label}}</span>
+                {{end}}
+            {{end}}
+            <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
+                   class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+    {{if eq .Label "free"}}
+        <script>
+            $(function () {
+                $(".{{.Field}}_ul li a").click(function () {
+                    $(".{{.Field}}-label").text($(this).text());
+                    $(".{{.Field}}-operation").val($(this).data('index'));
+                });
+            })
+        </script>
+    {{end}}
+{{end}}

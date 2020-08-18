@@ -1,0 +1,8 @@
+{{define "form_default"}}
+    <div class="box box-solid box-default no-margin">
+        <div class="box-body" style="min-height: 40px;">
+            {{.Value}}
+        </div>
+    </div>
+    <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+{{end}}

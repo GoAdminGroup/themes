@@ -1,0 +1,134 @@
+{{define "box-header"}}
+    <div class="pull-right">
+
+        {{if ne .IsHideRowSelector true}}
+            <div class="dropdown pull-right column-selector" style="margin-right: 10px">
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-table"></i>
+                    &nbsp;
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" style="padding: 10px;max-height: 400px;overflow: scroll;">
+                    <li>
+                        <ul style="padding: 0;">
+                            {{range $key, $head := .Thead}}
+                                <li class="checkbox icheck" style="margin: 0;">
+                                    <label style="width: 100%;padding: 3px;">
+                                        <input type="checkbox" class="column-select-item" data-id="{{$head.Field}}"
+                                               style="position: absolute; opacity: 0;">&nbsp;&nbsp;&nbsp;{{$head.Head}}
+                                    </label>
+                                </li>
+                            {{end}}
+                        </ul>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li class="text-right">
+                        <button class="btn btn-sm btn-default column-select-all">{{lang "all"}}</button>&nbsp;&nbsp;
+                        <button class="btn btn-sm btn-primary column-select-submit">{{lang "submit"}}</button>
+                    </li>
+                </ul>
+            </div>
+        {{end}}
+
+        {{if .HasFilter}}
+
+            <div class="btn-group pull-right" style="margin-right: 10px">
+                <a href="javascript:;" class="btn btn-sm btn-primary" id="filter-btn"><i
+                            class="fa fa-filter"></i>&nbsp;&nbsp;{{lang "filter"}}</a>
+            </div>
+
+            <script>
+                $("#filter-btn").click(function () {
+                    $('.filter-area').toggle();
+                });
+            </script>
+
+        {{end}}
+
+        <div class="btn-group pull-right" style="margin-right: 10px">
+            {{if .NewUrl}}
+                <a href="{{.NewUrl}}" class="btn btn-sm btn-default">
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;{{lang "New"}}
+                </a>
+            {{end}}
+            {{if .ExportUrl}}
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default">{{lang "Export"}}</a>
+                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="export-btn-0">{{lang "Current Page"}}</a></li>
+                        {{if .ExportUrl}}
+                            <li><a href="#" id="export-btn-1">{{lang "All"}}</a></li>
+                        {{end}}
+                    </ul>
+                </div>
+            {{end}}
+        </div>
+        {{renderRowDataHTML "" .Buttons}}
+    </div>
+    <span>
+        {{if or .DeleteUrl .ExportUrl}}
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default">{{lang "Action"}}</a>
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">{{lang "Toggle Dropdown"}}</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {{if .DeleteUrl}}
+                        <li><a href="#" class="grid-batch-0">{{lang "Delete"}}</a></li>
+                    {{end}}
+                    {{if .ExportUrl}}
+                        <li><a href="#" class="grid-batch-1">{{lang "Export"}}</a></li>
+                    {{end}}
+                </ul>
+            </div>
+        {{end}}
+        <a class="btn btn-sm btn-primary grid-refresh" style="margin-left: 10px;">
+            <i class="fa fa-refresh"></i> {{lang "Refresh"}}
+        </a>
+    </span>
+    <script>
+        let toastMsg = '{{lang "Refresh succeeded"}} !';
+        $('.grid-refresh').on('click', function () {
+            $.pjax.reload('#pjax-container');
+            toastr.success(toastMsg);
+        });
+
+        {{if .ExportUrl}}
+
+        $("#export-btn-0").click(function () {
+            ExportData("false")
+        });
+        $("#export-btn-1").click(function () {
+            ExportData("true")
+        });
+
+        function ExportData(isAll) {
+            let form = $("<form>");
+            form.attr("style", "display:none");
+            form.attr("target", "");
+            form.attr("method", "post");
+            form.attr("action",{{.ExportUrl}});
+            let input1 = $("<input>");
+            input1.attr("type", "hidden");
+            input1.attr("name", "time");
+            input1.attr("value", (new Date()).getTime());
+            let input2 = $("<input>");
+            input2.attr("type", "hidden");
+            input2.attr("name", "is_all");
+            input2.attr("value", isAll);
+            $("body").append(form);
+            form.append(input1);
+            form.append(input2);
+            form.submit();
+            form.remove()
+        }
+
+        {{end}}
+    </script>
+{{end}}

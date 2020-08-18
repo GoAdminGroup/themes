@@ -1,0 +1,14 @@
+{{define "form_multi_file"}}
+    <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{.Placeholder}}">
+    <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
+    <script>
+        mutilfileoptions = {{.OptionExt}};
+        {{if ne .Value ""}}
+        mutilfileoptions.initialPreview = {{js .Value}};
+        {{end}}
+        $("input.{{.Field}}").fileinput(mutilfileoptions);
+        $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
+            $(".{{.Field}}__delete_flag").val("1")
+        });
+    </script>
+{{end}}

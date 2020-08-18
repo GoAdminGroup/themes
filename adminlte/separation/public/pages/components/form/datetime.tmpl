@@ -1,0 +1,26 @@
+{{define "form_datetime"}}
+    {{if not .Editable}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body" style="min-height: 40px;">
+                {{.Value}}
+            </div>
+            <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+        </div>
+    {{else}}
+        <div class="input-group">
+            {{if ne .Label ""}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
+            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            <input {{if .Must}}required="1"{{end}} style="width: 170px" type="text"
+                   name="{{.Field}}"
+                   value="{{.Value}}"
+                   class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
+        </div>
+        <script>
+            $(function () {
+                $('input.{{.Field}}').parent().datetimepicker({{.OptionExt}});
+            });
+        </script>
+    {{end}}
+{{end}}

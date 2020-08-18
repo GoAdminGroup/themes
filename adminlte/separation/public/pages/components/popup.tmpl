@@ -1,0 +1,44 @@
+{{define "popup"}}
+<div class="modal fade {{if .Draggable}}draggable{{end}}" id="{{.ID}}" tabindex="-1" role="dialog" aria-labelledby="{{.ID}}" aria-hidden="true">
+    <div class="modal-dialog modal-{{.Size}}" role="document" style="{{if ne .Width ""}}width:{{.Width}};{{end}}">
+        <div class="modal-content" style="{{if ne .Width ""}}width:{{.Width}};{{end}}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{.ID}}Title">{{langHtml .Title}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="{{if ne .Height ""}}height:{{.Height}};{{end}}">
+                {{langHtml .Body}}
+            </div>
+            {{if not .HideFooter}}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{lang "Close"}}</button>
+                    {{if .Footer}}
+                    <button type="button" class="btn btn-primary">{{langHtml .Footer}}</button>
+                    {{end}}
+                    {{.FooterHTML}}
+                </div>
+            {{end}}
+        </div>
+    </div>
+</div>
+    {{if .Draggable}}
+        <script>
+            $('#{{.ID}}>.modal-dialog').draggable({
+                cursor: 'move',
+                handle: '.modal-header'
+            });
+            $('#{{.ID}}>.modal-dialog>.modal-content').resizable({
+                minHeight: 300,
+                minWidth: 300
+            });
+            $('#{{.ID}}>.modal-dialog>.modal-content>.modal-header').css('cursor', 'move');
+            $('#{{.ID}}').on('show.bs.modal', function () {
+                $(this).find('.modal-body').css({
+                    'max-height':'100%'
+                });
+            });
+        </script>
+    {{end}}
+{{end}}

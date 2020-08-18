@@ -1,0 +1,70 @@
+{{define "form_components"}}
+    {{if eq .FormType.String "default"}}
+        {{ template "form_default" .  }}
+    {{else if eq .FormType.String "text"}}
+        {{ template "form_text" .  }}
+    {{else if eq .FormType.String "file"}}
+        {{ template "form_file" .  }}
+    {{else if eq .FormType.String "multi_file"}}
+        {{ template "form_multi_file" .  }}
+    {{else if eq .FormType.String "password"}}
+        {{ template "form_password" .  }}
+    {{else if eq .FormType.String "selectbox"}}
+        {{ template "form_selectbox" .  }}
+    {{else if eq .FormType.String "select"}}
+        {{ template "form_select" .  }}
+    {{else if eq .FormType.String "select_single"}}
+        {{ template "form_select_single" .  }}
+    {{else if eq .FormType.String "textarea"}}
+        {{ template "form_textarea" .  }}
+    {{else if eq .FormType.String "slider"}}
+        {{ template "form_slider" .  }}                
+    {{else if eq .FormType.String "rate"}}
+        {{ template "form_rate" .  }}                
+    {{else if eq .FormType.String "iconpicker"}}
+        {{ template "form_iconpicker" .  }}
+    {{else if eq .FormType.String "richtext"}}
+        {{ template "form_rich_text" .  }}
+    {{else if eq .FormType.String "code"}}
+        {{ template "form_code" .  }}
+    {{else if eq .FormType.String "checkbox_single"}}
+        {{ template "form_checkbox_single" .  }}          
+    {{else if eq .FormType.String "checkbox"}}
+        {{ template "form_checkbox" .  }}        
+    {{else if eq .FormType.String "checkbox_stacked"}}
+        {{ template "form_checkbox_stacked" .  }}         
+    {{else if eq .FormType.String "table"}}
+        {{ template "form_table" .  }}        
+    {{else if eq .FormType.String "array"}}
+        {{ template "form_array" .  }}        
+    {{else if eq .FormType.String "datetime"}}
+        {{ template "form_datetime" .  }}
+    {{else if eq .FormType.String "datetime_range"}}
+        {{ template "form_datetime_range" .  }}
+    {{else if eq .FormType.String "radio"}}
+        {{ template "form_radio" .  }}
+    {{else if eq .FormType.String "email"}}
+        {{ template "form_email" .  }}
+    {{else if eq .FormType.String "url"}}
+        {{ template "form_url" .  }}
+    {{else if eq .FormType.String "ip"}}
+        {{ template "form_ip" .  }}
+    {{else if eq .FormType.String "color"}}
+        {{ template "form_color" .  }}
+    {{else if eq .FormType.String "currency"}}
+        {{ template "form_currency" .  }}
+    {{else if eq .FormType.String "number"}}
+        {{ template "form_number" .  }}
+    {{else if eq .FormType.String "number_range"}}
+        {{ template "form_number_range" .  }}
+    {{else if eq .FormType.String "custom"}}
+        {{ template "form_custom" .  }}
+    {{else if eq .FormType.String "switch"}}
+        {{ template "form_switch" .  }}
+    {{end}}
+    {{if ne .HelpMsg ""}}
+        <span class="help-block">
+            <i class="fa fa-info-circle"></i>&nbsp;{{.HelpMsg}}
+        </span>
+    {{end}}
+{{end}}

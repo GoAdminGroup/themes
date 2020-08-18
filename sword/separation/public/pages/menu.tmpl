@@ -1,0 +1,74 @@
+{{define "menu"}}
+    <ul class="sidebar-menu" data-widget="tree" data-plug="{{.Menu.PluginName}}">
+        {{$UrlPrefix := .UrlPrefix}}
+        {{range $key, $list := .Menu.List }}
+            {{if eq (len $list.ChildrenList) 0}}
+                {{if $list.Header}}
+                    <li class="header" data-rel="external">{{$list.Header}}</li>
+                {{end}}
+                <li class='{{$list.Active}}'>
+                    {{if eq $list.Url "/"}}
+                        <a href='{{$UrlPrefix}}'>
+                    {{else if isLinkUrl $list.Url}}
+                        <a href='{{$list.Url}}'>
+                    {{else}}
+                        <a href='{{$UrlPrefix}}{{$list.Url}}'>
+                    {{end}}
+                        <i class="fa {{$list.Icon}}"></i><span> {{$list.Name}}</span>
+                        <span class="pull-right-container"><!-- <small class="label pull-right bg-green">new</small> --></span>
+                    </a>
+                </li>
+            {{else}}
+                <li class="treeview {{$list.Active}}">
+                    <a href="#">
+                        <i class="fa {{$list.Icon}}"></i><span> {{$list.Name}}</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        {{range $key2, $item := $list.ChildrenList}}
+                            {{if eq (len $item.ChildrenList) 0}}
+                            <li>
+                                {{if eq $item.Url "/"}}
+                                    <a href='{{$UrlPrefix}}'>
+                                {{else if isLinkUrl $item.Url}}
+                                    <a href='{{$item.Url}}'>
+                                {{else}}
+                                    <a href='{{$UrlPrefix}}{{$item.Url}}'>
+                                {{end}}                            
+                                    <i class="fa {{$item.Icon}}"></i> {{$item.Name}}
+                                </a>
+                            </li>
+                            {{else}}
+                                <li class="treeview {{$item.Active}}">
+                                    <a href="#">
+                                        <i class="fa {{$item.Icon}}"></i><span> {{$item.Name}}</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        {{range $key3, $subItem := $item.ChildrenList}}
+                                            <li>
+                                                {{if eq $subItem.Url "/"}}
+                                                    <a href='{{$UrlPrefix}}'>
+                                                {{else if isLinkUrl $subItem.Url}}
+                                                    <a href='{{$subItem.Url}}'>
+                                                {{else}}
+                                                    <a href='{{$UrlPrefix}}{{$subItem.Url}}'>
+                                                {{end}}                                             
+                                                    <i class="fa {{$subItem.Icon}}"></i> {{$subItem.Name}}
+                                                </a>
+                                            </li>
+                                        {{end}}
+                                    </ul>
+                                </li>
+                            {{end}}
+                        {{end}}
+                    </ul>
+                </li>
+            {{end}}
+        {{end}}
+    </ul>
+{{end}}

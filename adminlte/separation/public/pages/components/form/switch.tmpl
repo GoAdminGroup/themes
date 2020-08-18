@@ -1,0 +1,29 @@
+{{define "form_switch"}}
+    <input id="__{{.Field}}" class="{{.Field}} ga_checkbox" {{attr (index .Options 0).SelectedLabel}} type="checkbox"
+           name="__checkbox__{{.Field}}">
+    {{$index := 0}}
+    {{if eq (index .Options 0).SelectedLabel ""}}
+        {{$index = 1}}
+    {{end}}
+    <input type="hidden" class="{{.Field}}" name="{{.Field}}" value="{{(index .Options $index).Value}}">
+    <script>
+        $(".{{.Field}}.ga_checkbox").bootstrapSwitch({
+            size: "small",
+            {{if eq (index .Options 0).Text ""}}
+            onText: "ON",
+            {{else}}
+            onText: "{{(index .Options 0).Text}}",
+            {{end}}
+            {{if eq (index .Options 1).Text ""}}
+            offText: "OFF",
+            {{else}}
+            offText: "{{(index .Options 1).Text}}",
+            {{end}}
+            onColor: 'primary',
+            offColor: 'default',
+            onSwitchChange: function (event, state) {
+                $(event.target).closest('.bootstrap-switch').next().val(state ? '{{(index .Options 0).Value}}' : '{{(index .Options 1).Value}}').change();
+            }
+        })
+    </script>
+{{end}}

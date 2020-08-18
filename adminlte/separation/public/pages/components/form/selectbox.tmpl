@@ -1,0 +1,17 @@
+{{define "form_selectbox"}}
+    <select class="form-control {{.FieldClass}}" style="width: 100%;" name="{{.Field}}[]" multiple="multiple"
+            data-placeholder="Input {{.Head}}" {{if not .Editable}}disabled="disabled"{{end}}>
+        {{range  $key, $v := .Options }}
+            <option value='{{$v.Value}}' {{attr $v.SelectedLabel}}>{{if ne $v.TextHTML ""}}{{$v.TextHTML}}{{else}}{{$v.Text}}{{end}}</option>
+        {{end}}
+    </select>
+    <script>
+        $("select.{{.FieldClass}}").bootstrapDualListbox({
+            "infoText": "Showing all {0}",
+            "infoTextEmpty": "Empty list",
+            "infoTextFiltered": "{0} \/ {1}",
+            "filterTextClear": "Show all",
+            "filterPlaceHolder": "Filter"
+        });
+    </script>
+{{end}}

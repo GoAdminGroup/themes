@@ -1,0 +1,32 @@
+{{define "form_datetime_range"}}
+    {{if .Editable}}
+        <div class="input-group">
+            {{if ne .Label ""}}
+                <span class="input-group-addon">{{.Label}}</span>
+            {{end}}
+            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
+                   class="form-control {{.Field}}_start__goadmin" placeholder="{{.Placeholder}}">
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input type="text" id="{{.Field}}_end__goadmin" name="{{.Field}}_end__goadmin" value="{{.Value2}}"
+                   class="form-control {{.Field}}_end__goadmin" placeholder="{{.Placeholder}}">
+        </div>
+        <script>
+            $(function () {
+                $('input.{{.Field}}_start__goadmin').datetimepicker({{.OptionExt}});
+                $('input.{{.Field}}_end__goadmin').datetimepicker({{.OptionExt2}});
+                $('input.{{.Field}}_start__goadmin').on("dp.change", function (e) {
+                    $('input.{{.Field}}_end__goadmin').data("DateTimePicker").minDate(e.date);
+                });
+                $('input.{{.Field}}_end__goadmin').on("dp.change", function (e) {
+                    $('input.{{.Field}}_start__goadmin').data("DateTimePicker").maxDate(e.date);
+                });
+            });
+        </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+{{end}}

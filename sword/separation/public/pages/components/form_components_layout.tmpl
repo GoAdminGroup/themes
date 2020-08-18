@@ -1,0 +1,237 @@
+{{define "form_components_layout"}}
+
+    {{if ne (len .ContentList) 0}}
+
+        {{range $key, $content := .ContentList}}
+            <div class="col-md-{{divide 12 (len $.ContentList)}}">
+                <div class="box-body">
+                    <div class="fields-group">
+                        {{range $key, $data := $content}}                            
+                            {{if $data.Divider}}
+                                {{if $data.DividerTitle}}
+                                    <div class='form-group divider'>
+                                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
+                                    </div>
+                                {{end}}
+                                <div class='col-sm-12 pb-3'>
+                                    <hr>
+                                </div>
+                            {{end}}
+                            {{if $data.Hide}}
+                                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+                            {{else}}
+                                {{if eq $data.RowFlag 1}}
+                                    <div class="form-group">
+                                        {{if ne $data.Head ""}}
+                                            <label for="{{$data.Field}}"
+                                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                        {{end}}
+                                        <div class="col-sm-{{$data.RowWidth}}">
+                                            {{template "form_components" $data}}
+                                            {{$data.Foot}} 
+                                        </div>                                                    
+                                {{else if eq $data.RowFlag 3}}
+                                    <div class="col-sm-{{$data.RowWidth}}" style="padding-left: 0px;">
+                                        {{if ne $data.Head ""}}
+                                            <label for="{{$data.Field}}"
+                                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label"  style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                        {{end}}
+                                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                            {{template "form_components" $data}}
+                                        </div>
+                                        {{$data.Foot}}
+                                    </div>                                            
+                                {{else if eq $data.RowFlag 2}}
+                                        <div class="col-sm-{{$data.RowWidth}}" style="padding-right:0px;padding-left: 0px;">
+                                            {{if ne $data.Head ""}}
+                                                <label for="{{$data.Field}}"
+                                                    class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label"  style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                            {{end}}
+                                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                                {{template "form_components" $data}}
+                                            </div>                                            
+                                        </div>
+                                        {{$data.Foot}}
+                                    </div>
+                                {{else}}
+                                    <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                                        {{if ne $data.Head ""}}
+                                            <label for="{{$data.Field}}"
+                                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                        {{end}}
+                                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                                            {{template "form_components" $data}}
+                                        </div>
+                                        {{$data.Foot}}
+                                    </div>
+                                {{end}}
+                            {{end}}
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        {{end}}
+
+    {{else if ne (len .TabHeaders) 0}}
+
+        {{range $key, $content := .TabContents}}
+            <div class="tab-pane {{if eq $key 0}}active{{end}}" id="tab-form-{{$key}}">
+                {{range $key, $data := $content}}
+                    {{if $data.Divider}}
+                        {{if $data.DividerTitle}}
+                            <div class='form-group divider'>
+                                <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
+                            </div>
+                        {{end}}
+                        <div class='col-sm-12 pb-3'>
+                            <hr>
+                        </div>
+                    {{end}}
+                    {{if $data.Hide}}
+                        <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+                    {{else}}
+                        {{if eq $data.RowFlag 1}}
+                            <div class="form-group">
+                                {{if ne $data.Head ""}}
+                                    <label for="{{$data.Field}}"
+                                        class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                {{end}}
+                                <div class="col-sm-{{$data.RowWidth}}">
+                                    {{template "form_components" $data}}
+                                    {{$data.Foot}} 
+                                </div>                                                    
+                        {{else if eq $data.RowFlag 3}}
+                            <div class="col-sm-{{$data.RowWidth}}" style="padding-left: 0px;">
+                                {{if ne $data.Head ""}}
+                                    <label for="{{$data.Field}}"
+                                        class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                {{end}}
+                                <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                    {{template "form_components" $data}}
+                                </div>
+                                {{$data.Foot}}
+                            </div>                                            
+                        {{else if eq $data.RowFlag 2}}
+                                <div class="col-sm-{{$data.RowWidth}}" style="padding-right:0px;padding-left: 0px;">
+                                    {{if ne $data.Head ""}}
+                                        <label for="{{$data.Field}}"
+                                            class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                                    {{end}}
+                                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                        {{template "form_components" $data}}
+                                    </div>                                    
+                                </div>
+                                {{$data.Foot}}
+                            </div>
+                        {{else}}
+                            <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                                {{if ne $data.Head ""}}
+                                    <label for="{{$data.Field}}"
+                                        class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                                {{end}}
+                                <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                                    {{template "form_components" $data}}
+                                </div>
+                                {{$data.Foot}}
+                            </div>
+                        {{end}}
+                    {{end}}
+                {{end}}
+            </div>
+        {{end}}
+
+    {{else if .Layout.Flow}}
+
+        {{range $key, $data := .Content}}
+            {{if $data.Divider}}
+                {{if $data.DividerTitle}}
+                    <div class='form-group divider'>
+                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
+                    </div>
+                {{end}}
+                <div class='col-sm-12 pb-3'>
+                    <hr>
+                </div>
+            {{end}}
+            {{if $data.Hide}}
+                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+            {{else}}
+                <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{end}}">
+                    {{if ne $data.Head ""}}
+                        <label for="{{$data.Field}}"
+                               class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                    {{end}}
+                    <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                        {{template "form_components" $data}}
+                    </div>
+                    {{$data.Foot}}
+                </div>
+            {{end}}
+        {{end}}
+
+    {{else}}
+
+        {{range $key, $data := .Content}}
+            {{if $data.Divider}}
+                {{if $data.DividerTitle}}
+                    <div class='form-group divider'>
+                        <div class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} control-label divider-title">{{$data.DividerTitle}}</div>
+                    </div>
+                {{end}}
+                <div class='col-sm-12 pb-3'>
+                    <hr>
+                </div>
+            {{end}}
+            {{if $data.Hide}}
+                <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
+            {{else}}
+                {{if eq $data.RowFlag 1}}
+                    <div class="form-group">
+                        {{if ne $data.Head ""}}
+                            <label for="{{$data.Field}}"
+                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                        {{end}}
+                        <div class="col-sm-{{$data.RowWidth}}">
+                            {{template "form_components" $data}}
+                            {{$data.Foot}} 
+                        </div>                                                    
+                {{else if eq $data.RowFlag 3}}
+                    <div class="col-sm-{{$data.RowWidth}}" style="padding-left: 0px;">
+                        {{if ne $data.Head ""}}
+                            <label for="{{$data.Field}}"
+                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                        {{end}}
+                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                            {{template "form_components" $data}}
+                        </div>
+                        {{$data.Foot}}
+                    </div>                                            
+                {{else if eq $data.RowFlag 2}}
+                        <div class="col-sm-{{$data.RowWidth}}" style="padding-right:0px;padding-left: 0px;">
+                            {{if ne $data.Head ""}}
+                                <label for="{{$data.Field}}"
+                                    class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label" style="text-align:left;padding-right: 0px;padding-left: 0px;">{{$data.Head}}</label>
+                            {{end}}
+                            <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}" style="padding-left: 0px;padding-right: 0px;">
+                                {{template "form_components" $data}}
+                            </div>                            
+                        </div>
+                        {{$data.Foot}}
+                    </div>
+                {{else}}
+                    <div class="form-group" {{if ne $data.Width 0}}style="width: {{$data.Width}}px;"{{end}}>
+                        {{if ne $data.Head ""}}
+                            <label for="{{$data.Field}}"
+                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
+                        {{end}}
+                        <div class="{{if eq $data.InputWidth 0}}col-sm-{{$.InputWidth}}{{else}}col-sm-{{$data.InputWidth}}{{end}}">
+                            {{template "form_components" $data}}
+                        </div>
+                        {{$data.Foot}}
+                    </div>
+                {{end}}              
+            {{end}}
+        {{end}}
+
+    {{end}}
+{{end}}

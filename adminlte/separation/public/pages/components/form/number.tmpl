@@ -1,0 +1,26 @@
+{{define "form_number"}}
+    {{if .Editable}}
+        <div class="input-group">
+            <input {{if .Must}}required="1"{{end}} style="width: 100px; text-align: center;" type="text"
+                   name="{{.Field}}"
+                   value="{{.Value}}" class="form-control {{.Field}}"
+                   placeholder="{{.Head}}">
+        </div>
+        <script>
+            $(function () {
+                $('.{{.Field}}:not(.initialized)')
+                    .addClass('initialized')
+                    .bootstrapNumber({
+                        upClass: 'success',
+                        downClass: 'primary',
+                        center: true
+                    });
+            })
+        </script>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+{{end}}

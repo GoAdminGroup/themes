@@ -1,0 +1,5 @@
+{{define "form_textarea"}}
+    <textarea {{if .Must}}required="1"{{end}} name="{{.Field}}" class="form-control" rows="5"
+              placeholder="{{.Placeholder}}"
+                      {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
+{{end}}

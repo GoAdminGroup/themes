@@ -1,0 +1,17 @@
+{{define "form_checkbox_stacked"}}
+    <div class="checkbox_stacked" style="margin-top: -7px;">
+    {{range $key, $v := .Options }}
+        <div class="checkbox icheck">
+            <label class="checkbox-inline">
+                <input type="checkbox" class="{{$.FieldClass}}" {{attr $v.SelectedLabel}} value='{{$v.Value}}' name="{{$.Field}}" style="position: absolute; opacity: 0;">
+                {{if ne $v.Text ""}}
+                    &nbsp;{{$v.Text}}&nbsp;&nbsp;
+                {{end}}
+            </label>
+        </div>
+    {{end}}
+    </div>
+<script>
+    $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
+</script>
+{{end}}

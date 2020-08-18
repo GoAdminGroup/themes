@@ -1,0 +1,17 @@
+{{define "form_iconpicker"}}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa"></i></span>
+        {{if eq .Value ""}}
+            <input style="width: 140px" type="text" name="{{.Field}}" value="fa-bars"
+                   class="form-control {{.Field}}"
+                   placeholder="{{lang "Input Icon"}}">
+        {{else}}
+            <input style="width: 140px" type="text" name="{{.Field}}" value="{{.Value}}"
+                   class="form-control {{.Field}}"
+                   placeholder="{{lang "Input Icon"}}">
+        {{end}}
+    </div>
+    <script>
+        $('.{{.Field}}').iconpicker({placement: 'bottomLeft'});
+    </script>
+{{end}}

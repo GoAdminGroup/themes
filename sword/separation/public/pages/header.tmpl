@@ -1,0 +1,45 @@
+{{define "header"}}
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{{.UrlPrefix}}" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">{{.MiniLogo}}</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">{{.Logo}}</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <div id="firstnav">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="menu-fold" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"></path></svg>
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div style="float: left;">
+                    <ul class="nav navbar-nav">
+                        <li class="navbar-nav-btn-left" style="display: none;">
+                            <a href="javascript:;" style="border-left: none;border-right: solid 1px #dedede;">
+                                <i class="fa fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-tabs-content">
+                    <ul class="nav nav-tabs nav-addtabs">
+                    </ul>
+                </div>
+                <div style="float: left;">
+                    <ul class="nav navbar-nav">
+                        <li class="navbar-nav-btn-right" style="display: none;">
+                            <a href="javascript:;" style="border-left: solid 1px #dedede;border-right: none;">
+                                <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {{ template "admin_panel" . }}
+            </div>
+        </nav>
+    </header>
+{{end}}

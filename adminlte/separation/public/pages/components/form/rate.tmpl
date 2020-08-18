@@ -1,0 +1,13 @@
+{{define "form_rate"}}
+    {{if .Editable}}
+        <div class="input-group" style="width: 120px;">
+            <input style="text-align: right;width: 120px; " placeholder="0" type="text" name="{{.Field}}" value="{{.Value}}" class="form-control {{.Field}}" />
+            <span class="input-group-addon clearfix">%</span>
+        </div>
+    {{else}}
+        <div class="box box-solid box-default no-margin">
+            <div class="box-body">{{.Value}}</div>
+        </div>
+        <input type="hidden" class="{{.Field}}" name="{{.Field}}" value='{{.Value}}'>
+    {{end}}
+{{end}}

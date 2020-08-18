@@ -1,0 +1,26 @@
+{{define "form_checkbox_single"}}
+    <span class="icheck">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="{{.FieldClass}}" {{attr (index .Options 0).SelectedLabel}} value='{{(index .Options 0).Value}}' name="{{.Field}}" style="position: absolute; opacity: 0;">
+            {{if ne (index .Options 0).Text ""}}
+                &nbsp;{{(index .Options 0).Text}}&nbsp;&nbsp;
+            {{end}}
+            {{if ne (index .Options 0).SelectedLabel "checked"}}
+                <input type="hidden" value="{{(index .Options 1).Value}}" name="{{.Field}}">
+            {{end}}
+        </label>
+    </span>
+<script>
+    $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'}).on('ifChanged', function () {
+        if (this.checked) {
+            let next = $(this).parent().next();
+            if (next) {
+                next.remove();
+            }
+        } else {
+            $(this).parent().parent().append('<input type="hidden" value="{{(index .Options 1).Value}}" name="{{.Field}}">')
+        }
+    });
+</script>
+{{end}}
+

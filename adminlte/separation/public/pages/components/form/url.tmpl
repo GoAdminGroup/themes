@@ -1,0 +1,8 @@
+{{define "form_url"}}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
+        <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
+               class="form-control {{.Field}}"
+               placeholder="{{.Placeholder}}">
+    </div>
+{{end}}

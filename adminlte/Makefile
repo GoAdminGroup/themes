@@ -1,6 +1,8 @@
 CLI=adm
 RESOURCE_PATH=./resource
 ASSETS_PATH=./resource/assets
+SEPARATION_PATH=./separation
+COMMON_PATH=./../common
 
 all: build
 
@@ -15,15 +17,22 @@ rebuild-dist:
 	mkdir $(ASSETS_PATH)/dist
 	mkdir $(ASSETS_PATH)/dist/js
 	mkdir $(ASSETS_PATH)/dist/css
-	cp -R ./../common/assets/* $(ASSETS_PATH)/src/
+	cp -R $(COMMON_PATH)/assets/* $(ASSETS_PATH)/src/
 	cp $(RESOURCE_PATH)/adminlte/adminlte.css $(ASSETS_PATH)/src/css/combine/g_all.css
 	cp $(ASSETS_PATH)/src/js/*.js $(ASSETS_PATH)/dist/js/
 	cp $(ASSETS_PATH)/src/css/*.png $(ASSETS_PATH)/dist/css/
-	cp -R ./../common/pages/* $(RESOURCE_PATH)/pages/
+	cp -R $(COMMON_PATH)/pages/* $(RESOURCE_PATH)/pages/
 
 	cp -R $(ASSETS_PATH)/src/css/fonts $(ASSETS_PATH)/dist/css/
 	cp -R $(ASSETS_PATH)/src/img $(ASSETS_PATH)/dist/
-	cp -R $(ASSETS_PATH)/src/fonts $(ASSETS_PATH)/dist/	
+	cp -R $(ASSETS_PATH)/src/fonts $(ASSETS_PATH)/dist/
+
+	rm -rf $(SEPARATION_PATH)/public
+	mkdir $(SEPARATION_PATH)/public
+
+	cp -R $(RESOURCE_PATH)/assets $(SEPARATION_PATH)/public/assets
+	cp -R $(RESOURCE_PATH)/pages $(SEPARATION_PATH)/public/pages
+	rm -rf $(SEPARATION_PATH)/public/assets/vendor
 
 # combine frontend assets(js/css)
 # 合并并压缩前端js/css

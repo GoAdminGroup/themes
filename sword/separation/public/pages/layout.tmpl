@@ -1,0 +1,41 @@
+{{define "layout"}}
+
+    <!DOCTYPE html>
+    <html>
+
+    {{ template "head" . }}
+
+    <body class="hold-transition skin-black sidebar-mini">
+    <div class="wrapper">
+
+        {{if not .Iframe}}
+
+        {{ template "header" . }}
+
+        {{ template "sidebar" . }}
+
+        {{end}}
+
+        <div class="content-wrapper" id="pjax-container">
+
+            {{ template "content" . }}
+
+        </div>
+
+        {{if not .Iframe}}
+
+        {{ template "footer" . }}
+
+        {{end}}
+
+    </div>
+
+    {{ template "js" . }}
+
+    </body>
+    {{if not .Iframe}}
+        {{.CustomFootHtml}}
+    {{end}}
+    </html>
+
+{{end}}

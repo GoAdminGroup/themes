@@ -1,0 +1,58 @@
+{{define "form"}}    
+    {{.Header}}
+    <form id={{.Id}} {{if .Ajax}}οnsubmit="return false;" {{end}}action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" {{if not .Ajax}}pjax-container{{end}}
+          style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
+        <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+
+            {{if eq .FieldsHTML ""}}
+                {{if ne (len .TabHeaders) 0}}
+                    {{ template "form_layout_tab" . }}
+                {{else if ne (len .ContentList) 0}}
+                    {{ template "form_layout_two_col" . }}
+                {{else if .Layout.Flow}}
+                    {{ template "form_layout_flow" . }}
+                {{else}}
+                    {{ template "form_layout_default" . }}
+                {{end}}
+            {{else}}
+                {{.FieldsHTML}}
+            {{end}}
+
+        </div>
+
+        {{if ne .OperationFooter ""}}
+            <div class="box-footer">
+                {{.OperationFooter}}
+            </div>
+        {{end}}
+
+        {{range $key, $value := .HiddenFields}}
+            <input type="hidden" name="{{$key}}" value='{{$value}}'>
+        {{end}}
+    </form>
+    {{.Footer}}
+    {{if .Ajax}}
+        <script>
+            $("#{{.Id}}").submit(function(e){                
+                var form = $(this);
+                $.ajax({
+                    headers: {
+                        Accept: "application/json; charset=utf-8"
+                    },
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: new FormData($("#{{.Id}}")[0]),
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        {{.AjaxSuccessJS}}
+                    },
+                    error : function(data) {
+                        {{.AjaxErrorJS}}
+                    }
+                });
+                e.preventDefault();
+            });
+        </script>
+    {{end}}
+{{end}}

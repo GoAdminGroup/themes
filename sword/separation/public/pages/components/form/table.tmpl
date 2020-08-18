@@ -1,0 +1,107 @@
+{{define "form_table"}}
+<table class="table table-hover" style="min-width: 800px;">
+  <thead>
+    <tr>
+        {{range $key, $item := .TableFields }}
+            <th>{{$item.Head}}</th>
+        {{end}}
+        <th style="width: 75px;"></th>
+    </tr>
+  </thead>
+  <tbody class="{{.Field}}-table">
+    {{range $k, $v := (index .TableFields 0).ValueArr}}
+      <tr>
+          {{range $key, $item := $.TableFields }}
+              <td>
+                  <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-12">
+                        {{template "form_components" (changeValue $item $k)}}
+                    </div>
+                  </div>
+              </td>
+          {{end}}
+
+          <td class="form-group" style="width: 174px;">
+              <div>
+                    <div class="{{$.Field}}-up btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                        <i class="fa fa-arrow-up"></i>
+                    </div>
+                    <div class="{{$.Field}}-down btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                        <i class="fa fa-arrow-down"></i>
+                    </div> 
+                    <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                        <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+                    </div> 
+              </div>
+          </td>
+      </tr>
+    {{end}}
+  </tbody>
+  <tfoot>
+    <tr>
+        {{range $key, $item := .TableFields }}
+            <td></td>
+        {{end}}
+        <td>
+            <div class="{{.Field}}-add btn btn-success btn-sm pull-right">
+            <i class="fa fa-save"></i>&nbsp;{{lang "new"}}
+            </div>
+        </td>
+    </tr>
+  </tfoot>
+</table>
+<template class="{{.Field}}-tpl">
+  <tr>
+        {{range $key, $item := .TableFields }}
+            <td>
+                <div class="form-group" style="margin-bottom: 0px;">
+                  <div class="col-sm-12">
+                    {{template "form_components" $item}}
+                  </div>
+                </div>
+            </td>
+        {{end}}
+
+        <td class="form-group" style="width: 174px;">
+        <div>
+            <div class="{{$.Field}}-up btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                <i class="fa fa-arrow-up"></i>
+            </div>
+            <div class="{{$.Field}}-down btn btn-warning btn-sm pull-right" style="margin-left: 5px;">
+                <i class="fa fa-arrow-down"></i>
+            </div> 
+            <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+                <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+            </div>         
+        </div>
+        </td>
+  </tr>
+</template>
+<script>
+  $(".{{.Field}}-add").on("click", function() {
+    var tpl = $("template.{{.Field}}-tpl").html();
+    $("tbody.{{.Field}}-table").append(tpl);
+  });
+
+  $("tbody").on("click", ".{{.Field}}-remove", function() {
+    $(this)
+      .closest("tr")
+      .remove();
+  });
+
+  $("tbody").on("click", ".{{.Field}}-down", function() {    
+    let $tr = $(this).parents("tr");
+    let len = $(this).parents("tbody").find("tr").length;
+    if ($tr.index() !== len - 1) {
+        $tr.next().after($tr);
+    }
+  });
+
+  $("tbody").on("click", ".{{.Field}}-up", function() {    
+    let $tr = $(this).parents("tr");
+    if ($tr.index() !== 0){
+        $tr.prev().before($tr);
+    }
+  });
+</script>
+{{ end }}

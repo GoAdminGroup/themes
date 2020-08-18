@@ -1,0 +1,59 @@
+{{define "form_array"}}
+<table class="table table-hover">
+  <tbody class="{{.Field}}-table">
+        {{range $k, $value := .ValueArr}}
+            <tr>
+                <td>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-12">
+                        <input name="{{$.Field}}[values][]" value="{{$value}}" class="form-control" />
+                    </div>
+                    </div>
+                </td>
+
+                <td style="width: 75px;">
+                    <div class="{{$.Field}}-remove btn btn-warning btn-sm pull-right">
+                    <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+                    </div>
+                </td>
+            </tr>
+        {{end}}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td>
+        <div class="{{.Field}}-add btn btn-success btn-sm pull-right">
+          <i class="fa fa-save"></i>&nbsp;{{lang "new"}}
+        </div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<template class="{{.Field}}-tpl">
+  <tr>
+    <td>
+      <div class="form-group" style="margin-bottom: 0px;">
+        <div class="col-sm-12">
+          <input name="{{.Field}}[values][]" class="form-control" />
+        </div>
+      </div>
+    </td>
+    <td style="width: 75px;">
+      <div class="{{.Field}}-remove btn btn-warning btn-sm pull-right">
+        <i class="fa fa-trash">&nbsp;</i>{{lang "remove"}}
+      </div>
+    </td>
+  </tr>
+</template>
+<script>
+  $(".{{.Field}}-add").on("click", function() {
+    var tpl = $("template.{{.Field}}-tpl").html();
+    $("tbody.{{.Field}}-table").append(tpl);
+  });
+
+  $("tbody").on("click", ".{{.Field}}-remove", function() {
+    $(this).closest("tr").remove();
+  });
+</script>
+{{ end }}
