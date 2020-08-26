@@ -39,7 +39,7 @@
                             {{if eq $list.Url "/"}}
                                 <a href='{{$UrlPrefix}}'>
                             {{else if isLinkUrl $list.Url}}
-                                <a target="_blank" href='{{$list.Url}}'>
+                                <a href='{{$list.Url}}'>
                             {{else}}
                                 <a href='{{$UrlPrefix}}{{$list.Url}}'>
                             {{end}}
@@ -62,7 +62,7 @@
                                         {{if eq $item.Url "/"}}
                                             <a href='{{$UrlPrefix}}'>
                                         {{else if isLinkUrl $item.Url}}
-                                            <a target="_blank" href='{{$item.Url}}'>
+                                            <a href='{{$item.Url}}'>
                                         {{else}}
                                             <a href='{{$UrlPrefix}}{{$item.Url}}'>
                                         {{end}}                            
@@ -83,7 +83,7 @@
                                                         {{if eq $subItem.Url "/"}}
                                                             <a href='{{$UrlPrefix}}'>
                                                         {{else if isLinkUrl $subItem.Url}}
-                                                            <a target="_blank" href='{{$subItem.Url}}'>
+                                                            <a href='{{$subItem.Url}}'>
                                                         {{else}}
                                                             <a href='{{$UrlPrefix}}{{$subItem.Url}}'>
                                                         {{end}}                                             

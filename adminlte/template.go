@@ -2811,7 +2811,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                     {{if eq $list.Url "/"}}
                         <a href='{{$UrlPrefix}}'>
                     {{else if isLinkUrl $list.Url}}
-                        <a href='{{$list.Url}}'>
+                        <a target="_blank" href='{{$list.Url}}'>
                     {{else}}
                         <a href='{{$UrlPrefix}}{{$list.Url}}'>
                     {{end}}
@@ -2834,7 +2834,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                                 {{if eq $item.Url "/"}}
                                     <a href='{{$UrlPrefix}}'>
                                 {{else if isLinkUrl $item.Url}}
-                                    <a href='{{$item.Url}}'>
+                                    <a target="_blank" href='{{$item.Url}}'>
                                 {{else}}
                                     <a href='{{$UrlPrefix}}{{$item.Url}}'>
                                 {{end}}                            
@@ -2855,7 +2855,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                                                 {{if eq $subItem.Url "/"}}
                                                     <a href='{{$UrlPrefix}}'>
                                                 {{else if isLinkUrl $subItem.Url}}
-                                                    <a href='{{$subItem.Url}}'>
+                                                    <a target="_blank" href='{{$subItem.Url}}'>
                                                 {{else}}
                                                     <a href='{{$UrlPrefix}}{{$subItem.Url}}'>
                                                 {{end}}                                             
