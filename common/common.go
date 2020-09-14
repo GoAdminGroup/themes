@@ -22,7 +22,7 @@ func (b *BaseTheme) GetVersion() string {
 }
 
 func (b *BaseTheme) GetRequirements() []string {
-	return []string{">=v1.2.16"}
+	return []string{">=v1.2.17"}
 }
 
 var comps = []string{"datatable.min.js", "form.min.js", "tree.min.js", "treeview.min.js"}
