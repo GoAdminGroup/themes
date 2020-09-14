@@ -45,9 +45,11 @@ combine-js:
 	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/tree/ --dist=$(ASSETS_PATH)/dist/js/tree.min.js
 	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/treeview/ --dist=$(ASSETS_PATH)/dist/js/treeview.min.js
 	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/datatable/ --dist=$(ASSETS_PATH)/dist/js/datatable.min.js
+	cp $(ASSETS_PATH)/dist/js/* $(SEPARATION_PATH)/public/assets/dist/js/
 
 combine-css:
 	$(CLI) combine css --hash=true
+	cp $(ASSETS_PATH)/dist/css/*.css $(SEPARATION_PATH)/public/assets/dist/css/
 
 # use packr2 turn assets into a go file.
 # 使用packr2工具将css/js等前端资源合并为一个go文件
