@@ -101,7 +101,7 @@ func (b *BaseTheme) GetTemplate(isPjax bool) (tmpl *template.Template, name stri
 		} else {
 			name = "content"
 			tmpl, err = template.New("content").Funcs(adminTemplate.DefaultFuncMap).
-				ParseFiles(b.TemplateList["admin_panel"], b.TemplateList["content"])
+				ParseFiles(root+b.TemplateList["admin_panel"]+".tmpl", root+b.TemplateList["content"]+".tmpl")
 		}
 	} else {
 		if !isPjax {
