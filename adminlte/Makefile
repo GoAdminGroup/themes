@@ -33,7 +33,7 @@ rebuild-dist:
 	cp -R $(RESOURCE_PATH)/assets $(SEPARATION_PATH)/public/assets
 	cp -R $(RESOURCE_PATH)/pages $(SEPARATION_PATH)/public/pages
 	rm -rf $(SEPARATION_PATH)/public/assets/vendor
-x
+
 # combine frontend assets(js/css)
 # 合并并压缩前端js/css
 combine: remove combine-js combine-css
