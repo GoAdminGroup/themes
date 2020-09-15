@@ -84,9 +84,9 @@ func (b *BaseTheme) GetTemplate(isPjax bool) (tmpl *template.Template, name stri
 	var err error
 
 	if b.Separation {
+		root := config.GetAssetRootPath() + "pages/"
 		if !isPjax {
-			name = "layout"
-			root := config.GetAssetRootPath() + "pages/"
+			name = "layout"			
 			tmpl, err = template.New("layout").Funcs(adminTemplate.DefaultFuncMap).
 				ParseFiles(
 					root+b.TemplateList["layout"]+".tmpl",
