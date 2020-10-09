@@ -10,8 +10,11 @@
         <div class="input-group">
             {{if ne .Label ""}}
                 <span class="input-group-addon">{{.Label}}</span>
-            {{end}}
-            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            {{else}}
+                {{if not .NoIcon}}
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                {{end}}
+            {{end}}            
             <input {{if .Must}}required="1"{{end}} style="width: 170px" type="text"
                    name="{{.Field}}"
                    value="{{.Value}}"

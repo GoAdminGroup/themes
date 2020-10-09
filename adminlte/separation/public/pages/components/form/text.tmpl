@@ -3,7 +3,9 @@
         <div class="input-group">
             {{if not .HideLabel}}
                 {{if eq .Label ""}}
-                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                    {{if not .NoIcon}}
+                        <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                    {{end}}
                 {{else if eq .Label "free"}}
                     <div class="input-group-btn">
                         <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">

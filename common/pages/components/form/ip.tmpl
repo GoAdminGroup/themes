@@ -1,7 +1,9 @@
 {{define "form_ip"}}
     {{if .Editable}}
         <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+            {{if not .NoIcon}}
+                <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+            {{end}}         
             <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" name="{{.Field}}"
                    value='{{.Value}}' class="form-control {{.Field}}"
                    placeholder="{{.Placeholder}}">

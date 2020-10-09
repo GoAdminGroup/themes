@@ -1,6 +1,8 @@
 {{define "form_iconpicker"}}
     <div class="input-group">
-        <span class="input-group-addon"><i class="fa"></i></span>
+        {{if not .NoIcon}}
+            <span class="input-group-addon"><i class="fa"></i></span>
+        {{end}}
         {{if eq .Value ""}}
             <input style="width: 140px" type="text" name="{{.Field}}" value="fa-bars"
                    class="form-control {{.Field}}"

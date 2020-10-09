@@ -314,7 +314,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/color": `{{define "form_color"}}
     {{if .Editable}}
         <div class="input-group colorpicker-element">
-            <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
+            {{if not .NoIcon}}
+                <span class="input-group-addon"><i style="background-color: rgb(0, 0, 0);"></i></span>
+            {{end}}
             <input {{if .Must}}required="1"{{end}} style="width: 140px" type="text" name="{{.Field}}"
                    value="" class="form-control {{.Field}}" placeholder="{{.Value}}">
         </div>
@@ -330,7 +332,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/currency": `{{define "form_currency"}}
     {{if .Editable}}
         <div class="input-group">
-            <span class="input-group-addon">$</span>
+            {{if not .NoIcon}}
+                <span class="input-group-addon">$</span>
+            {{end}}
             <input {{if .Must}}required="1"{{end}} style="width: 120px; text-align: right;" type="text"
                    name="{{.Field}}"
                    value="{{.Value}}" class="form-control {{.Field}}" placeholder="{{.Head}}">
@@ -377,8 +381,11 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="input-group">
             {{if ne .Label ""}}
                 <span class="input-group-addon">{{.Label}}</span>
-            {{end}}
-            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            {{else}}
+                {{if not .NoIcon}}
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                {{end}}
+            {{end}}            
             <input {{if .Must}}required="1"{{end}} style="width: 170px" type="text"
                    name="{{.Field}}"
                    value="{{.Value}}"
@@ -395,8 +402,11 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="input-group">
             {{if ne .Label ""}}
                 <span class="input-group-addon">{{.Label}}</span>
-            {{end}}
-            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            {{else}}
+                {{if not .NoIcon}}
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                {{end}}
+            {{end}} 
             <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
                    class="form-control {{.Field}}_start__goadmin" placeholder="{{.Placeholder}}">
             <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
@@ -460,7 +470,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     {{end}}
 {{end}}`, "components/form/iconpicker": `{{define "form_iconpicker"}}
     <div class="input-group">
-        <span class="input-group-addon"><i class="fa"></i></span>
+        {{if not .NoIcon}}
+            <span class="input-group-addon"><i class="fa"></i></span>
+        {{end}}
         {{if eq .Value ""}}
             <input style="width: 140px" type="text" name="{{.Field}}" value="fa-bars"
                    class="form-control {{.Field}}"
@@ -477,7 +489,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/ip": `{{define "form_ip"}}
     {{if .Editable}}
         <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+            {{if not .NoIcon}}
+                <span class="input-group-addon"><i class="fa fa-laptop fa-fw"></i></span>
+            {{end}}         
             <input {{if .Must}}required="1"{{end}} style="width: 130px" type="text" name="{{.Field}}"
                    value='{{.Value}}' class="form-control {{.Field}}"
                    placeholder="{{.Placeholder}}">
@@ -570,7 +584,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/password": `{{define "form_password"}}
     {{if .Editable}}
         <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
+            {{if not .NoIcon}}
+                <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
+            {{end}}
             <input {{if .Must}}required="1"{{end}} type="password" name="{{.Field}}"
                    value="{{.Value}}"
                    class="form-control {{.Field}}" placeholder="{{.Placeholder}}">
@@ -825,7 +841,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="input-group">
             {{if not .HideLabel}}
                 {{if eq .Label ""}}
-                    <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                    {{if not .NoIcon}}
+                        <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
+                    {{end}}
                 {{else if eq .Label "free"}}
                     <div class="input-group-btn">
                         <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
@@ -876,7 +894,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                       {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
 {{end}}`, "components/form/url": `{{define "form_url"}}
     <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
+        {{if not .NoIcon}}
+            <span class="input-group-addon"><i class="fa fa-internet-explorer fa-fw"></i></span>
+        {{end}}
         <input {{if .Must}}required="1"{{end}} type="text" name="{{.Field}}" value='{{.Value}}'
                class="form-control {{.Field}}"
                placeholder="{{.Placeholder}}">
@@ -1165,7 +1185,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             {{if $data.Hide}}
                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
             {{else}}
-                <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{end}}">
+                <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{$data.Style}}{{end}}">
                     {{if ne $data.Head ""}}
                         <label for="{{$data.Field}}"
                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>
@@ -1585,7 +1605,6 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         {{end}}
         <tbody>
         {{if eq .Type "data-table"}}
-            {{$SortUrlParam := .SortUrl}}
             <tr>
                 {{if eq .IsTab false}}
                     <th style="text-align: center;">
@@ -1604,7 +1623,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                         {{$head.Head}}
                         {{if $head.Sortable}}
                             <a class="fa fa-fw fa-sort" id="sort-{{$head.Field}}"
-                               href="?__sort={{$head.Field}}&__sort_type=desc{{$SortUrlParam}}"></a>
+                               href="?__sort={{$head.Field}}&__sort_type=desc{{$.SortUrl}}"></a>
                         {{end}}
                         </th>
                     {{end}}

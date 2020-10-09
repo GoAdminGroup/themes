@@ -156,7 +156,7 @@
             {{if $data.Hide}}
                 <input type="hidden" name="{{$data.Field}}" value='{{$data.Value}}'>
             {{else}}
-                <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{end}}">
+                <div class="form-group" style="float: left;{{if ne $data.Width 0}}width: {{$data.Width}}px;{{$data.Style}}{{end}}">
                     {{if ne $data.Head ""}}
                         <label for="{{$data.Field}}"
                                class="{{if eq $data.HeadWidth 0}}col-sm-{{$.HeadWidth}}{{else}}col-sm-{{$data.HeadWidth}}{{end}} {{if $data.Must}}asterisk{{end}} control-label">{{$data.Head}}</label>

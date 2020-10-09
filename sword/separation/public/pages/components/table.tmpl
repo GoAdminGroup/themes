@@ -21,7 +21,6 @@
         {{end}}
         <tbody>
         {{if eq .Type "data-table"}}
-            {{$SortUrlParam := .SortUrl}}
             <tr>
                 {{if eq .IsTab false}}
                     <th style="text-align: center;">
@@ -40,7 +39,7 @@
                         {{$head.Head}}
                         {{if $head.Sortable}}
                             <a class="fa fa-fw fa-sort" id="sort-{{$head.Field}}"
-                               href="?__sort={{$head.Field}}&__sort_type=desc{{$SortUrlParam}}"></a>
+                               href="?__sort={{$head.Field}}&__sort_type=desc{{$.SortUrl}}"></a>
                         {{end}}
                         </th>
                     {{end}}

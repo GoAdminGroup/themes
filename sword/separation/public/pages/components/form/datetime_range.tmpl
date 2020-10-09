@@ -3,8 +3,11 @@
         <div class="input-group">
             {{if ne .Label ""}}
                 <span class="input-group-addon">{{.Label}}</span>
-            {{end}}
-            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            {{else}}
+                {{if not .NoIcon}}
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                {{end}}
+            {{end}} 
             <input type="text" id="{{.Field}}_start__goadmin" name="{{.Field}}_start__goadmin" value="{{.Value}}"
                    class="form-control {{.Field}}_start__goadmin" placeholder="{{.Placeholder}}">
             <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
