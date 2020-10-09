@@ -1604,7 +1604,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                         {{$head.Head}}
                         {{if $head.Sortable}}
                             <a class="fa fa-fw fa-sort" id="sort-{{$head.Field}}"
-                               href="?__sort={{$head.Field}}&__sort_type=desc"></a>
+                               href="?__sort={{$head.Field}}&__sort_type=desc{{$SortUrlParam}}"></a>
                         {{end}}
                         </th>
                     {{end}}
@@ -1678,15 +1678,15 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                         <td style="text-align: center;">
                             {{if eq $Action ""}}
                                 {{if $EditUrl}}
-                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}'><i
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}&{{(index $info "__goadmin_edit_params").Content}}'><i
                                                 class="fa fa-edit" style="font-size: 16px;"></i></a>
                                 {{end}}
                                 {{if $DeleteUrl}}
-                                    <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}'
+                                    <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}' data-param='{{(index $info "__goadmin_delete_params").Content}}'
                                        class="grid-row-delete"><i class="fa fa-trash" style="font-size: 16px;"></i></a>
                                 {{end}}
                                 {{if $DetailUrl}}
-                                    <a href="{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}"
+                                    <a href='{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}&{{(index $info "__goadmin_detail_params").Content}}'
                                        class="grid-row-view">
                                         <i class="fa fa-eye" style="font-size: 16px;"></i>
                                     </a>
@@ -1715,10 +1715,12 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <script>
             window.selectedRows = function () {
                 let selected = [];
+                let params = [];
                 $('.grid-row-checkbox:checked').each(function () {
                     selected.push($(this).data('id'));
+                    params.push($(this).data('param'));
                 });
-                return selected;
+                return [selected, params];
             };
 
             const selectedAllFieldsRows = function () {
@@ -1868,9 +1870,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             {{if .ExportUrl}}
 
             $('.grid-batch-1').on('click', function () {
-                let rows = selectedRows();
-                if (rows.length > 0) {
-                    ExportAll(rows.join())
+                let data = selectedRows();
+                if (data[0].length > 0) {
+                    ExportAll(data[0].join())
                 }
             });
 
@@ -1903,17 +1905,17 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             {{if .DeleteUrl}}
 
             $('.grid-row-delete').click(function () {
-                DeletePost($(this).data('id'))
+                DeletePost($(this).data('id'), $(this).data('param'))
             });
 
             $('.grid-batch-0').on('click', function () {
-                let rows = selectedRows();
-                if (rows.length > 0) {
-                    DeletePost(rows.join())
+                let data = selectedRows();
+                if (data[0].length > 0) {
+                    DeletePost(data[0].join(), data[1].join(''))
                 }
             });
 
-            function DeletePost(id) {
+            function DeletePost(id, url_param) {
                 swal({
                         title: {{lang "are you sure to delete"}},
                         type: "warning",
@@ -1926,7 +1928,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                     function () {
                         $.ajax({
                             method: 'post',
-                            url: {{.DeleteUrl}},
+                            url: {{.DeleteUrl}} + url_param,
                             data: {
                                 id: id
                             },
