@@ -15,14 +15,14 @@ type BaseTheme struct {
 	Separation   bool
 }
 
-const Version = "v0.0.39"
+const Version = "v0.0.40"
 
 func (b *BaseTheme) GetVersion() string {
 	return Version
 }
 
 func (b *BaseTheme) GetRequirements() []string {
-	return []string{">=v1.2.17"}
+	return []string{">=v1.2.18"}
 }
 
 var comps = []string{"datatable.min.js", "form.min.js", "tree.min.js", "treeview.min.js"}
