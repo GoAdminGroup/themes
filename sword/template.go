@@ -1343,11 +1343,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/link": `{{define "link"}}
     <a class="{{.Class}}" {{.Attributes}} data-title="{{.Title}}" href="{{.URL}}">{{.Content}}</a>
 {{end}}`, "components/paginator": `{{define "paginator"}}
-    {{if not .HideEntriesInfo}}
-        <div style="float: left;margin-top: 21px;">{{lang "showing"}} <b>{{.CurPageStartIndex}}</b> {{lang "to"}}
-            <b>{{.CurPageEndIndex}}</b> {{lang "of"}} <b>{{.Total}}</b> {{lang "entries"}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}
-        </div>
-    {{end}}
+    <div style="float: left;margin-top: 21px;">{{.EntriesInfo}} &nbsp;&nbsp;&nbsp;{{.ExtraInfo}}</div>
     <ul class="pagination pagination-sm no-margin pull-right">
         <!-- Previous Page Link -->
         <li class="page-item {{.PreviousClass}}">
@@ -1633,6 +1629,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 
         {{$NoAction := .NoAction}}
         {{$Action := .Action}}
+        {{$ActionFold := .ActionFold}}
         {{$Thead := .Thead}}
         {{$Type := .Type}}
         {{$EditUrl := .EditUrl}}
@@ -1691,7 +1688,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                     {{end}}
                     {{if eq $NoAction false}}
                         <td style="text-align: center;">
-                            {{if eq $Action ""}}
+                            {{if not $ActionFold}}
                                 {{if $EditUrl}}
                                     <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}&{{(index $info "__goadmin_edit_params").Content}}'><i
                                                 class="fa fa-edit" style="font-size: 16px;"></i></a>
@@ -1706,6 +1703,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                                         <i class="fa fa-eye" style="font-size: 16px;"></i>
                                     </a>
                                 {{end}}
+                                {{renderRowDataHTML (index $info $PrimaryKey).Content $Action $info}}
                             {{else}}
                                 {{renderRowDataHTML (index $info $PrimaryKey).Content $Action $info}}
                             {{end}}
