@@ -456,11 +456,15 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     <input type="file" class="{{.Field}}" name="{{.Field}}" data-initial-preview="{{.Value2}}"
            data-initial-caption="{{.Value}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
+    <input type="hidden" value="0" name="{{.Field}}__change_flag" class="{{.Field}}__change_flag">
     <script>
         $("input.{{.Field}}").fileinput({{.OptionExt}});
         $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
             $(".{{.Field}}__delete_flag").val("1")
         });
+        $("input.{{.Field}}").on("change", function(e) {
+            $(".{{.Field}}__change_flag").val("1")
+        });        
     </script>
 {{end}}`, "components/form/help_block": `{{define "help_block"}}
     {{if ne . ""}}
@@ -505,6 +509,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 {{end}}`, "components/form/multi_file": `{{define "form_multi_file"}}
     <input type="file" class="{{.Field}}" name="{{.Field}}" multiple data-initial-caption="{{.Placeholder}}">
     <input type="hidden" value="0" name="{{.Field}}__delete_flag" class="{{.Field}}__delete_flag">
+    <input type="hidden" value="0" name="{{.Field}}__change_flag" class="{{.Field}}__change_flag">
     <script>
         mutilfileoptions = {{.OptionExt}};
         {{if ne .Value ""}}
@@ -514,6 +519,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         $(".preview-{{.Field}} .close.fileinput-remove").on("click", function (e) {
             $(".{{.Field}}__delete_flag").val("1")
         });
+        $("input.{{.Field}}").on("change", function(e) {
+            $(".{{.Field}}__change_flag").val("1")
+        });        
     </script>
 {{end}}`, "components/form/number": `{{define "form_number"}}
     {{if .Editable}}
