@@ -91,6 +91,7 @@ remove:
 # build assets zip of separation theme.
 # 构建分离主题资源文件压缩包
 build-separation-zip:
-	zip -r -q $(SEPARATION_PATH)/public.zip $(SEPARATION_PATH)/public -x "*.DS_Store" -x "__MACOSX"
+	rm $(SEPARATION_PATH)/public.zip
+	cd $(SEPARATION_PATH)/public && zip -r -q ./../public.zip . -x "*.DS_Store" -x "__MACOSX"
 
 .PHONY: all build rebuild-dist combine combine-js combine-css build-assets build-tmpl clean fmt remove
