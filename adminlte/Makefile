@@ -8,7 +8,7 @@ all: build
 
 # build a theme
 # 构建主题
-build: rebuild-dist combine build-assets build-tmpl clean fmt
+build: rebuild-dist build-separation-zip combine build-assets build-tmpl clean fmt
 
 # clean old dist folder, create new dist folder.
 # 删除旧的dist文件夹，新建新的dist文件夹
@@ -79,5 +79,10 @@ fmt:
 # 删除系统产生的无用文件，防止被一并合并到golang文件中
 remove:
 	find ./ -name ".DS_Store" -depth -exec rm {} \;
+
+# build assets zip of separation theme.
+# 构建分离主题资源文件压缩包
+build-separation-zip:
+	zip -r -q $(SEPARATION_PATH)/public.zip $(SEPARATION_PATH)/public -x "*.DS_Store" -x "__MACOSX"
 
 .PHONY: all build rebuild-dist combine combine-js combine-css build-assets build-tmpl clean fmt remove
