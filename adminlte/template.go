@@ -1941,6 +1941,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
             });
 
             function DeletePost(id, url_param) {
+                url_param = url_param ?? ''
                 swal({
                         title: {{lang "are you sure to delete"}},
                         type: "warning",
