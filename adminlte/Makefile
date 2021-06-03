@@ -8,7 +8,7 @@ all: build
 
 # build a theme
 # 构建主题
-build: rebuild-dist build-separation-zip combine build-assets build-tmpl clean fmt
+build: rebuild-dist combine build-separation-zip build-assets build-tmpl clean fmt
 
 # clean old dist folder, create new dist folder.
 # 删除旧的dist文件夹，新建新的dist文件夹
