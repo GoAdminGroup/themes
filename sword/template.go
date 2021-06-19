@@ -644,7 +644,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     <script type="text/javascript">
         {{$field := (js .Field)}}
         {{$field}}editor = new window.wangEditor('#{{.Field}}-editor');
-        {{$field}}editor.customConfig.onchange = function (html) {
+        {{$field}}editor.config.onchange = function (html) {
             $('#{{.Field}}').val(html)
         };
         {{.OptionExt}}

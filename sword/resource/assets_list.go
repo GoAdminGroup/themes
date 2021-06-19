@@ -39,7 +39,7 @@ var AssetsList = []string{
 	"/dist/js/all.min.8425540791.js",
 	"/dist/js/all_2.min.38a2a946b0.js",
 	"/dist/js/datatable.min.581cdc109b.js",
-	"/dist/js/form.min.f8678914e9.js",
+	"/dist/js/form.min.16acf72af1.js",
 	"/dist/js/html5shiv.min.js",
 	"/dist/js/respond.min.js",
 	"/dist/js/tree.min.e1faf8b7de.js",
