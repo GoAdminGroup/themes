@@ -40,7 +40,7 @@
         <select class="input-sm grid-per-pager" name="per-page">
             {{range $key, $pageSize := .PageSizeList}}
                 <option value="{{$url}}&__pageSize={{$pageSize}}" {{index $option $pageSize}}>
-                    {{$pageSize}} {{lang "条/页"}}
+                    {{$pageSize}}
                 </option>
             {{end}}
         </select>
