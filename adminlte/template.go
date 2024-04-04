@@ -293,8 +293,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
 </script>
 {{end}}`, "components/form/code": `{{define "form_code"}}
-    <div id="{{.Field}}" class="ace_editor" style="min-height:200px">{{.Value}}</div>
+    <div id="{{.Field}}" class="ace_editor" style="min-height:200px"></div>
     <textarea style="display:none;" id="{{.Field}}_input" name="{{.Field}}">{{.Value}}</textarea>
+    <textarea style="display:none;" id="{{.Field}}_input_original">{{.Value}}</textarea>
     <script>
         {{.OptionExt}}
         {{$field := (js .Field)}}
@@ -304,6 +305,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         {{$field}}editor.setFontSize(font_size);
         {{$field}}editor.setReadOnly({{if not .Editable}}true{{else}}false{{end}});
         {{$field}}editor.setOptions(options);
+        {{$field}}editor.setValue($('#{{.Field}}_input_original').text());
         {{$field}}editor.session.on('change', function(delta) {
             $('#{{.Field}}_input').html(encodeURIComponent({{$field}}editor.getValue()));
         });
