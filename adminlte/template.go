@@ -293,10 +293,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     $('input.{{.FieldClass}}').iCheck({checkboxClass: 'icheckbox_minimal-blue'})
 </script>
 {{end}}`, "components/form/code": `{{define "form_code"}}
-    <pre id="{{.Field}}" class="ace_editor" style="min-height:200px">
-        <textarea {{if .Must}}required="1"{{end}} class="ace_text-input {{.Field}}"
-                {{if not .Editable}}disabled="disabled"{{end}}>{{.Value}}</textarea>
-    </pre>
+    <div id="{{.Field}}" class="ace_editor" style="min-height:200px">{{.Value}}</div>
     <textarea style="display:none;" id="{{.Field}}_input" name="{{.Field}}">{{.Value}}</textarea>
     <script>
         {{.OptionExt}}
