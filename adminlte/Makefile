@@ -51,13 +51,8 @@ combine-css:
 	$(CLI) combine css --hash=true
 	cp $(ASSETS_PATH)/dist/css/*.css $(SEPARATION_PATH)/public/assets/dist/css/
 
-# use packr2 turn assets into a go file.
-# 使用packr2工具将css/js等前端资源合并为一个go文件
-# more: https://github.com/gobuffalo/packr
 build-assets:
 	$(CLI) compile asset
-	packr2 clean
-	packr2
 
 # turn golang template files into a go file.
 # 将所有golang模板文件(.tmpl)合并为一个golang文件

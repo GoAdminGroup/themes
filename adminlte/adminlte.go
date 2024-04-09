@@ -1,6 +1,7 @@
 package adminlte
 
 import (
+	"embed"
 	"strings"
 
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
@@ -8,7 +9,6 @@ import (
 	"github.com/GoAdminGroup/go-admin/template/types"
 	"github.com/GoAdminGroup/themes/adminlte/resource"
 	"github.com/GoAdminGroup/themes/common"
-	"github.com/gobuffalo/packr/v2"
 )
 
 const (
@@ -61,12 +61,14 @@ func (t *Theme) GetTmplList() map[string]string {
 	return TemplateList
 }
 
-func (t *Theme) GetAsset(path string) ([]byte, error) {
-	path = strings.Replace(path, "/assets/dist", "", -1)
-	box := packr.New("adminlte", "./resource/assets/dist")
-	return box.Find(path)
-}
-
 func (t *Theme) GetAssetList() []string {
 	return resource.AssetsList
 }
+
+func (t *Theme) GetAsset(path string) ([]byte, error) {
+	path = strings.Replace(path, "/assets/dist", "resource/assets/dist", -1)
+	return assetFS.ReadFile(path)
+}
+
+//go:embed resource/assets/dist/*
+var assetFS embed.FS
