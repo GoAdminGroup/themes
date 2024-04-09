@@ -1,7 +1,6 @@
 package sword
 
 import (
-	"fmt"
 	"strings"
 
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
@@ -51,7 +50,6 @@ func (t *Theme) GetAssetList() []string {
 }
 
 func (t *Theme) GetAsset(path string) ([]byte, error) {
-	fmt.Println("GetAsset 2")
 	path = strings.Replace(path, "/assets/dist", "assets/dist", -1)
 	return resource.AssetFS.ReadFile(path)
 }
