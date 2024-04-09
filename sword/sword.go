@@ -1,7 +1,7 @@
 package sword
 
 import (
-	"embed"
+	"fmt"
 	"strings"
 
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
@@ -51,9 +51,7 @@ func (t *Theme) GetAssetList() []string {
 }
 
 func (t *Theme) GetAsset(path string) ([]byte, error) {
-	path = strings.Replace(path, "/assets/dist", "resource/assets/dist", -1)
-	return assetFS.ReadFile(path)
+	fmt.Println("GetAsset 2")
+	path = strings.Replace(path, "/assets/dist", "assets/dist", -1)
+	return resource.AssetFS.ReadFile(path)
 }
-
-//go:embed resource/assets/dist/*
-var assetFS embed.FS

@@ -18,7 +18,8 @@ rebuild-dist:
 	mkdir $(ASSETS_PATH)/dist/js
 	mkdir $(ASSETS_PATH)/dist/css
 
-	cp -R $(COMMON_PATH)/assets/* $(ASSETS_PATH)/src/
+	rm -rf $(ASSETS_PATH)/src
+	cp -R $(COMMON_PATH)/assets $(ASSETS_PATH)/src
 	cp $(RESOURCE_PATH)/sword/sword.css $(ASSETS_PATH)/src/css/combine/i_sword.css
 	cp $(RESOURCE_PATH)/sword/blue@2x.png $(ASSETS_PATH)/src/css/
 	cp $(RESOURCE_PATH)/sword/blue.png $(ASSETS_PATH)/src/css/
@@ -26,7 +27,8 @@ rebuild-dist:
 	cp $(ASSETS_PATH)/src/js/*.js $(ASSETS_PATH)/dist/js/
 	cp $(ASSETS_PATH)/src/css/*.png $(ASSETS_PATH)/dist/css/
 
-	cp -R $(COMMON_PATH)/pages/* $(RESOURCE_PATH)/pages/
+	rm -rf $(RESOURCE_PATH)/pages
+	cp -R $(COMMON_PATH)/pages $(RESOURCE_PATH)/pages
 	cp $(RESOURCE_PATH)/sword/pages/*.tmpl $(RESOURCE_PATH)/pages/
 	cp $(RESOURCE_PATH)/sword/pages/components/*.tmpl $(RESOURCE_PATH)/pages/components/
 	cp $(RESOURCE_PATH)/sword/pages/components/table/*.tmpl $(RESOURCE_PATH)/pages/components/table/
@@ -38,6 +40,8 @@ rebuild-dist:
 	rm -rf $(SEPARATION_PATH)/public
 	mkdir $(SEPARATION_PATH)/public
 
+	rm -rf $(SEPARATION_PATH)/public/assets
+	rm -rf $(SEPARATION_PATH)/public/pages
 	cp -R $(RESOURCE_PATH)/assets $(SEPARATION_PATH)/public/assets
 	cp -R $(RESOURCE_PATH)/pages $(SEPARATION_PATH)/public/pages
 	rm -rf $(SEPARATION_PATH)/public/assets/vendor
@@ -47,25 +51,25 @@ rebuild-dist:
 combine: remove combine-js combine-css
 
 combine-js:
-	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/all/ --dist=$(ASSETS_PATH)/dist/js/all.min.js
-	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/all_2/ --dist=$(ASSETS_PATH)/dist/js/all_2.min.js
-	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/form/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
-	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/tree/ --dist=$(ASSETS_PATH)/dist/js/tree.min.js
-	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/treeview/ --dist=$(ASSETS_PATH)/dist/js/treeview.min.js
-	$(CLI) combine js --hash=true --src=$(ASSETS_PATH)/src/js/components/datatable/ --dist=$(ASSETS_PATH)/dist/js/datatable.min.js
+	$(CLI) merge js --hash=true --src=$(ASSETS_PATH)/src/js/all/ --dist=$(ASSETS_PATH)/dist/js/all.min.js
+	$(CLI) merge js --hash=true --src=$(ASSETS_PATH)/src/js/all_2/ --dist=$(ASSETS_PATH)/dist/js/all_2.min.js
+	$(CLI) merge js --hash=true --src=$(ASSETS_PATH)/src/js/components/form/ --dist=$(ASSETS_PATH)/dist/js/form.min.js
+	$(CLI) merge js --hash=true --src=$(ASSETS_PATH)/src/js/components/tree/ --dist=$(ASSETS_PATH)/dist/js/tree.min.js
+	$(CLI) merge js --hash=true --src=$(ASSETS_PATH)/src/js/components/treeview/ --dist=$(ASSETS_PATH)/dist/js/treeview.min.js
+	$(CLI) merge js --hash=true --src=$(ASSETS_PATH)/src/js/components/datatable/ --dist=$(ASSETS_PATH)/dist/js/datatable.min.js
 	cp $(ASSETS_PATH)/dist/js/* $(SEPARATION_PATH)/public/assets/dist/js/
 
 combine-css:
-	$(CLI) combine css --hash=true
+	$(CLI) merge css --hash=true
 	cp $(ASSETS_PATH)/dist/css/*.css $(SEPARATION_PATH)/public/assets/dist/css/
 
 build-assets:
-	$(CLI) compile asset
+	$(CLI) bundle asset
 
 # turn golang template files into a go file.
 # 将所有golang模板文件(.tmpl)合并为一个golang文件
 build-tmpl:
-	$(CLI) compile tpl -p=sword
+	$(CLI) bundle tpl -p=sword
 
 # clean
 # 整理生成后的文件夹

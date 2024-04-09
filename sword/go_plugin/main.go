@@ -93,8 +93,7 @@ func (Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
 }
 
 func (Theme) GetAsset(path string) ([]byte, error) {
-	path = "resource" + path
-	return resource.Asset(path)
+	return resource.AssetFS.ReadFile(path[1:])
 }
 
 func (Theme) GetAssetList() []string {
