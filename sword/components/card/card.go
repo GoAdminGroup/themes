@@ -96,4 +96,4 @@ func (c Card) BindActionToFooter(ctx *context.Context, action types.Action) Card
 	return c
 }
 
-func (c Card) GetContent(ctx *context.Context) template.HTML { return c.GetContentWithData(c) }
+func (c Card) GetContent() template.HTML { return c.GetContentWithData(c) }

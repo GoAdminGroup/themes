@@ -4,7 +4,6 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/GoAdminGroup/go-admin/context"
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 )
 
@@ -56,4 +55,4 @@ func (p ProgressGroup) SetMolecular(value int) ProgressGroup {
 	return p
 }
 
-func (p ProgressGroup) GetContent(ctx *context.Context) template.HTML { return p.GetContentWithData(p) }
+func (p ProgressGroup) GetContent() template.HTML { return p.GetContentWithData(p) }
