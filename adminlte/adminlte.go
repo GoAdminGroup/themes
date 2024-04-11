@@ -66,5 +66,5 @@ func (t *Theme) GetAssetList() []string {
 
 func (t *Theme) GetAsset(path string) ([]byte, error) {
 	path = strings.Replace(path, "/assets/dist", "assets/dist", -1)
-	return resource.AssetFS.ReadFile(path[1:])
+	return resource.AssetFS.ReadFile(path)
 }

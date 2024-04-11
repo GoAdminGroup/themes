@@ -3,6 +3,7 @@ package description
 import (
 	"html/template"
 
+	"github.com/GoAdminGroup/go-admin/context"
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 )
 
@@ -56,4 +57,4 @@ func (c Description) SetBorder(value string) Description {
 	return c
 }
 
-func (c Description) GetContent() template.HTML { return c.GetContentWithData(c) }
+func (c Description) GetContent(ctx *context.Context) template.HTML { return c.GetContentWithData(c) }

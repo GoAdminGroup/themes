@@ -3,6 +3,7 @@ package card
 import (
 	"html/template"
 
+	"github.com/GoAdminGroup/go-admin/context"
 	"github.com/GoAdminGroup/go-admin/modules/utils"
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 	"github.com/GoAdminGroup/go-admin/template/types"
@@ -59,8 +60,8 @@ func (c Card) SetAction(action template.HTML) Card {
 	return c
 }
 
-func (c Card) AddButton(button types.Button) Card {
-	c.Footer, c.JS = button.Content()
+func (c Card) AddButton(ctx *context.Context, button types.Button) Card {
+	c.Footer, c.JS = button.Content(ctx)
 	c.Callbacks = append(c.Callbacks, button.GetAction().GetCallbacks())
 	return c
 }
@@ -70,29 +71,29 @@ func (c Card) SetFooter(footer template.HTML) Card {
 	return c
 }
 
-func (c Card) BindAction(action types.Action) Card {
-	c.BindActionTo(action, "#"+c.ID)
+func (c Card) BindAction(ctx *context.Context, action types.Action) Card {
+	c.BindActionTo(ctx, action, "#"+c.ID)
 	return c
 }
 
-func (c Card) BindActionToBody(action types.Action) Card {
-	c.BindActionTo(action, "#"+c.BodyID)
+func (c Card) BindActionToBody(ctx *context.Context, action types.Action) Card {
+	c.BindActionTo(ctx, action, "#"+c.BodyID)
 	return c
 }
 
-func (c Card) BindActionToTop(action types.Action) Card {
-	c.BindActionTo(action, "#"+c.TopID)
+func (c Card) BindActionToTop(ctx *context.Context, action types.Action) Card {
+	c.BindActionTo(ctx, action, "#"+c.TopID)
 	return c
 }
 
-func (c Card) BindActionToContent(action types.Action) Card {
-	c.BindActionTo(action, "#"+c.ContentID)
+func (c Card) BindActionToContent(ctx *context.Context, action types.Action) Card {
+	c.BindActionTo(ctx, action, "#"+c.ContentID)
 	return c
 }
 
-func (c Card) BindActionToFooter(action types.Action) Card {
-	c.BindActionTo(action, "#"+c.FooterID)
+func (c Card) BindActionToFooter(ctx *context.Context, action types.Action) Card {
+	c.BindActionTo(ctx, action, "#"+c.FooterID)
 	return c
 }
 
-func (c Card) GetContent() template.HTML { return c.GetContentWithData(c) }
+func (c Card) GetContent(ctx *context.Context) template.HTML { return c.GetContentWithData(c) }

@@ -3,6 +3,7 @@ package chart_legend
 import (
 	"html/template"
 
+	"github.com/GoAdminGroup/go-admin/context"
 	adminTemplate "github.com/GoAdminGroup/go-admin/template"
 )
 
@@ -26,4 +27,4 @@ func (c ChartLegend) SetData(value []map[string]string) ChartLegend {
 	return c
 }
 
-func (c ChartLegend) GetContent() template.HTML { return c.GetContentWithData(c) }
+func (c ChartLegend) GetContent(ctx *context.Context) template.HTML { return c.GetContentWithData(c) }
