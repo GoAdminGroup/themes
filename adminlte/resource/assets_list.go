@@ -1,7 +1,7 @@
 package resource
 
 var AssetsList = []string{
-	"/dist/css/all.min.55ca5441ba.css",
+	"/dist/css/all.min.ce636828d8.css",
 	"/dist/css/blue.png",
 	"/dist/css/blue@2x.png",
 	"/dist/css/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf",
@@ -37,7 +37,7 @@ var AssetsList = []string{
 	"/dist/img/ui-icons_cc0000_256x240.png",
 	"/dist/img/ui-icons_ffffff_256x240.png",
 	"/dist/js/all.min.506636f003.js",
-	"/dist/js/all_2.min.9f7777a039.js",
+	"/dist/js/all_2.min.ccb6e57445.js",
 	"/dist/js/datatable.min.43c12443cf.js",
 	"/dist/js/form.min.4022a41f70.js",
 	"/dist/js/html5shiv.min.js",

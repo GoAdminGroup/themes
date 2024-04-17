@@ -148,7 +148,7 @@ sidebarMenuA.on('click', function () {
 
         removeActive();
 
-        addNavTab(link, $(this).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>'))
+        addNavTab(link, $(this).text())
 
         moveToRight();
     }
@@ -234,7 +234,7 @@ function listenerForAddNavTab(link, content) {
 
             for (let i = 0; i < sidebarMenus.length; i++) {
                 if (link.replace(re, '') === $(sidebarMenus[i]).attr('href')) {
-                    content = $(sidebarMenus[i]).html().replace('<i/><span>', '<i/>&nbsp&nbsp&nbsp<span>');
+                    content = $(sidebarMenus[i]).text();
                     break
                 }
             }
@@ -283,17 +283,17 @@ function addNavTab(link, content) {
         event.preventDefault();
         removeActive();
         $(this).addClass('active');
-        let li = $(this).parent();
-        cachePjax(li.find('a').attr('href'));
+        cachePjax($(this).find('a').attr('href'));
     });
 
     addElement.appendTo('.nav-addtabs');
 }
 
 function cachePjax(url) {
+    console.log("cachePjax url", url)
     var content = sessionStorage.getItem(url);
     if (content) {
-        $('#pjax-container').html(content);
+        $('#pjax-container').get(0).innerHTML = content;
     } else {
         $.pjax({url: url, container: '#pjax-container'});
     }
@@ -361,6 +361,7 @@ $(function () {
         $('.main-header .logo').css('position', 'fixed');
         $('.fixed-btn').attr('data-click', 'true');
     }
+    $(".nav.nav-tabs.nav-addtabs").sortable();
 });
 
 

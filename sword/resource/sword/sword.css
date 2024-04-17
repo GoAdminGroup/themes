@@ -705,3 +705,17 @@ ul.treeview-menu ul.treeview-menu.menu-open {
     margin-top: -20px;
     margin-bottom: 20px;
 }
+
+.skin-black .main-header .navbar .nav>.active>a {
+    background-color: #f1f8ff !important;
+    color: #2990ff !important;
+}
+
+.skin-black .main-header .navbar .nav>.active>a:hover {
+    background-color: #f1f8ff !important;
+    color: #2990ff !important;
+}
+
+.nav-addtabs>li.active .close-tab {
+    color: #2990ff;
+}

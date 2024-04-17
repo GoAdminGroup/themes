@@ -743,3 +743,7 @@ form .row .nav-tabs-custom {
 .select2-dropdown.select2-dropdown--below {
     z-index: 10005;
 }
+
+a.navtab_link {
+    font-weight: bold !important;
+}

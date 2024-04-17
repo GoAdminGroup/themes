@@ -1,5 +1,5 @@
 {{define "table"}}
-    <table class="table table-{{.Style}}" style="min-width: {{.MinWidth}};table-layout: {{.Layout}};">
+    <table class="table table-{{.Style}} {{.Class}}" style="min-width: {{.MinWidth}};table-layout: {{.Layout}};">
         {{if eq .Type "table"}}
             {{if not .HideThead}}
                 <thead>
@@ -555,7 +555,7 @@
                 word-wrap: break-word;
                 word-break: break-all;
             }
-            table tbody th:last-child, table tbody td:last-child {
+            table.sticky_table tbody th:last-child, table.sticky_table tbody td:last-child {
                 position: sticky;
                 right: 0;
                 z-index: 1;
@@ -563,7 +563,7 @@
             table tbody td:last-child {
                 background-color: white;
             }
-            .last_th_td_ele:before, .last_th_td_ele:before {
+            table.sticky_table .last_th_td_ele:before, table.sticky_table .last_th_td_ele:before {
                 left: 10px;
                 box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, .15);
                 content: "";
