@@ -556,6 +556,14 @@
                 word-wrap: break-word;
                 word-break: break-all;
             }
+            table tbody th:last-child, table tbody td:last-child {
+                position: sticky;
+                right: 0;
+                z-index: 1;
+            }
+            table tbody td:last-child {
+                background-color: white;
+            }
         </style>
     {{end}}
 {{end}}

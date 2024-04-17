@@ -2139,6 +2139,14 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 word-wrap: break-word;
                 word-break: break-all;
             }
+            table tbody th:last-child, table tbody td:last-child {
+                position: sticky;
+                right: 0;
+                z-index: 1;
+            }
+            table tbody td:last-child {
+                background-color: white;
+            }
         </style>
     {{end}}
 {{end}}`, "components/tabs": `{{define "tabs"}}
