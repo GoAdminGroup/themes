@@ -22,7 +22,7 @@ NProgress.configure({parent: '#pjax-container'});
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
 
-$(document).pjax('a:not(a[target="_blank"])', {
+$(document).pjax('a:not(a[target="_blank"]):not(.navtab_link)', {
     container: '#pjax-container'
 });
 
@@ -249,7 +249,7 @@ function listenerForAddNavTab(link, content) {
 
 function addNavTab(link, content) {
     let addElement = $('<li class="active">\n' +
-        '<a href="' + link + '">\n' +
+        '<a class="navtab_link" href="' + link + '">\n' +
         '<span>' + content + '</span>\n' +
         '</a><i class="close-tab fa fa-remove"></i>\n' +
         '</li>');
@@ -259,10 +259,10 @@ function addNavTab(link, content) {
         if (li.hasClass('active')) {
             if (li.prev().length > 0) {
                 li.prev().addClass('active');
-                $.pjax({url: li.prev().find('a').attr('href'), container: '#pjax-container'});
+                cachePjax(li.prev().find('a').attr('href'));
             } else if (li.next().length > 0) {
                 li.next().addClass('active');
-                $.pjax({url: li.next().find('a').attr('href'), container: '#pjax-container'});
+                cachePjax(li.prev().find('a').attr('href'));
             }
         }
         li.remove();
@@ -279,13 +279,29 @@ function addNavTab(link, content) {
             $(this).children('i').hide();
         }
     });
-    addElement.on('click', function () {
+    addElement.on('click', function (event) {
+        event.preventDefault();
         removeActive();
         $(this).addClass('active');
+        let li = $(this).parent();
+        cachePjax(li.find('a').attr('href'));
     });
 
     addElement.appendTo('.nav-addtabs');
 }
+
+function cachePjax(url) {
+    var content = sessionStorage.getItem(url);
+    if (content) {
+        $('#pjax-container').html(content);
+    } else {
+        $.pjax({url: url, container: '#pjax-container'});
+    }
+}
+
+$(document).on('pjax:success', function(event) {
+    sessionStorage.setItem(event.currentTarget.URL, $('#pjax-container').html());
+});
 
 function checkNavExist(link) {
     let navs = $('.nav-addtabs li');

@@ -114,17 +114,16 @@
                         <td style="text-align: center;">
                             {{if not $ActionFold}}
                                 {{if $EditUrl}}
-                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}&{{(index $info "__goadmin_edit_params").Content}}'><i
-                                                class="fa fa-edit" style="font-size: 16px;"></i></a>
+                                    <a href='{{$EditUrl}}&__goadmin_edit_pk={{(index $info $PrimaryKey).Content}}&{{(index $info "__goadmin_edit_params").Content}}'>{{lang "edit"}}</a>
                                 {{end}}
                                 {{if $DeleteUrl}}
                                     <a href="javascript:void(0);" data-id='{{(index $info $PrimaryKey).Content}}' data-param='{{(index $info "__goadmin_delete_params").Content}}'
-                                       class="grid-row-delete"><i class="fa fa-trash" style="font-size: 16px;"></i></a>
+                                       class="grid-row-delete">{{lang "del"}}</a>
                                 {{end}}
                                 {{if $DetailUrl}}
                                     <a href='{{$DetailUrl}}&__goadmin_detail_pk={{(index $info $PrimaryKey).Content}}&{{(index $info "__goadmin_detail_params").Content}}'
                                        class="grid-row-view">
-                                        <i class="fa fa-eye" style="font-size: 16px;"></i>
+                                        {{lang "view"}}
                                     </a>
                                 {{end}}
                                 {{renderRowDataHTML (index $info $PrimaryKey).Content $Action $info}}
@@ -556,6 +555,27 @@
                 word-wrap: break-word;
                 word-break: break-all;
             }
+            table tbody th:last-child, table tbody td:last-child {
+                position: sticky;
+                right: 0;
+                z-index: 1;
+            }
+            table tbody td:last-child {
+                background-color: white;
+            }
+            .last_th_td_ele:before, .last_th_td_ele:before {
+                left: 10px;
+                box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, .15);
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 10px;
+                bottom: -1px;
+                overflow-x: hidden;
+                overflow-y: hidden;
+                touch-action: none;
+                pointer-events: none;
+            }            
         </style>
     {{end}}
 {{end}}
