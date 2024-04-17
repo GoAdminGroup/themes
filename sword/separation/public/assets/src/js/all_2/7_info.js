@@ -294,6 +294,8 @@ function cachePjax(url) {
     var content = sessionStorage.getItem(url);
     if (content) {
         $('#pjax-container').get(0).innerHTML = content;
+        window.history.replaceState(null, null, url);
+        activateMenuItem();
     } else {
         $.pjax({url: url, container: '#pjax-container'});
     }
@@ -362,6 +364,7 @@ $(function () {
         $('.fixed-btn').attr('data-click', 'true');
     }
     $(".nav.nav-tabs.nav-addtabs").sortable();
+    activateMenuItem();
 });
 
 
@@ -381,3 +384,23 @@ $('.fixed-btn').on('click', function () {
         $(this).css('background-color', 'white');
     }
 });
+
+$(window).on('popstate', function() {
+    activateMenuItem();
+});
+
+function activateMenuItem() {
+    var currentUrl = window.location.pathname;
+    $('.sidebar-menu a').each(function() {
+        var menuItemUrl = $(this).attr('href');
+        if (currentUrl.indexOf(menuItemUrl) === 0) {
+            $(this).closest('li').addClass('active');
+            if ($(this).parents('.treeview')) {
+                $(this).parents('.treeview').addClass('active');
+                $(this).parents('.treeview').addClass('menu-open');
+            }
+        } else {
+            $(this).closest('li').removeClass('active');
+        }
+    });
+}

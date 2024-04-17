@@ -37,7 +37,7 @@ var AssetsList = []string{
 	"/dist/img/ui-icons_cc0000_256x240.png",
 	"/dist/img/ui-icons_ffffff_256x240.png",
 	"/dist/js/all.min.506636f003.js",
-	"/dist/js/all_2.min.ccb6e57445.js",
+	"/dist/js/all_2.min.1afe5645ea.js",
 	"/dist/js/datatable.min.43c12443cf.js",
 	"/dist/js/form.min.4022a41f70.js",
 	"/dist/js/html5shiv.min.js",
