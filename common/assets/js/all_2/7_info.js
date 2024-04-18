@@ -290,7 +290,6 @@ function addNavTab(link, content) {
 }
 
 function cachePjax(url) {
-    console.log("cachePjax url", url)
     var content = sessionStorage.getItem(url);
     if (content) {
         $('#pjax-container').get(0).innerHTML = content;
@@ -390,17 +389,70 @@ $(window).on('popstate', function() {
 });
 
 function activateMenuItem() {
-    var currentUrl = window.location.pathname;
-    $('.sidebar-menu a').each(function() {
-        var menuItemUrl = $(this).attr('href');
-        if (currentUrl.indexOf(menuItemUrl) === 0) {
-            $(this).closest('li').addClass('active');
-            if ($(this).parents('.treeview')) {
-                $(this).parents('.treeview').addClass('active');
-                $(this).parents('.treeview').addClass('menu-open');
-            }
-        } else {
-            $(this).closest('li').removeClass('active');
+    var currentPath = window.location.pathname;
+
+    var lastActiveLi;
+    var curActiveLi;
+    var same;
+
+    $('.sidebar-menu').find('li:not(.treeview)').each(function() {
+        var menuUrl = $(this).find('a').attr('href');
+
+        if (currentPath === menuUrl) {
+            curActiveLi = $(this);
+        }
+
+        if ($(this).hasClass('active')) {
+            lastActiveLi = $(this);
+        }
+
+        if ((currentPath === menuUrl) && ($(this).hasClass('active'))) {
+            same = true;
         }
     });
+
+    window.lastActiveLi = lastActiveLi;
+    window.curActiveLi = curActiveLi;
+    console.log('lastActiveLi', lastActiveLi, 'curActiveLi', curActiveLi);
+
+    if (same) {
+        return
+    }
+
+    // 重新获取curActiveLi
+    curActiveLi = $('.sidebar-menu').find('li:not(.treeview)').filter(function() {
+        return $(this).find('a').attr('href') === currentPath;
+    });
+
+    if (lastActiveLi) {
+        console.log('removeClass', lastActiveLi);
+        lastActiveLi.removeClass('active');
+    }
+
+    var curTreeviewLis = curActiveLi.parents('li.treeview');
+
+    for (var i = 0; i < curTreeviewLis.length; i++) {
+        if (!$(curTreeviewLis[i]).hasClass('active')) {
+            console.log('click', curTreeviewLis[i]);
+            $(curTreeviewLis[i]).find('.pull-right').trigger('click');
+        }
+    }
+
+    if (lastActiveLi) {
+        var lastTreeviewLis = lastActiveLi.parents('li.treeview');
+
+        if (curTreeviewLis.length == 0) {
+            for (var i = 0; i < lastTreeviewLis.length; i++) {
+                if ($(lastTreeviewLis[i]).hasClass('active')) {
+                    console.log('click', lastTreeviewLis[i]);
+                    $(lastTreeviewLis[i]).find('.pull-right').trigger('click');
+                }
+            } 
+        }
+    }
+
+    if (curActiveLi.length > 0) {
+        console.log('addClass', curActiveLi);
+        curActiveLi.addClass('active');
+    }
 }
