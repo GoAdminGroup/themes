@@ -2386,14 +2386,6 @@ $('.container-refresh').on('click', function () {
 let sidebarMenuA = $('.sidebar-menu a');
 
 $(function () {
-  $(".sidebar-menu li:not(.treeview) > a").on("click", function () {
-    console.log("1 addClass...");
-    let parent = $(this).parent().addClass("active");
-    parent.siblings(".treeview.active").find("> a").trigger("click");
-    console.log("1 removeClass...");
-    parent.siblings().removeClass("active").find("li").removeClass("active");
-  });
-
   $('[data-toggle="popover"]').popover();
 
   addOrRemoveLeftRightNavBtn(false);
@@ -2402,20 +2394,42 @@ $(function () {
 
   $(".treeview > a").off("click");
 
-  // 自定义菜单项的点击事件处理逻辑
+  $(".sidebar-menu li:not(.treeview) > a").on("click", function (e) {
+    
+    let parent = $(this).parent();
+    parent.addClass("active");
+    
+    $(".sidebar-menu li:not(.treeview)").not(parent).removeClass("active");
+
+    var excludeMenu;
+    parentTreeview = parent.parents(".treeview").last();
+    if (parentTreeview.length > 0) {
+      excludeMenu = parentTreeview.find(".treeview-menu");
+    }
+    needSlideUpMenu = $(".treeview-menu");
+    if (excludeMenu && excludeMenu.length > 0) {
+      needSlideUpMenu = needSlideUpMenu.not(excludeMenu);
+    }
+    needSlideUpMenu.add(parent.siblings(".treeview").find(".treeview-menu")).slideUp(function() {
+      $(this).find("li").removeClass("active");
+      $(this).parent().removeClass("active");
+    });
+  });
+
   $(".treeview > a").click(function (e) {
-    e.preventDefault(); // 阻止默认行为
-    e.stopPropagation(); // 阻止事件冒泡
+    e.preventDefault();
+    e.stopPropagation();
 
-    // 切换子菜单的显示状态
-    $(this).siblings(".treeview-menu").slideToggle();
+    var clickedItem = $(this).closest('.treeview');
+    var isActive = clickedItem.hasClass('active');
 
-    // 切换图标方向
-    $(this).find(".fa-angle-left").toggleClass("rotate-icon");
-
-    // 自定义菜单项的高亮处理逻辑
-    $(".treeview").removeClass("active");
-    $(this).parent(".treeview").addClass("active");
+    $(this).siblings('.treeview-menu').first().slideToggle(function() {
+      if (!isActive) {
+        clickedItem.addClass('active');        
+      } else {
+        clickedItem.removeClass('active');
+      }
+    });
   });
 });
 
@@ -2596,7 +2610,6 @@ function checkNavExist(link) {
   for (let i = 0; i < navs.length; i++) {
     if (parseURL($(navs[i]).find("a").attr("href")) === link.split("?")[0]) {
       removeActive();
-      console.log("2 addClass...");
       $(navs[i]).addClass("active");
       return true;
     }
@@ -2621,7 +2634,6 @@ function updateNavURL() {
 function removeActive() {
   let lis = $(".nav-addtabs li");
   for (let i = 0; i < lis.length; i++) {
-    console.log("3 removeClass...");
     $(lis[i]).removeClass("active");
   }
 }
@@ -2701,15 +2713,10 @@ function activateMenuItem() {
       }
     });
 
-  window.lastActiveLi = lastActiveLi;
-  window.curActiveLi = curActiveLi;
-  console.log("lastActiveLi", lastActiveLi, "curActiveLi", curActiveLi);
-
   if (same) {
     return;
   }
 
-  // 重新获取curActiveLi
   curActiveLi = $(".sidebar-menu")
     .find("li:not(.treeview)")
     .filter(function () {
@@ -2717,7 +2724,6 @@ function activateMenuItem() {
     });
 
   if (lastActiveLi) {
-    console.log("removeClass 4", lastActiveLi);
     lastActiveLi.removeClass("active");
   }
 
@@ -2725,7 +2731,6 @@ function activateMenuItem() {
 
   for (var i = 0; i < curTreeviewLis.length; i++) {
     if (!$(curTreeviewLis[i]).hasClass("active")) {
-      console.log("click", curTreeviewLis[i]);
       $(curTreeviewLis[i]).find(".pull-right").trigger("click");
     }
   }
@@ -2736,7 +2741,6 @@ function activateMenuItem() {
     if (curTreeviewLis.length == 0) {
       for (var i = 0; i < lastTreeviewLis.length; i++) {
         if ($(lastTreeviewLis[i]).hasClass("active")) {
-          console.log("click", lastTreeviewLis[i]);
           $(lastTreeviewLis[i]).find(".pull-right").trigger("click");
         }
       }
@@ -2744,7 +2748,6 @@ function activateMenuItem() {
   }
 
   if (curActiveLi.length > 0) {
-    console.log("addClass 3", curActiveLi);
     curActiveLi.addClass("active");
   }
 }

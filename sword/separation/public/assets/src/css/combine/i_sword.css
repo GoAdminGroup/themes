@@ -124,7 +124,11 @@ body {
     vertical-align: middle;
 }
 
-.skin-black ul.treeview-menu li.active {
+.skin-black ul.treeview-menu li.active:not(.treeview) {
+    background-color: #1890ff !important;
+}
+
+.skin-black .sidebar-menu>li.active>a {
     background-color: #1890ff !important;
 }
 
@@ -564,10 +568,6 @@ form .control-label.divider-title {
 }
 
 ul.treeview-menu ul.treeview-menu.menu-open {
-    background: rgb(0, 4, 8) !important;
-}
-
-.skin-black ul.treeview-menu ul.treeview-menu li.active {
     background: rgb(0, 4, 8) !important;
 }
 
