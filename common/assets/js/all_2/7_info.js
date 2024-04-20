@@ -426,63 +426,17 @@ $(window).on("popstate", function () {
 function activateMenuItem() {
   var currentPath = window.location.pathname;
 
-  var lastActiveLi;
-  var curActiveLi;
-  var same;
+  var currentA = $(".sidebar-menu a")
+  .filter(function () {
+    return $(this).attr("href") === currentPath;
+  });
 
-  $(".sidebar-menu")
-    .find("li:not(.treeview)")
-    .each(function () {
-      var menuUrl = $(this).find("a").attr("href");
+  currentA.trigger("click");
 
-      if (currentPath === menuUrl) {
-        curActiveLi = $(this);
-      }
-
-      if ($(this).hasClass("active")) {
-        lastActiveLi = $(this);
-      }
-
-      if (currentPath === menuUrl && $(this).hasClass("active")) {
-        same = true;
-      }
+  parentTreeview = currentA.parents(".treeview").last();
+  if (parentTreeview.length > 0) {
+    parentTreeview.find(".treeview-menu").slideDown(function() {
+      $(this).parent().addClass("active");
     });
-
-  if (same) {
-    return;
-  }
-
-  curActiveLi = $(".sidebar-menu")
-    .find("li:not(.treeview)")
-    .filter(function () {
-      return $(this).find("a").attr("href") === currentPath;
-    });
-
-  if (lastActiveLi) {
-    lastActiveLi.removeClass("active");
-  }
-
-  var curTreeviewLis = curActiveLi.parents("li.treeview");
-
-  for (var i = 0; i < curTreeviewLis.length; i++) {
-    if (!$(curTreeviewLis[i]).hasClass("active")) {
-      $(curTreeviewLis[i]).find(".pull-right").trigger("click");
-    }
-  }
-
-  if (lastActiveLi) {
-    var lastTreeviewLis = lastActiveLi.parents("li.treeview");
-
-    if (curTreeviewLis.length == 0) {
-      for (var i = 0; i < lastTreeviewLis.length; i++) {
-        if ($(lastTreeviewLis[i]).hasClass("active")) {
-          $(lastTreeviewLis[i]).find(".pull-right").trigger("click");
-        }
-      }
-    }
-  }
-
-  if (curActiveLi.length > 0) {
-    curActiveLi.addClass("active");
-  }
+  }  
 }
