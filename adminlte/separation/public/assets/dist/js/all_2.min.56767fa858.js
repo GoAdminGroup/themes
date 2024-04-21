@@ -2385,6 +2385,28 @@ $('.container-refresh').on('click', function () {
 
 let sidebarMenuA = $('.sidebar-menu a');
 
+function clickSideBarMenuA(obj) {
+
+  let parent = obj.parent();
+  parent.addClass("active");
+  
+  $(".sidebar-menu li:not(.treeview)").not(parent).removeClass("active");
+
+  var excludeMenu;
+  parentTreeview = parent.parents(".treeview").last();
+  if (parentTreeview.length > 0) {
+    excludeMenu = parentTreeview.find(".treeview-menu");
+  }
+  needSlideUpMenu = $(".treeview-menu");
+  if (excludeMenu && excludeMenu.length > 0) {
+    needSlideUpMenu = needSlideUpMenu.not(excludeMenu);
+  }
+  needSlideUpMenu.add(parent.siblings(".treeview").find(".treeview-menu")).slideUp(function() {
+    $(this).find("li").removeClass("active");
+    $(this).parent().removeClass("active");
+  });
+}
+
 $(function () {
   $('[data-toggle="popover"]').popover();
 
@@ -2394,26 +2416,8 @@ $(function () {
 
   $(".treeview > a").off("click");
 
-  $(".sidebar-menu li:not(.treeview) > a").on("click", function (e) {
-    
-    let parent = $(this).parent();
-    parent.addClass("active");
-    
-    $(".sidebar-menu li:not(.treeview)").not(parent).removeClass("active");
-
-    var excludeMenu;
-    parentTreeview = parent.parents(".treeview").last();
-    if (parentTreeview.length > 0) {
-      excludeMenu = parentTreeview.find(".treeview-menu");
-    }
-    needSlideUpMenu = $(".treeview-menu");
-    if (excludeMenu && excludeMenu.length > 0) {
-      needSlideUpMenu = needSlideUpMenu.not(excludeMenu);
-    }
-    needSlideUpMenu.add(parent.siblings(".treeview").find(".treeview-menu")).slideUp(function() {
-      $(this).find("li").removeClass("active");
-      $(this).parent().removeClass("active");
-    });
+  $(".sidebar-menu li:not(.treeview) > a").on("click", function(){
+    clickSideBarMenuA($(this));
   });
 
   $(".treeview > a").click(function (e) {
@@ -2696,7 +2700,7 @@ function activateMenuItem() {
     return $(this).attr("href") === currentPath;
   });
 
-  currentA.trigger("click");
+  clickSideBarMenuA(currentA);
 
   parentTreeview = currentA.parents(".treeview").last();
   if (parentTreeview.length > 0) {
