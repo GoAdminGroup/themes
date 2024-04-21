@@ -99,8 +99,10 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                     </a>
                     <ul class="dropdown-menu">
                         {{.NavButtonsHTML}}
-                        <li><a href="{{.UrlPrefix}}/info/normal_manager/edit?__goadmin_edit_pk={{.User.Id}}" class="dropdown-item">{{lang "setting"}}</a></li>                        
-                        <li><a href="{{.UrlPrefix}}/logout" class="no-pjax dropdown-item">{{lang "sign out"}}</a></li>                        
+                        <li><a href="{{.UrlPrefix}}/info/normal_manager/edit?__goadmin_edit_pk={{.User.Id}}" class="dropdown-item"><i class="fa fa-edit"></i>
+                            <span>{{lang "setting"}}</span></a></li>
+                        <li><a href="{{.UrlPrefix}}/logout" class="no-pjax dropdown-item"><i class="fa fa-sign-out"></i>
+                            <span>{{lang "sign out"}}</span></a></li>
                     </ul>
                 </li>
             {{end}}
@@ -2400,6 +2402,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 <small>{{langHtml .Panel.Description}}</small>
             </h4>
         </section>
+        <div id="content-title" style="display:none">{{langHtml .Panel.Title}}</div>
     {{end}}
 
     <!-- Main content -->

@@ -747,3 +747,11 @@ form .row .nav-tabs-custom {
 a.navtab_link {
     font-weight: bold !important;
 }
+
+.navbar-custom-menu ul.nav.navbar-nav .dropdown-menu li:not(.dropdown) {
+    text-align: left;
+}
+
+div.navbar-custom-menu > ul > li.dropdown.user.user-menu.open > ul > li > a i {
+    width: 15px;
+}

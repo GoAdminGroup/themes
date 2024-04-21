@@ -366,6 +366,13 @@ function updateNavURL() {
   for (let i = 0; i < navs.length; i++) {
     if ($(navs[i]).hasClass("active")) {
       $(navs[i]).find("a").attr("href", location.href);
+      contentTitle = $("#content-title");
+      if (contentTitle) {
+        title = contentTitle.text();
+        if (title != "") {
+          $(navs[i]).find("a span").html(title)
+        }
+      }
     }
   }
 }
