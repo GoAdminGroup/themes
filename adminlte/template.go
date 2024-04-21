@@ -66,9 +66,6 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 </style>`, "admin_panel": `{{define "admin_panel"}}
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-
-            {{.NavButtonsHTML}}
-
             <li title="{{lang "Fixed the sidebar"}}">
                 <a href="javascript:void(0);" class="fixed-btn" data-click="false">
                     <i class="fa fa-thumb-tack"></i>
@@ -101,28 +98,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                         <span class="hidden-xs">{{.User.Name}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="user-header">
-                            {{if eq .User.Avatar ""}}
-                                <img src="{{.UrlPrefix}}/assets/dist/img/avatar04.png" class="img-circle"
-                                     alt="User Image">
-                            {{else}}
-                                <img src="{{.User.Avatar}}" class="img-circle" alt="User Image">
-                            {{end}}
-                            <p>
-                                {{.User.Name}} -{{.User.LevelName}}
-                                <small>{{.User.CreatedAt}}</small>
-                            </p>
-                        </li>
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="{{.UrlPrefix}}/info/normal_manager/edit?__goadmin_edit_pk={{.User.Id}}"
-                                   class="btn btn-default btn-flat">{{lang "setting"}}</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="{{.UrlPrefix}}/logout"
-                                   class="no-pjax btn btn-default btn-flat">{{lang "sign out"}}</a>
-                            </div>
-                        </li>
+                        {{.NavButtonsHTML}}
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
             {{end}}
