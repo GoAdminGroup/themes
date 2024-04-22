@@ -186,6 +186,7 @@ var SepTemplateList = map[string]string{
 	"components/form_components":        "components/form_components",
 	"components/form_components_layout": "components/form_components_layout",
 	"components/form_layout_default":    "components/form_layout_default",
+	"components/form_layout_filter":     "components/form_layout_filter",
 	"components/form_layout_flow":       "components/form_layout_flow",
 	"components/form_layout_tab":        "components/form_layout_tab",
 	"components/form_layout_two_col":    "components/form_layout_two_col",

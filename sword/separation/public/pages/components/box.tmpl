@@ -1,5 +1,5 @@
 {{define "box"}}
-<div class="box box-{{.Theme}}" {{.Attr}}>
+<div class="box box-{{.Theme}} {{.Class}}" {{.Attr}}>
     {{if ne .Header ""}}
         {{if eq .HeadColor ""}}
             <div class="box-header {{.HeadBorder}}">

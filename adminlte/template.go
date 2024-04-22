@@ -115,7 +115,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     {{langHtml .Content}}
 </div>
 {{end}}`, "components/box": `{{define "box"}}
-<div class="box box-{{.Theme}}" {{.Attr}}>
+<div class="box box-{{.Theme}} {{.Class}}" {{.Attr}}>
     {{if ne .Header ""}}
         {{if eq .HeadColor ""}}
             <div class="box-header {{.HeadBorder}}">
@@ -890,30 +890,73 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     </div>
 {{end}}`, "components/form": `{{define "form"}}    
     {{.Header}}
-    <form id={{.Id}} {{if .Ajax}}οnsubmit="return false;" {{end}}action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" {{if not .Ajax}}pjax-container{{end}}
+    <form id={{.Id}} {{if .Ajax}}οnsubmit="return false;" {{end}}action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="{{if not .Layout.Filter}}form-horizontal{{end}}" {{if not .Ajax}}pjax-container{{end}}
           style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
-        <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+        {{if .Horizontal}}
 
-            {{if eq .FieldsHTML ""}}
-                {{if ne (len .TabHeaders) 0}}
-                    {{ template "form_layout_tab" . }}
-                {{else if ne (len .ContentList) 0}}
-                    {{ template "form_layout_two_col" . }}
-                {{else if .Layout.Flow}}
-                    {{ template "form_layout_flow" . }}
+                    {{if eq .FieldsHTML ""}}
+                        {{if ne (len .TabHeaders) 0}}
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_tab" . }}
+                                </div>
+                            </div>
+                        {{else if ne (len .ContentList) 0}}
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_two_col" . }}
+                                </div>
+                            </div>                            
+                        {{else if .Layout.Flow}}                            
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_flow" . }}
+                                </div>
+                            </div>                            
+                        {{else if .Layout.Filter}}
+                            {{ template "form_layout_filter" . }}
+                        {{else}}                            
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_default" . }}
+                                </div>
+                            </div>                            
+                        {{end}}
+                    {{else}}
+                        {{.FieldsHTML}}
+                    {{end}}
+
+            {{if ne .OperationFooter ""}}
+                <div class="col-sm-2">
+                    <div class="box-footer">
+                        {{.OperationFooter}}
+                    </div>
+                </div>
+            {{end}}          
+        {{else}}
+            <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+
+                {{if eq .FieldsHTML ""}}
+                    {{if ne (len .TabHeaders) 0}}
+                        {{ template "form_layout_tab" . }}
+                    {{else if ne (len .ContentList) 0}}
+                        {{ template "form_layout_two_col" . }}
+                    {{else if .Layout.Flow}}
+                        {{ template "form_layout_flow" . }}
+                    {{else}}
+                        {{ template "form_layout_default" . }}
+                    {{end}}
                 {{else}}
-                    {{ template "form_layout_default" . }}
+                    {{.FieldsHTML}}
                 {{end}}
-            {{else}}
-                {{.FieldsHTML}}
-            {{end}}
 
-        </div>
-
-        {{if ne .OperationFooter ""}}
-            <div class="box-footer">
-                {{.OperationFooter}}
             </div>
+
+            {{if ne .OperationFooter ""}}
+                <div class="box-footer">
+                    {{.OperationFooter}}
+                </div>
+            {{end}}
         {{end}}
 
         {{range $key, $value := .HiddenFields}}
@@ -1256,6 +1299,39 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         <div class="fields-group">
             {{ template "form_components_layout" . }}
         </div>
+    </div>
+
+{{end}}`, "components/form_layout_filter": `{{define "form_layout_filter"}}
+
+    <div style="float: left;margin-right: 10px;">
+      <div class="form-group">
+        <label for="name" style="float: left; padding-top: 7px; font-weight: 300">姓名</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name" placeholder="请输入姓名" style="width: 80%; float: left; margin-left: 10px">
+        </div>
+      </div>
+    </div>
+    <div style="float: left;margin-right: 10px;">
+      <div class="form-group">
+        <label for="name" style="float: left; padding-top: 7px; font-weight: 300">角色</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name" placeholder="请输入角色" style="width: 80%; float: left; margin-left: 10px">
+        </div>
+      </div>
+    </div>
+    <div style="float: left;margin-right: 10px;">
+      <div class="form-group">
+        <label for="name" style="float: left; padding-top: 7px; font-weight: 300">昵称</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name" placeholder="请输入昵称" style="width: 80%; float: left; margin-left: 10px">
+        </div>
+      </div>
+    </div>
+    <div style="float: left;margin-right: 10px;">
+      <div class="form-group" style="float: right; margin-right: 30px">
+        <button type="submit" class="btn btn-primary">搜索</button>
+        <button type="reset" class="btn btn-default">重置</button>
+      </div>
     </div>
 
 {{end}}`, "components/form_layout_flow": `{{define "form_layout_flow"}}

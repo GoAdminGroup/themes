@@ -1,29 +1,72 @@
 {{define "form"}}    
     {{.Header}}
-    <form id={{.Id}} {{if .Ajax}}οnsubmit="return false;" {{end}}action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="form-horizontal" {{if not .Ajax}}pjax-container{{end}}
+    <form id={{.Id}} {{if .Ajax}}οnsubmit="return false;" {{end}}action="{{.Url}}" method="{{.Method}}" accept-charset="UTF-8" class="{{if not .Layout.Filter}}form-horizontal{{end}}" {{if not .Ajax}}pjax-container{{end}}
           style="background-color: white;{{if ne (len .TabHeaders) 0}}padding: 0px;{{end}}">
-        <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+        {{if .Horizontal}}
 
-            {{if eq .FieldsHTML ""}}
-                {{if ne (len .TabHeaders) 0}}
-                    {{ template "form_layout_tab" . }}
-                {{else if ne (len .ContentList) 0}}
-                    {{ template "form_layout_two_col" . }}
-                {{else if .Layout.Flow}}
-                    {{ template "form_layout_flow" . }}
+                    {{if eq .FieldsHTML ""}}
+                        {{if ne (len .TabHeaders) 0}}
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_tab" . }}
+                                </div>
+                            </div>
+                        {{else if ne (len .ContentList) 0}}
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_two_col" . }}
+                                </div>
+                            </div>                            
+                        {{else if .Layout.Flow}}                            
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_flow" . }}
+                                </div>
+                            </div>                            
+                        {{else if .Layout.Filter}}
+                            {{ template "form_layout_filter" . }}
+                        {{else}}                            
+                            <div class="col-sm-10">
+                                <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+                                    {{ template "form_layout_default" . }}
+                                </div>
+                            </div>                            
+                        {{end}}
+                    {{else}}
+                        {{.FieldsHTML}}
+                    {{end}}
+
+            {{if ne .OperationFooter ""}}
+                <div class="col-sm-2">
+                    <div class="box-footer">
+                        {{.OperationFooter}}
+                    </div>
+                </div>
+            {{end}}          
+        {{else}}
+            <div class="{{if ne (len .TabHeaders) 0}}row{{else}}box-body{{end}}">
+
+                {{if eq .FieldsHTML ""}}
+                    {{if ne (len .TabHeaders) 0}}
+                        {{ template "form_layout_tab" . }}
+                    {{else if ne (len .ContentList) 0}}
+                        {{ template "form_layout_two_col" . }}
+                    {{else if .Layout.Flow}}
+                        {{ template "form_layout_flow" . }}
+                    {{else}}
+                        {{ template "form_layout_default" . }}
+                    {{end}}
                 {{else}}
-                    {{ template "form_layout_default" . }}
+                    {{.FieldsHTML}}
                 {{end}}
-            {{else}}
-                {{.FieldsHTML}}
-            {{end}}
 
-        </div>
-
-        {{if ne .OperationFooter ""}}
-            <div class="box-footer">
-                {{.OperationFooter}}
             </div>
+
+            {{if ne .OperationFooter ""}}
+                <div class="box-footer">
+                    {{.OperationFooter}}
+                </div>
+            {{end}}
         {{end}}
 
         {{range $key, $value := .HiddenFields}}
