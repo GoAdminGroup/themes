@@ -1303,34 +1303,21 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
 
 {{end}}`, "components/form_layout_filter": `{{define "form_layout_filter"}}
 
-    <div style="float: left;margin-right: 10px;">
-      <div class="form-group">
-        <label for="name" style="float: left; padding-top: 7px; font-weight: 300">姓名</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="name" placeholder="请输入姓名" style="width: 80%; float: left; margin-left: 10px">
+    {{range $key, $data := .Content}}
+      <div style="float: left;margin-right: 10px;">
+        <div class="form-group">
+          <label for="{{$data.Field}}" style="float: left; padding-top: 7px; font-weight: 300;margin-right: 10px;">{{$data.Head}}</label>
+          <div class="input-group">
+            {{template "form_components" $data}}
+          </div>
         </div>
       </div>
-    </div>
-    <div style="float: left;margin-right: 10px;">
-      <div class="form-group">
-        <label for="name" style="float: left; padding-top: 7px; font-weight: 300">角色</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="name" placeholder="请输入角色" style="width: 80%; float: left; margin-left: 10px">
-        </div>
-      </div>
-    </div>
-    <div style="float: left;margin-right: 10px;">
-      <div class="form-group">
-        <label for="name" style="float: left; padding-top: 7px; font-weight: 300">昵称</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="name" placeholder="请输入昵称" style="width: 80%; float: left; margin-left: 10px">
-        </div>
-      </div>
-    </div>
+    {{end}}
+
     <div style="float: left;margin-right: 10px;">
       <div class="form-group" style="float: right; margin-right: 30px">
-        <button type="submit" class="btn btn-primary">搜索</button>
-        <button type="reset" class="btn btn-default">重置</button>
+        <button type="submit" class="btn btn-primary">{{lang "search"}}</button>
+        <button type="reset" class="btn btn-default">{{lang "submit"}}</button>
       </div>
     </div>
 
