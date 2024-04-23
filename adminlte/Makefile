@@ -17,11 +17,13 @@ rebuild-dist:
 	mkdir $(ASSETS_PATH)/dist
 	mkdir $(ASSETS_PATH)/dist/js
 	mkdir $(ASSETS_PATH)/dist/css
-	cp -R $(COMMON_PATH)/assets/* $(ASSETS_PATH)/src/
+	rm -rf $(ASSETS_PATH)/src
+	cp -R $(COMMON_PATH)/assets $(ASSETS_PATH)/src
 	cp $(RESOURCE_PATH)/adminlte/adminlte.css $(ASSETS_PATH)/src/css/combine/g_all.css
 	cp $(ASSETS_PATH)/src/js/*.js $(ASSETS_PATH)/dist/js/
 	cp $(ASSETS_PATH)/src/css/*.png $(ASSETS_PATH)/dist/css/
-	cp -R $(COMMON_PATH)/pages/* $(RESOURCE_PATH)/pages/
+	rm -rf $(RESOURCE_PATH)/pages
+	cp -R $(COMMON_PATH)/pages $(RESOURCE_PATH)/pages
 
 	cp -R $(ASSETS_PATH)/src/css/fonts $(ASSETS_PATH)/dist/css/
 	cp -R $(ASSETS_PATH)/src/img $(ASSETS_PATH)/dist/

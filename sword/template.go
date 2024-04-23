@@ -1315,9 +1315,9 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
     {{end}}
 
     <div style="float: left;margin-right: 10px;">
-      <div class="form-group" style="float: right; margin-right: 30px">
+      <div class="form-group" style="float: right; margin-right: 30px; margin-left: 30px;">
         <button type="submit" class="btn btn-primary">{{lang "search"}}</button>
-        <button type="reset" class="btn btn-default">{{lang "submit"}}</button>
+        <button type="reset" class="btn btn-default">{{lang "reset"}}</button>
       </div>
     </div>
 
