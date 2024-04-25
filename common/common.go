@@ -15,7 +15,7 @@ type BaseTheme struct {
 	Separation   bool
 }
 
-const Version = "v0.0.46"
+const Version = "v0.0.47"
 
 func (b *BaseTheme) GetVersion() string {
 	return Version

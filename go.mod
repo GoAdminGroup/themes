@@ -2,7 +2,7 @@ module github.com/GoAdminGroup/themes
 
 go 1.21.5
 
-require github.com/GoAdminGroup/go-admin v1.2.25
+require github.com/GoAdminGroup/go-admin v1.2.26
 
 require (
 	github.com/GoAdminGroup/html v0.0.1 // indirect
