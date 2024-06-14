@@ -1436,7 +1436,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
         {{$url := .Url}}
         <select class="input-sm grid-per-pager" name="per-page">
             {{range $key, $pageSize := .PageSizeList}}
-                <option value="{{$url}}&__pageSize={{$pageSize}}" {{index $option $pageSize}}>
+                <option value="{{$url}}&__pageSize={{$pageSize}}" {{with index $option $pageSize}}{{index $option $pageSize}}{{end}}>
                     {{$pageSize}}
                 </option>
             {{end}}
