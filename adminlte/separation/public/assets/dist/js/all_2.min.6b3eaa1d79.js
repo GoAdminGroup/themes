@@ -2597,7 +2597,8 @@ function addNavTab(link, content) {
 function cachePjax(url) {
   var content = sessionStorage.getItem(url);
   if (content) {
-    $("#pjax-container").get(0).innerHTML = content;
+    container = $("#pjax-container");
+    container.html(content);
     window.history.replaceState(null, null, url);
     activateMenuItem();
   } else {
