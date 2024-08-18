@@ -1675,7 +1675,11 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                     {{end}}
                 {{end}}
                 {{if eq .NoAction false}}
-                    <th style="text-align: center;">{{lang "operation"}}</th>
+                    {{if not .ActionFold}}
+                        <th style="text-align: center;">{{lang "operation"}}</th>
+                    {{else}}
+                        <th style="text-align: center; width: 100px;">{{lang "operation"}}</th>
+                    {{end}}
                 {{end}}
             </tr>
         {{end}}
@@ -2190,7 +2194,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 right: 0;
                 z-index: 1;
             }
-            table tbody td:last-child {
+            table tbody th:last-child, table tbody td:last-child {
                 background-color: white;
             }
             table.sticky_table .last_th_td_ele:before, table.sticky_table .last_th_td_ele:before {
@@ -2200,6 +2204,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                 position: absolute;
                 top: 0;
                 width: 10px;
+                left: -10px;
                 bottom: -1px;
                 overflow-x: hidden;
                 overflow-y: hidden;
