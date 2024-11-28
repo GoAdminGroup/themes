@@ -833,7 +833,7 @@ var TemplateList = map[string]string{"403": `<div class="missing-content">
                     {{end}}
                 {{else if eq .Label "free"}}
                     <div class="input-group-btn">
-                        <input type="hidden" name="{{.Field}}__operator__" class="{{.Field}}-operation" value="3">
+                        <input type="hidden" name="{{.Field}}__goadmin_operator__" class="{{.Field}}-operation" value="3">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 style="min-width: 32px;" aria-expanded="false">
                             {{if eq .Value2 ""}}
